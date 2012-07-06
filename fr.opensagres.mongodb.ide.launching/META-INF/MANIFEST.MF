@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Bundle-SymbolicName: fr.opensagres.mongodb.ide.launching;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ant.launching;bundle-version="1.0.100",
+ fr.opensagres.mongodb.ide.core;bundle-version="1.0.0"
+Bundle-Activator: fr.opensagres.mongodb.ide.launching.internal.Activator
+Bundle-ActivationPolicy: lazy
+Import-Package: com.mongodb

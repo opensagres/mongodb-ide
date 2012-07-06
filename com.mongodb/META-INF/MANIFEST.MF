@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mongodb
+Bundle-SymbolicName: com.mongodb
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: .,
+ lib/mongo-2.8.0.jar
+Export-Package: com.mongodb,
+ com.mongodb.gridfs,
+ com.mongodb.io,
+ com.mongodb.util,
+ org.bson,
+ org.bson.io,
+ org.bson.types,
+ org.bson.util,
+ org.bson.util.annotations

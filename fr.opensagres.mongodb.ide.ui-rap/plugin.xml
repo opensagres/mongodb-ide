@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+      <extension
+         point="org.eclipse.rap.ui.branding">
+      <branding
+            servletName="mongodb-ide"
+            themeId="org.eclipse.rap.design.example.business.theme"
+            defaultEntrypointId="fr.opensagres.mongodb.ide.ui.applications"
+            title="MongoDB IDE"
+            id="fr.opensagres.mongodb.ide.ui.branding">
+      </branding>
+   </extension>
+   
+</plugin>

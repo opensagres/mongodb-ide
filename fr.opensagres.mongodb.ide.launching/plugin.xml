@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+  <!-- MongoDB Core Launching -->
+  
+  <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+  	 <!-- Server (mongod) -->
+     <launchConfigurationType
+        id="fr.opensagres.mongodb.ide.launching.mongod.launchConfigurationType"
+        name="%mongodLaunchConfigurationType"
+        delegate="fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongod.MongodLaunchConfigurationDelegate"
+        modes="run"/>
+  	 <!-- Console (mongo) -->        
+     <launchConfigurationType
+        id="fr.opensagres.mongodb.ide.launching.mongo.launchConfigurationType"
+        name="%mongoLaunchConfigurationType"
+        delegate="fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongo.MongoLaunchConfigurationDelegate"
+        modes="run"/>        
+  </extension>
+    
+  <!-- MongoDB UI Launching -->
+  	
+  <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+  	<!-- Server (mongod) -->
+    <launchConfigurationTypeImage
+      id="fr.opensagres.mongodb.ide.ui.launching.mongod.launchConfigurationTypeImage"
+      configTypeID="fr.opensagres.mongodb.ide.launching.mongod.launchConfigurationType"
+      icon="icons/obj16/mongod.png">
+    </launchConfigurationTypeImage>
+	<!-- Console (mongo) -->
+    <launchConfigurationTypeImage
+      id="fr.opensagres.mongodb.ide.ui.launching.mongo.launchConfigurationTypeImage"
+      configTypeID="fr.opensagres.mongodb.ide.launching.mongo.launchConfigurationType"
+      icon="icons/obj16/mongo.png">
+    </launchConfigurationTypeImage>    
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+  	<!-- Server (mongod) -->  
+    <launchConfigurationTabGroup
+      id="fr.opensagres.mongodb.ide.launching.ui.mongod.launchConfigurationTabGroup"
+      type="fr.opensagres.mongodb.ide.launching.mongod.launchConfigurationType"
+      class="fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongod.MongodLaunchConfigurationTabGroup">
+    </launchConfigurationTabGroup>
+	<!-- Console (mongo) -->    
+    <launchConfigurationTabGroup
+      id="fr.opensagres.mongodb.ide.launching.ui.mongo.launchConfigurationTabGroup"
+      type="fr.opensagres.mongodb.ide.launching.mongo.launchConfigurationType"
+      class="fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongo.MongoLaunchConfigurationTabGroup">
+    </launchConfigurationTabGroup>    
+  </extension>   
+
+  <extension point="org.eclipse.ui.preferencePages">   
+    <page
+      id="fr.opensagres.mongodb.ide.launching.runtime.preferencePage"
+      name="%preferenceRuntimesTitle"
+      category="fr.opensagres.mongodb.ide.ui.preferencePage"
+      class="fr.opensagres.mongodb.ide.launching.internal.preferences.MongoRuntimePreferencePage">      
+    </page>
+  </extension>
+
+</plugin>

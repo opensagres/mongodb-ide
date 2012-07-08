@@ -11,6 +11,8 @@
 	</properties>
 	<modules>
 		<module>fr.opensagres.mongodb.ide.core</module>
+		<module>fr.opensagres.mongodb.ide.ui</module>
+		<module>fr.opensagres.mongodb.ide.ui-rap</module>
 	</modules>
 	<build>
 		<defaultGoal>install</defaultGoal>

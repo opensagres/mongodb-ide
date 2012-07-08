@@ -13,6 +13,7 @@
 		<module>fr.opensagres.mongodb.ide.core</module>
 		<module>fr.opensagres.mongodb.ide.ui</module>
 		<module>fr.opensagres.mongodb.ide.ui-rap</module>
+		<module>fr.opensagres.mongodb.ide.launching</module>
 	</modules>
 	<build>
 		<defaultGoal>install</defaultGoal>

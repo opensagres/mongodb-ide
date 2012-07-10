@@ -61,7 +61,7 @@ public class NewServerWizardPage extends WizardPage {
 
 		// Port
 		Label portLabel = new Label(container, SWT.NONE);
-		portLabel.setText(Messages.NewServerWizardPage_host_label);
+		portLabel.setText(Messages.NewServerWizardPage_port_label);
 		portCombo = new Combo(container, SWT.BORDER);
 		portCombo.add("27017");
 		portCombo.addModifyListener(new ModifyListener() {

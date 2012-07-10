@@ -30,7 +30,12 @@ public class DeleteAction extends Action {
 			while (iter.hasNext()) {
 				Object element = iter.next();
 				if (element instanceof Server) {
-					Platform.getServerManager().removeServer((Server) element);
+					try {
+						Platform.getServerManager().removeServer((Server) element);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					// TODO manag ethe other delete by updating the Database.
 				}

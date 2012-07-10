@@ -16,7 +16,8 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> {
 	private String userName;
 	private String password;
 	private ServerStatus serverStatus;
-
+	private MongoRuntime runtime;
+	
 	public Server(String name, String host, Integer port) {
 		setName(name);
 		setHost(host);
@@ -120,4 +121,11 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> {
 		Platform.getServerLauncherManager().stop(this);
 	}
 
+	public void setRuntime(MongoRuntime runtime) {
+		this.runtime = runtime;
+	}
+	
+	public MongoRuntime getRuntime() {
+		return runtime;
+	}
 }

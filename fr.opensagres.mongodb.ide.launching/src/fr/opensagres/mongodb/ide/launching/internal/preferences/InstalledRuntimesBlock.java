@@ -365,8 +365,8 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 	private void addRuntime() {
 		AddRuntimeDialog dialog = new AddRuntimeDialog(fAddButton.getShell());
 		// dialog.setTitle(Messages.AddRuntimeDialog_Add_Title);
-		if (dialog.open() != Window.OK) {
-			// return;
+		if (dialog.open() == Window.OK) {
+			runtimeAdded(dialog.getRuntime());
 		}
 	}
 

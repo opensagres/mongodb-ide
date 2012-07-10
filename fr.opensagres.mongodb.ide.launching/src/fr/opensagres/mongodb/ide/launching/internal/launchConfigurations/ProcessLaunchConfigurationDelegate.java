@@ -15,12 +15,14 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.osgi.util.NLS;
 
-import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongod.MongodProcess;
+import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
+import fr.opensagres.mongodb.ide.launching.internal.LaunchHelper;
 
 public abstract class ProcessLaunchConfigurationDelegate implements
 		ILaunchConfigurationDelegate {
 
-	private final String mongoProcessName;	
+	private final String mongoProcessName;
+
 	public ProcessLaunchConfigurationDelegate(String mongoProcessName) {
 		this.mongoProcessName = mongoProcessName;
 	}
@@ -136,8 +138,14 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 	protected abstract IProcess createProcess(ILaunch launch, IPath location,
 			Process p, Map processAttributes);
 
-	protected Path getLocation(ILaunchConfiguration configuration) {
+	protected Path getLocation(ILaunchConfiguration configuration)
+			throws CoreException {
 		return new Path("D:\\MongoDB\\mongodb-win32-i386-2.0.2\\bin\\"
 				+ mongoProcessName);
+	}
+
+	protected MongoRuntime getRuntime(ILaunchConfiguration configuration)
+			throws CoreException {
+		return LaunchHelper.getRuntime(configuration);
 	}
 }

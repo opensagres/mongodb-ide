@@ -4,11 +4,11 @@ import java.util.List;
 
 import fr.opensagres.mongodb.ide.core.model.Server;
 
-public interface IServerManager {
+public interface IServerManager extends ISettingsManager{
 
-	void addServer(Server server);
+	void addServer(Server server) throws Exception;
 
-	void removeServer(Server server);
+	void removeServer(Server server) throws Exception;
 
 	List<Server> getServers();
 
@@ -17,5 +17,7 @@ public interface IServerManager {
 	void removeListener(IServerListener listener);
 
 	void dispose();
+
+	Server findServer(String serverId);
 
 }

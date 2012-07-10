@@ -33,6 +33,17 @@ public class Messages extends NLS {
 	public static String AddRuntimeDialog_installDir;
 	public static String AddRuntimeDialog_selectInstallDir;
 
+	
+	// MongodLaunchConfigurationTab
+	public static String MongodLaunchConfigurationTab_serverLaunchDescription;
+	public static String MongodLaunchConfigurationTab_serverLaunchServer;
+
+	public static String MongodLaunchConfigurationTab_serverLaunchHost;
+
+	public static String MongodLaunchConfigurationTab_serverLaunchRuntime;
+
+	public static String MongodLaunchConfigurationTab_errorInvalidServer;
+
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -20,6 +20,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import fr.opensagres.mongodb.ide.core.IMongoRuntimeManager;
+import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.launching.internal.Activator;
 import fr.opensagres.mongodb.ide.launching.internal.Messages;
@@ -81,6 +83,16 @@ public class MongoRuntimePreferencePage extends PreferencePage implements
 
 	@Override
 	public boolean performOk() {
+		try {
+			IMongoRuntimeManager manager = Platform.getMongoRuntimeManager();
+			manager.setRuntimes(runtimesBlock.getRuntimes());
+			return true;
+		} catch (Exception e) {			
+			e.printStackTrace();
+			return false;
+		}
+		
+		
 //		MongoRuntime runtimeType = getCurrentDefaultRuntime();
 //		if (runtimeType == null) {
 //			setErrorMessage("Please select a XPath runtime");
@@ -88,7 +100,6 @@ public class MongoRuntimePreferencePage extends PreferencePage implements
 //		}
 //		runtimesBlock.saveColumnSettings();
 		//MongoRuntimeManager.getDefault().setDefaultRuntime(runtimeType);
-		return true;
 	}
 
 	private void initDefaultInstall() {

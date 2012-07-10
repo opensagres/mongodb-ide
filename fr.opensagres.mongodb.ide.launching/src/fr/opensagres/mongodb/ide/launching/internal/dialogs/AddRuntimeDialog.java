@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.launching.internal.Messages;
 
 public class AddRuntimeDialog extends TitleAreaDialog {
@@ -25,9 +26,15 @@ public class AddRuntimeDialog extends TitleAreaDialog {
 	private Text installDir;
 	private Label installLabel;
 
+	private MongoRuntime runtime;
+
 	public AddRuntimeDialog(Shell parentShell) {
+		this(parentShell, null);
+	}
+
+	public AddRuntimeDialog(Shell parentShell, MongoRuntime runtime) {
 		super(parentShell);
-		// TODO Auto-generated constructor stub
+		this.runtime = runtime;
 	}
 
 	@Override
@@ -42,7 +49,7 @@ public class AddRuntimeDialog extends TitleAreaDialog {
 		layout.numColumns = 2;
 		comp.setLayout(layout);
 		comp.setLayoutData(new GridData(GridData.FILL_BOTH));
- 
+
 		// Name field
 		Label label = new Label(comp, SWT.NONE);
 		label.setText(Messages.AddRuntimeDialog_runtimeName);
@@ -54,7 +61,7 @@ public class AddRuntimeDialog extends TitleAreaDialog {
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		name.setLayoutData(data);
 		name.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) { 
+			public void modifyText(ModifyEvent e) {
 				// runtimeWC.setName(name.getText());
 				validate();
 			}
@@ -103,5 +110,19 @@ public class AddRuntimeDialog extends TitleAreaDialog {
 	protected void validate() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	protected void okPressed() {
+		if(runtime == null) {
+			runtime= new MongoRuntime();
+		}
+		runtime.setName(name.getText());
+		runtime.setPath(installDir.getText());
+		super.okPressed();
+	}
+	
+	public MongoRuntime getRuntime() {
+		return runtime;
 	}
 }

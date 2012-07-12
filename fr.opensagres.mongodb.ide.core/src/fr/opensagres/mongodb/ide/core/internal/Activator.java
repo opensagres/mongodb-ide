@@ -24,8 +24,8 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		Platform.getServerManager().initialize();
 		Platform.getMongoRuntimeManager().initialize();
+		Platform.getServerManager().initialize();
 		// Force the start of the bundle "fr.opensagres.mongodb.ide.launching"
 		// to register the instance of IServerLauncherManager
 		BundleUtils.startBundle("fr.opensagres.mongodb.ide.launching");

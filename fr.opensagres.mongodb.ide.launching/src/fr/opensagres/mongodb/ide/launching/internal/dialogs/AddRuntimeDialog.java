@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import fr.opensagres.mongodb.ide.core.model.InvalidInstallDirException;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.launching.internal.Messages;
 
@@ -114,14 +115,17 @@ public class AddRuntimeDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
-		if(runtime == null) {
-			runtime= new MongoRuntime();
+		if (runtime == null) {
+			try {
+				runtime = new MongoRuntime(name.getText(), installDir.getText());
+			} catch (InvalidInstallDirException e) {
+				e.printStackTrace();
+				return;
+			}
 		}
-		runtime.setName(name.getText());
-		runtime.setPath(installDir.getText());
 		super.okPressed();
 	}
-	
+
 	public MongoRuntime getRuntime() {
 		return runtime;
 	}

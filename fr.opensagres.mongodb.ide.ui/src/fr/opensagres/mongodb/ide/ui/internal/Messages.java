@@ -15,7 +15,8 @@ public class Messages extends NLS {
 	public static String NewServerWizardPage_name_validation_required;
 	public static String NewServerWizardPage_host_validation_required;
 	public static String NewServerWizardPage_port_validation_int;
-
+	public static String NewServerWizardPage_runtime_label;
+	
 	// ****************** NewServerAction ******************
 	public static String NewServerAction_text;
 	public static String NewServerAction_toolTipText;
@@ -27,6 +28,13 @@ public class Messages extends NLS {
 	// ****************** DeleteAction ******************
 	public static String DeleteAction_text;
 	public static String DeleteAction_toolTipText;
+
+	public static String actionStart;
+	public static String actionStartToolTip;	
+	public static String actionStop;
+	public static String actionStopToolTip;
+	public static String actionRestart;	
+	public static String actionRestartToolTip;
 
 	static {
 		// load message values from bundle file

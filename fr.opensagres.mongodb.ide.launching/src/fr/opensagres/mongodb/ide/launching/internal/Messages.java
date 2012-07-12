@@ -35,14 +35,20 @@ public class Messages extends NLS {
 
 	
 	// MongodLaunchConfigurationTab
-	public static String MongodLaunchConfigurationTab_serverLaunchDescription;
-	public static String MongodLaunchConfigurationTab_serverLaunchServer;
-
-	public static String MongodLaunchConfigurationTab_serverLaunchHost;
-
-	public static String MongodLaunchConfigurationTab_serverLaunchRuntime;
-
-	public static String MongodLaunchConfigurationTab_errorInvalidServer;
+	public static String jobStarting;
+	public static String jobStopping;
+	public static String serverLaunchDescription;
+	public static String serverLaunchServer;
+	public static String serverLaunchHost;
+	public static String serverLaunchRuntime;
+	
+	// Error
+	public static String errorServerAlreadyRunning;
+	public static String errorInvalidServer;
+	public static String errorNoServerSelected;
+	public static String errorStartFailed;
+	public static String errorStartTimeout;
+	public static String errorStopFailed;
 
 	static {
 		// load message values from bundle file

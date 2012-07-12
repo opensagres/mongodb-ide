@@ -1,7 +1,10 @@
 package fr.opensagres.mongodb.ide.launching.internal;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationType;
+import org.eclipse.debug.core.ILaunchManager;
 
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
@@ -41,5 +44,10 @@ public class LaunchHelper {
 		if (runtimeId != null)
 			return Platform.getMongoRuntimeManager().findRuntime(runtimeId);
 		return null;
+	}
+
+	public static ILaunchConfigurationType getMongodLaunchConfigurationType() {
+		ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
+		return launchManager.getLaunchConfigurationType("fr.opensagres.mongodb.ide.launching.mongod.launchConfigurationType");
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import org.xml.sax.ContentHandler;
 
-import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.core.model.Server;
 
 public class ServersSettings extends AbstractSettings<Server> {
@@ -21,18 +20,23 @@ public class ServersSettings extends AbstractSettings<Server> {
 	protected ContentHandler createContentHandler(Collection<Server> list) {
 		return new ServersContentHandler(list);
 	}
-	
+
 	@Override
 	protected String getXMLRootElementName() {
-		return "servers";
+		return ServersConstants.SERVERS_ELT;
 	}
-	
+
 	@Override
 	protected void save(Server t, Writer writer) throws IOException {
-		writer.append("<server");
-		super.writeAttr("name", t.getName(), writer);
-		super.writeAttr("host", t.getHost(), writer);
-		super.writeAttr("port", t.getPort(), writer);
+		writer.append("<");
+		writer.append(ServersConstants.SERVER_ELT);
+		super.writeAttr(ServersConstants.ID_ATTR, t.getId(), writer);
+		super.writeAttr(ServersConstants.NAME_ATTR, t.getName(), writer);
+		super.writeAttr(ServersConstants.HOST_ATTR, t.getHost(), writer);
+		super.writeAttr(ServersConstants.PORT_ATTR, t.getPort(), writer);
+		if (t.getRuntime() != null) {
+			super.writeAttr(ServersConstants.RUNTIME_ID_ATTR, t.getRuntime().getId(), writer);
+		}
 		writer.append("/>");
 
 	}

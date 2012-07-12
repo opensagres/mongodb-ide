@@ -6,6 +6,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -14,16 +15,18 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 
-import fr.opensagres.mongodb.ide.core.IServerListener;
+import fr.opensagres.mongodb.ide.core.IServerLifecycleListener;
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.ui.actions.DeleteAction;
 import fr.opensagres.mongodb.ide.ui.actions.NewServerAction;
 import fr.opensagres.mongodb.ide.ui.actions.RefreshAction;
+import fr.opensagres.mongodb.ide.ui.actions.server.StartServerAction;
+import fr.opensagres.mongodb.ide.ui.actions.server.StopServerAction;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoContentProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoLabelProvider;
 
-public class ServerExplorer extends ViewPart implements IServerListener {
+public class ServerExplorer extends ViewPart implements IServerLifecycleListener {
 
 	public static final String ID = "fr.opensagres.mongodb.ide.ui.views.ServerExplorer";
 
@@ -31,6 +34,8 @@ public class ServerExplorer extends ViewPart implements IServerListener {
 	private Action newServerAction;
 	private DeleteAction deleteAction;	
 	private Action refreshAction;
+	private Action startServerAction;
+	private Action stopServerAction;
 
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -38,20 +43,22 @@ public class ServerExplorer extends ViewPart implements IServerListener {
 		viewer.setLabelProvider(MongoLabelProvider.getInstance());
 		viewer.setInput(Platform.getServerManager());
 
-		createActions();
+		createActions(viewer);
 		hookContextMenu();
 		contributeToActionBars();
-		Platform.getServerManager().addListener(this);
+		Platform.getServerManager().addServerLifecycleListener(this);
 	}
 
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
 
-	private void createActions() {
+	private void createActions(ISelectionProvider provider) {
 		newServerAction = new NewServerAction();
 		deleteAction = new DeleteAction(viewer);
 		refreshAction = new RefreshAction(viewer);
+		startServerAction = new StartServerAction(getSite().getShell(), provider);
+		stopServerAction = new StopServerAction(getSite().getShell(), provider);
 	}
 
 	private void contributeToActionBars() {
@@ -71,6 +78,8 @@ public class ServerExplorer extends ViewPart implements IServerListener {
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(startServerAction);
+		manager.add(stopServerAction);
 		manager.add(deleteAction);
 		manager.add(refreshAction);
 		manager.add(newServerAction);
@@ -99,7 +108,7 @@ public class ServerExplorer extends ViewPart implements IServerListener {
 	@Override
 	public void dispose() {
 		super.dispose();
-		Platform.getServerManager().removeListener(this);
+		Platform.getServerManager().removeServerLifecycleListener(this);
 	}
 	
 	public void serverAdded(Server server) {
@@ -108,5 +117,9 @@ public class ServerExplorer extends ViewPart implements IServerListener {
 	
 	public void serverRemoved(Server server) {
 		viewer.remove(server);
+	}
+	
+	public void serverChanged(Server server) {
+		
 	}
 }

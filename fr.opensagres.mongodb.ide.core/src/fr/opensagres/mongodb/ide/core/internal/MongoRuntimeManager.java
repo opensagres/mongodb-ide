@@ -9,6 +9,7 @@ import fr.opensagres.mongodb.ide.core.IRuntimeListener;
 import fr.opensagres.mongodb.ide.core.internal.settings.RuntimesSettings;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 
 public class MongoRuntimeManager extends AbstractManager<MongoRuntime>
 		implements IMongoRuntimeManager {
@@ -67,8 +68,11 @@ public class MongoRuntimeManager extends AbstractManager<MongoRuntime>
 	}
 
 	public MongoRuntime findRuntime(String runtimeId) {
+		if (StringUtils.isEmpty(runtimeId)) {
+			return null;
+		}
 		for (MongoRuntime runtime : this) {
-			if (runtimeId.equals(runtime.getName())) {
+			if (runtimeId.equals(runtime.getId())) {
 				return runtime;
 			}
 		}

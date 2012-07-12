@@ -19,7 +19,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import fr.opensagres.mongodb.ide.core.Platform;
+import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.model.ServerState;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 import fr.opensagres.mongodb.ide.launching.internal.ImageResources;
 import fr.opensagres.mongodb.ide.launching.internal.LaunchHelper;
 import fr.opensagres.mongodb.ide.launching.internal.Messages;
@@ -30,8 +33,6 @@ public class MongodLaunchConfigurationTab extends
 	// flag to be used to decide whether to enable combo in launch config dialog
 	// after the user requests a launch, they cannot change it
 	private static final String READ_ONLY = "read-only";
-
-	private String[] serverTypeIds;
 
 	private Combo serverCombo;
 
@@ -62,20 +63,18 @@ public class MongodLaunchConfigurationTab extends
 		layout.numColumns = 2;
 		composite.setLayout(layout);
 
-		// GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		// data.widthHint = 200;
-		// composite.setLayoutData(data);
-
+		// Description label
 		Label label = new Label(composite, SWT.WRAP);
-		label.setText(Messages.MongodLaunchConfigurationTab_serverLaunchDescription);
+		label.setText(Messages.serverLaunchDescription);
 		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		data.horizontalSpan = 2;
 		data.grabExcessHorizontalSpace = false;
 		data.widthHint = 300;
 		label.setLayoutData(data);
 
+		// Server combo
 		label = new Label(composite, SWT.NONE);
-		label.setText(Messages.MongodLaunchConfigurationTab_serverLaunchServer);
+		label.setText(Messages.serverLaunchServer);
 		serverCombo = new Combo(composite, SWT.SINGLE | SWT.BORDER
 				| SWT.READ_ONLY);
 		serverCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -94,13 +93,15 @@ public class MongodLaunchConfigurationTab extends
 		// .setHelp(serverCombo,
 		// ContextIds.LAUNCH_CONFIGURATION_SERVER_COMBO);
 
+		// Runtime label
 		label = new Label(composite, SWT.NONE);
-		label.setText(Messages.MongodLaunchConfigurationTab_serverLaunchRuntime);
+		label.setText(Messages.serverLaunchRuntime);
 		runtimeLabel = new Label(composite, SWT.NONE);
 		runtimeLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+		// Host label
 		label = new Label(composite, SWT.NONE);
-		label.setText(Messages.MongodLaunchConfigurationTab_serverLaunchHost);
+		label.setText(Messages.serverLaunchHost);
 		hostname = new Label(composite, SWT.NONE);
 		hostname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -109,11 +110,10 @@ public class MongodLaunchConfigurationTab extends
 		servers = new ArrayList<Server>();
 		if (servers2 != null) {
 			for (Server server2 : servers2) {
-				// if (server2.getServerType() != null
-				// && isSupportedServer(server2.getServerType().getId())) {
-				serverCombo.add(server2.getName());
-				servers.add(server2);
-				// }
+				if (server2.getRuntime() != null) {
+					serverCombo.add(server2.getName());
+					servers.add(server2);
+				}
 			}
 		}
 
@@ -129,24 +129,6 @@ public class MongodLaunchConfigurationTab extends
 		setControl(composite);
 	}
 
-	private boolean isSupportedServer(String serverTypeId) {
-		if (serverTypeIds == null)
-			return true;
-		int size = serverTypeIds.length;
-		for (int i = 0; i < size; i++) {
-			if (matches(serverTypeId, serverTypeIds[i]))
-				return true;
-		}
-		return false;
-	}
-
-	private static boolean matches(String a, String b) {
-		if (a == null || b == null || "*".equals(a) || "*".equals(b)
-				|| a.startsWith(b) || b.startsWith(a))
-			return true;
-		return false;
-	}
-
 	/**
 	 * Called when a server is selected. This method should not be called
 	 * directly.
@@ -156,34 +138,41 @@ public class MongodLaunchConfigurationTab extends
 			server = null;
 		else
 			server = servers.get(serverCombo.getSelectionIndex());
-//		IRuntime runtime = null;
-//		if (server != null) {
-//			runtime = server.getRuntime();
-//			hostname.setText(server.getHost());
-//		} else
-//			hostname.setText("");
-//
-//		// check if "runtime" property is true or false
-//		if (runtime != null && server != null && server.getServerType() != null
-//				&& server.getServerType().hasRuntime())
-//			runtimeLabel.setText(runtime.getName());
-//		else
-//			runtimeLabel.setText("");
-//
-//		try {
-//			if (wc != null)
-//				((Server) server).setupLaunchConfiguration(wc,
-//						new NullProgressMonitor());
-//		} catch (Exception e) {
-//			// ignore
-//		}
-//
-//		if (server == null)
-//			setErrorMessage(Messages.errorNoServerSelected);
-//		else if (server.getServerState() != IServer.STATE_STOPPED)
-//			setErrorMessage(Messages.errorServerAlreadyRunning);
-//		else
-//			setErrorMessage(null);
+		MongoRuntime runtime = null;
+		if (server != null) {
+			runtime = server.getRuntime();
+			hostname.setText(server.getHost());
+		} else
+			hostname.setText("");
+
+		if (runtime != null) {
+			runtimeLabel.setText(runtime.getName());
+		} else {
+			runtimeLabel.setText("");
+		}
+		//
+		// // check if "runtime" property is true or false
+		// if (runtime != null && server != null && server.getServerType() !=
+		// null
+		// && server.getServerType().hasRuntime())
+		// runtimeLabel.setText(runtime.getName());
+		// else
+		// runtimeLabel.setText("");
+		//
+		// try {
+		// if (wc != null)
+		// ((Server) server).setupLaunchConfiguration(wc,
+		// new NullProgressMonitor());
+		// } catch (Exception e) {
+		// // ignore
+		// }
+		//
+		if (server == null)
+			setErrorMessage(Messages.errorNoServerSelected);
+		else if (server.getServerState() != ServerState.Stopped)
+			setErrorMessage(Messages.errorServerAlreadyRunning);
+		else
+			setErrorMessage(null);
 
 		updateLaunchConfigurationDialog();
 	}
@@ -201,8 +190,8 @@ public class MongodLaunchConfigurationTab extends
 
 		if (servers != null) {
 			server = servers.get(serverCombo.getSelectionIndex());
-			//if (server != null)
-			//	((Server) server).setupLaunchConfiguration(configuration, null);
+			// if (server != null)
+			// ((Server) server).setupLaunchConfiguration(configuration, null);
 		}
 		wc = configuration;
 	}
@@ -221,13 +210,13 @@ public class MongodLaunchConfigurationTab extends
 			// if (configuration instanceof ILaunchConfigurationWorkingCopy)
 			// wc = (ILaunchConfigurationWorkingCopy)configuration;
 
-			String serverId = configuration.getAttribute(LaunchHelper.ATTR_SERVER_ID,
-					"");
+			String serverId = configuration.getAttribute(
+					LaunchHelper.ATTR_SERVER_ID, "");
 			if (serverId != null && !serverId.equals("")) {
 				server = Platform.getServerManager().findServer(serverId);
 
 				if (server == null) { // server no longer exists
-					setErrorMessage(Messages.MongodLaunchConfigurationTab_errorInvalidServer);
+					setErrorMessage(Messages.errorInvalidServer);
 					// serverCombo.clearSelection(); // appears to be
 					// broken...doesn't work with read only?
 					serverCombo.setEnabled(false);
@@ -235,8 +224,8 @@ public class MongodLaunchConfigurationTab extends
 				}
 
 				serverCombo.setText(server.getName());
-//				if (server.getServerState() != IServer.STATE_STOPPED)
-//					setErrorMessage(Messages.errorServerAlreadyRunning);
+				if (server.getServerState() != ServerState.Stopped)
+					setErrorMessage(Messages.errorServerAlreadyRunning);
 			} else {
 				if (serverCombo.getItemCount() > 0)
 					serverCombo.select(0);
@@ -256,29 +245,31 @@ public class MongodLaunchConfigurationTab extends
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#performApply(ILaunchConfigurationWorkingCopy)
 	 */
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-//		if (server != null)
-//			configuration.setAttribute(Server.ATTR_SERVER_ID, server.getId());
-//		else
-//			configuration.setAttribute(Server.ATTR_SERVER_ID, (String) null);
-//		wc = configuration;
+		if (server != null)
+			configuration.setAttribute(LaunchHelper.ATTR_SERVER_ID,
+					server.getId());
+		else
+			configuration.setAttribute(LaunchHelper.ATTR_SERVER_ID,
+					(String) null);
+		wc = configuration;
 	}
 
-	/**
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#isValid(ILaunchConfiguration)
-	 */
+	@Override
 	public boolean isValid(ILaunchConfiguration launchConfig) {
-//		try {
-//			String id = launchConfig.getAttribute(Server.ATTR_SERVER_ID, "");
-//			if (id != null && !id.equals("")) {
-//				IServer server2 = ServerCore.findServer(id);
-//				if (server2 == null)
-//					return false;
-//				if (server2.getServerState() == IServer.STATE_STOPPED)
-//					return true;
-//			}
-//		} catch (CoreException e) {
-//			// ignore
-//		}
+		try {
+			String serverId = launchConfig.getAttribute(
+					LaunchHelper.ATTR_SERVER_ID, "");
+			if (StringUtils.isNotEmpty(serverId)) {
+				Server server2 = Platform.getServerManager().findServer(
+						serverId);
+				if (server2 == null)
+					return false;
+				if (server2.getServerState() == ServerState.Stopped)
+					return true;
+			}
+		} catch (CoreException e) {
+			// ignore
+		}
 		return false;
 	}
 

@@ -12,9 +12,9 @@ public interface IServerManager extends ISettingsManager{
 
 	List<Server> getServers();
 
-	void addListener(IServerListener listener);
+	void addServerLifecycleListener(IServerLifecycleListener listener);
 
-	void removeListener(IServerListener listener);
+	void removeServerLifecycleListener(IServerLifecycleListener listener);
 
 	void dispose();
 

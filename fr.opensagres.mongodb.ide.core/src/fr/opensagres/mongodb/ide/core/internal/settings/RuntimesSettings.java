@@ -20,17 +20,19 @@ public class RuntimesSettings extends AbstractSettings<MongoRuntime> {
 	protected ContentHandler createContentHandler(Collection<MongoRuntime> list) {
 		return new RuntimesContentHandler(list);
 	}
-	
+
 	@Override
 	protected String getXMLRootElementName() {
-		return "runtimes";
+		return RuntimesConstants.RUNTIMES_ELT;
 	}
-	
+
 	@Override
 	protected void save(MongoRuntime t, Writer writer) throws IOException {
-		writer.append("<runtime");
-		super.writeAttr("name", t.getName(), writer);
-		super.writeAttr("path", t.getPath(), writer);
+		writer.append("<");
+		writer.append(RuntimesConstants.RUNTIME_ELT);
+		super.writeAttr(RuntimesConstants.ID_ATTR, t.getId(), writer);
+		super.writeAttr(RuntimesConstants.NAME_ATTR, t.getName(), writer);
+		super.writeAttr(RuntimesConstants.PATH_ATTR, t.getInstallDir(), writer);
 		writer.append("/>");
 
 	}

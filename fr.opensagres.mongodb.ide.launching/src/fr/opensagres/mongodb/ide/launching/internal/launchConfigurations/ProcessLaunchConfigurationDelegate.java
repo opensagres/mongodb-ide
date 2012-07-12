@@ -7,7 +7,9 @@ import java.util.Map;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -16,15 +18,16 @@ import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.osgi.util.NLS;
 
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
+import fr.opensagres.mongodb.ide.launching.internal.Activator;
 import fr.opensagres.mongodb.ide.launching.internal.LaunchHelper;
 
 public abstract class ProcessLaunchConfigurationDelegate implements
 		ILaunchConfigurationDelegate {
 
-	private final String mongoProcessName;
+	private final MongoProcessType processType;
 
-	public ProcessLaunchConfigurationDelegate(String mongoProcessName) {
-		this.mongoProcessName = mongoProcessName;
+	public ProcessLaunchConfigurationDelegate(MongoProcessType processType) {
+		this.processType = processType;
 	}
 
 	public void launch(ILaunchConfiguration configuration, String mode,
@@ -32,15 +35,22 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		if (monitor.isCanceled()) {
 			return;
 		}
+		onStart(configuration);
+		MongoRuntime runtime = getRuntime(configuration);
+		if (runtime == null) {
+			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+					"Runtime is missing");
+			throw new CoreException(status);
+		}
 		// resolve location
-		IPath location = getLocation(configuration);
+		IPath location = getLocation(configuration, runtime);
 
 		if (monitor.isCanceled()) {
 			return;
 		}
 
 		// resolve arguments
-		String[] arguments = {};// ExternalToolsCoreUtil.getArguments(configuration);
+		String[] arguments = getArguments(configuration, runtime);
 
 		if (monitor.isCanceled()) {
 			return;
@@ -98,7 +108,9 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		}
 		// process.setAttribute(IProcess.ATTR_CMDLINE,
 		// generateCommandLine(cmdLine));
-
+		onEnd(configuration, process);
+		
+		
 		// while (!process.isTerminated()) {
 		// try {
 		// if (monitor.isCanceled()) {
@@ -135,13 +147,31 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		// }
 	}
 
+	protected void onStart(ILaunchConfiguration configuration) throws CoreException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void onEnd(ILaunchConfiguration configuration, IProcess newProcess) throws CoreException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected abstract String[] getArguments(
+			ILaunchConfiguration configuration, MongoRuntime runtime)
+			throws CoreException;
+
 	protected abstract IProcess createProcess(ILaunch launch, IPath location,
 			Process p, Map processAttributes);
 
-	protected Path getLocation(ILaunchConfiguration configuration)
-			throws CoreException {
-		return new Path("D:\\MongoDB\\mongodb-win32-i386-2.0.2\\bin\\"
-				+ mongoProcessName);
+	protected Path getLocation(ILaunchConfiguration configuration,
+			MongoRuntime runtime) throws CoreException {
+		switch (processType) {
+		case mongo:
+			return runtime.getMongoProcessLocation();
+		default:
+			return runtime.getMongodProcessLocation();
+		}
 	}
 
 	protected MongoRuntime getRuntime(ILaunchConfiguration configuration)

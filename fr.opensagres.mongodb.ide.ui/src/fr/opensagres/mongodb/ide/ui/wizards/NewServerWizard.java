@@ -30,6 +30,7 @@ public class NewServerWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		Server server = new Server(page.getName(), page.getHost(),
 				page.getPort());
+		server.setRuntime(page.getRuntime());
 		try {
 			Platform.getServerManager().addServer(server);
 		} catch (Exception e) {

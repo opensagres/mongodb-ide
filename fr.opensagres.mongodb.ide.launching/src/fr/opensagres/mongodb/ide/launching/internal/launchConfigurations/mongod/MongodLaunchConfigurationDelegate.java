@@ -4,21 +4,52 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.debug.core.DebugEvent;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.IDebugEventSetListener;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.IProcess;
 
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.model.ServerState;
 import fr.opensagres.mongodb.ide.launching.internal.LaunchHelper;
+import fr.opensagres.mongodb.ide.launching.internal.ServerLauncherManager;
+import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.MongoProcessType;
 import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.ProcessLaunchConfigurationDelegate;
 
 public class MongodLaunchConfigurationDelegate extends
 		ProcessLaunchConfigurationDelegate {
 
 	public MongodLaunchConfigurationDelegate() {
-		super("mongod");
+		super(MongoProcessType.mongod);
+	}
+	
+	@Override
+	protected void onStart(ILaunchConfiguration configuration) throws CoreException {
+		Server server = LaunchHelper.getServer(configuration);
+		server.setServerState(ServerState.Starting);
+	}
+		
+	@Override
+	protected void onEnd(ILaunchConfiguration configuration, IProcess newProcess) throws CoreException {		
+		Server server = LaunchHelper.getServer(configuration);
+		addProcessListener(server, newProcess);
+		server.setServerState(ServerState.Started);		
+	}
+	
+	
+	@Override
+	protected String[] getArguments(ILaunchConfiguration configuration,
+			MongoRuntime runtime) throws CoreException {
+		Server server = LaunchHelper.getServer(configuration);
+		Integer port = server.getPort();
+		if (port != null) {
+			return new String[] { "-port", port.toString() };
+		}
+		return null;
 	}
 
 	@Override
@@ -39,6 +70,26 @@ public class MongodLaunchConfigurationDelegate extends
 			}
 		}
 		return super.getRuntime(configuration);
+	}
+	
+	private void addProcessListener(final Server server, final IProcess newProcess) {
+		IDebugEventSetListener processListener = server.getData(IDebugEventSetListener.class);
+		if (processListener != null || newProcess == null)
+			return;
+		
+		processListener = new IDebugEventSetListener() {
+			public void handleDebugEvents(DebugEvent[] events) {
+				if (events != null) {
+					int size = events.length;
+					for (int i = 0; i < size; i++) {
+						if (newProcess != null && newProcess.equals(events[i].getSource()) && events[i].getKind() == DebugEvent.TERMINATE) {
+							ServerLauncherManager.stopImpl(server);
+						}
+					}
+				}
+			}
+		};
+		DebugPlugin.getDefault().addDebugEventListener(processListener);
 	}
 
 }

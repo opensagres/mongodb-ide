@@ -18,6 +18,9 @@ public class ImageResources {
 	 * Set of predefined Image Descriptors.
 	 */
 	public static final String PATH_OBJ_16 = ICONS_PATH + "obj16/"; //$NON-NLS-1$
+	public static final String PATH_CLCL_16 = ICONS_PATH + "clcl16/"; //$NON-NLS-1$
+	public static final String PATH_DLCL_16 = ICONS_PATH + "dlcl16/"; //$NON-NLS-1$
+	public static final String PATH_ELCL_16 = ICONS_PATH + "elcl16/"; //$NON-NLS-1$
 
 	public static final String IMG_SERVER_16 = "server_16";
 	public static final String IMG_SERVER_NEW_16 = "server_new_16";
@@ -27,6 +30,13 @@ public class ImageResources {
 	public static final String IMG_COLLECTION_16 = "collection_16";
 	public static final String IMG_DOCUMENT_16 = "document_16";
 	public static final String IMG_ERROR_16 = "error_16";
+
+	public static final String IMG_ELCL_START = "start_elcl_16";
+	public static final String IMG_CLCL_START = "start_clcl_16";
+	public static final String IMG_DLCL_START = "start_dlcl_16";
+	public static final String IMG_ELCL_STOP = "stop_elcl_16";
+	public static final String IMG_CLCL_STOP = "stop_clcl_16";
+	public static final String IMG_DLCL_STOP = "stop_dlcl_16";
 
 	public static void initialize(ImageRegistry imageRegistry) {
 		// registerImage(imageRegistry, Activator.PLUGIN_ID, MISSING);
@@ -43,6 +53,19 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_DOCUMENT_16, PATH_OBJ_16
 				+ "document.gif");
 		registerImage(imageRegistry, IMG_ERROR_16, PATH_OBJ_16 + "error.gif");
+
+		registerImage(imageRegistry, IMG_ELCL_START, PATH_ELCL_16
+				+ "launch_run.gif");
+		registerImage(imageRegistry, IMG_CLCL_START, PATH_CLCL_16
+				+ "launch_run.gif");
+		registerImage(imageRegistry, IMG_DLCL_START, PATH_DLCL_16
+				+ "launch_run.gif");
+		registerImage(imageRegistry, IMG_ELCL_STOP, PATH_ELCL_16
+				+ "launch_stop.gif");
+		registerImage(imageRegistry, IMG_CLCL_STOP, PATH_CLCL_16
+				+ "launch_stop.gif");
+		registerImage(imageRegistry, IMG_DLCL_STOP, PATH_DLCL_16
+				+ "launch_stop.gif");
 	}
 
 	private static void registerImage(ImageRegistry registry, String key,

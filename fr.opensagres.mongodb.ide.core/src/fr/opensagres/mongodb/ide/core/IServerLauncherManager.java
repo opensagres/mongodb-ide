@@ -6,5 +6,5 @@ public interface IServerLauncherManager {
 
 	void start(Server server) throws Exception;
 
-	void stop(Server server) throws Exception;
+	void stop(Server server, boolean force) throws Exception;
 }

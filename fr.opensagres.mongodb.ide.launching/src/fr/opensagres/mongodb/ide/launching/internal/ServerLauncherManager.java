@@ -33,6 +33,9 @@ public class ServerLauncherManager implements IServerLauncherManager {
 			'*', '?', '"', '<', '>', '|', '\0', '@', '&' };
 
 	public void start(Server server) throws Exception {
+		// see bug 250999 - debug UI must be loaded before looking for debug consoles
+		org.eclipse.debug.ui.console.IConsole.class.toString();
+		
 		StartJob startJob = new StartJob(server);
 		startJob.schedule();
 		// startJob.join();
@@ -40,12 +43,11 @@ public class ServerLauncherManager implements IServerLauncherManager {
 	}
 
 	public void stop(Server server, boolean force) throws Exception {
-		/*
-		 * StopJob job = new StopJob(force); job.schedule();
-		 */
 		if (server.getServerState() == ServerState.Stopped)
 			return;
-
+		// see bug 250999 - debug UI must be loaded before looking for debug consoles
+		org.eclipse.debug.ui.console.IConsole.class.toString();
+		
 		StopJob job = new StopJob(server, force);
 		job.schedule();
 	}

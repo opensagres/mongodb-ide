@@ -40,7 +40,7 @@ public class ImageResources {
 
 	public static void initialize(ImageRegistry imageRegistry) {
 		// registerImage(imageRegistry, Activator.PLUGIN_ID, MISSING);
-		registerImage(imageRegistry, IMG_SERVER_16, PATH_OBJ_16 + "server.png");
+		registerImage(imageRegistry, IMG_SERVER_16, PATH_OBJ_16 + "server.gif");
 		registerImage(imageRegistry, IMG_SERVER_NEW_16, PATH_OBJ_16
 				+ "server-new.png");
 		registerImage(imageRegistry, IMG_REFRESH_16, PATH_OBJ_16

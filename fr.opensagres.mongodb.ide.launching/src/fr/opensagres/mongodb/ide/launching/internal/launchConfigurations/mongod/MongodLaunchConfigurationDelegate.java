@@ -26,21 +26,30 @@ public class MongodLaunchConfigurationDelegate extends
 	public MongodLaunchConfigurationDelegate() {
 		super(MongoProcessType.mongod);
 	}
-	
+
 	@Override
-	protected void onStart(ILaunchConfiguration configuration) throws CoreException {
+	protected void onStart(ILaunchConfiguration configuration)
+			throws CoreException {
 		Server server = LaunchHelper.getServer(configuration);
 		server.setServerState(ServerState.Starting);
-	}
 		
-	@Override
-	protected void onEnd(ILaunchConfiguration configuration, IProcess newProcess) throws CoreException {		
-		Server server = LaunchHelper.getServer(configuration);
-		addProcessListener(server, newProcess);
-		server.setServerState(ServerState.Started);		
+		PingThread ping = new PingThread(server, -1);
+		server.setData(ping);
+		
 	}
-	
-	
+
+	@Override
+	protected void onEnd(ILaunchConfiguration configuration,
+			IProcess newProcess, boolean error) throws CoreException {
+		Server server = LaunchHelper.getServer(configuration);
+		if (!error) {
+			addProcessListener(server, newProcess);
+			//server.setServerState(ServerState.Started);
+		} else {
+			ServerLauncherManager.terminate(server);
+		}
+	}
+
 	@Override
 	protected String[] getArguments(ILaunchConfiguration configuration,
 			MongoRuntime runtime) throws CoreException {
@@ -71,18 +80,22 @@ public class MongodLaunchConfigurationDelegate extends
 		}
 		return super.getRuntime(configuration);
 	}
-	
-	private void addProcessListener(final Server server, final IProcess newProcess) {
-		IDebugEventSetListener processListener = server.getData(IDebugEventSetListener.class);
+
+	private void addProcessListener(final Server server,
+			final IProcess newProcess) {
+		IDebugEventSetListener processListener = server
+				.getData(IDebugEventSetListener.class);
 		if (processListener != null || newProcess == null)
 			return;
-		
+
 		processListener = new IDebugEventSetListener() {
 			public void handleDebugEvents(DebugEvent[] events) {
 				if (events != null) {
 					int size = events.length;
 					for (int i = 0; i < size; i++) {
-						if (newProcess != null && newProcess.equals(events[i].getSource()) && events[i].getKind() == DebugEvent.TERMINATE) {
+						if (newProcess != null
+								&& newProcess.equals(events[i].getSource())
+								&& events[i].getKind() == DebugEvent.TERMINATE) {
 							ServerLauncherManager.stopImpl(server);
 						}
 					}

@@ -108,7 +108,7 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		}
 		// process.setAttribute(IProcess.ATTR_CMDLINE,
 		// generateCommandLine(cmdLine));
-		onEnd(configuration, process);
+		onEnd(configuration, process, false);
 		
 		
 		// while (!process.isTerminated()) {
@@ -152,7 +152,7 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		
 	}
 
-	protected void onEnd(ILaunchConfiguration configuration, IProcess newProcess) throws CoreException {
+	protected void onEnd(ILaunchConfiguration configuration, IProcess newProcess, boolean error) throws CoreException {
 		// TODO Auto-generated method stub
 		
 	}

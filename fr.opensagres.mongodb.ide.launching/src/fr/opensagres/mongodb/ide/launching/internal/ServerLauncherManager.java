@@ -26,6 +26,7 @@ import fr.opensagres.mongodb.ide.core.ServerEvent;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.ServerState;
 import fr.opensagres.mongodb.ide.core.utils.MongoHelper;
+import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongod.PingThread;
 
 public class ServerLauncherManager implements IServerLauncherManager {
 
@@ -33,9 +34,10 @@ public class ServerLauncherManager implements IServerLauncherManager {
 			'*', '?', '"', '<', '>', '|', '\0', '@', '&' };
 
 	public void start(Server server) throws Exception {
-		// see bug 250999 - debug UI must be loaded before looking for debug consoles
+		// see bug 250999 - debug UI must be loaded before looking for debug
+		// consoles
 		org.eclipse.debug.ui.console.IConsole.class.toString();
-		
+
 		StartJob startJob = new StartJob(server);
 		startJob.schedule();
 		// startJob.join();
@@ -45,9 +47,10 @@ public class ServerLauncherManager implements IServerLauncherManager {
 	public void stop(Server server, boolean force) throws Exception {
 		if (server.getServerState() == ServerState.Stopped)
 			return;
-		// see bug 250999 - debug UI must be loaded before looking for debug consoles
+		// see bug 250999 - debug UI must be loaded before looking for debug
+		// consoles
 		org.eclipse.debug.ui.console.IConsole.class.toString();
-		
+
 		StopJob job = new StopJob(server, force);
 		job.schedule();
 	}
@@ -537,8 +540,8 @@ public class ServerLauncherManager implements IServerLauncherManager {
 		 * null); else timer.alreadyDone = true;
 		 */
 		if (!monitor.isCanceled() && s.getServerState() == ServerState.Started)
-			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-					NLS.bind(Messages.errorStopFailed, s.getName()), null);
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, NLS.bind(
+					Messages.errorStopFailed, s.getName()), null);
 
 		return Status.OK_STATUS;
 	}
@@ -556,23 +559,19 @@ public class ServerLauncherManager implements IServerLauncherManager {
 			stop3(server, force);
 		} catch (RuntimeException e) {
 			if (Trace.SEVERE) {
-				Trace.trace(
-						Trace.STRING_SEVERE,
-						"Error calling delegate stop() "
-								+ server.toString(), e);
+				Trace.trace(Trace.STRING_SEVERE,
+						"Error calling delegate stop() " + server.toString(), e);
 			}
 			throw e;
 		} catch (Throwable t) {
 			if (Trace.SEVERE) {
-				Trace.trace(
-						Trace.STRING_SEVERE,
-						"Error calling delegate stop() "
-								+ server.toString(), t);
+				Trace.trace(Trace.STRING_SEVERE,
+						"Error calling delegate stop() " + server.toString(), t);
 			}
 			throw new RuntimeException(t);
 		}
 	}
-	
+
 	public void stop3(Server server, boolean force) {
 		if (force) {
 			terminate(server);
@@ -580,58 +579,63 @@ public class ServerLauncherManager implements IServerLauncherManager {
 		}
 		ServerState state = server.getServerState();
 		// If stopped or stopping, no need to run stop command again
-		if (state == ServerState.Stopped ||  state == ServerState.Stopping)
+		if (state == ServerState.Stopped || state == ServerState.Stopping)
 			return;
 		else if (state == ServerState.Starting) {
 			terminate(server);
 			return;
 		}
-		if (state != ServerState.Stopped )
+		if (state != ServerState.Stopped)
 			server.setServerState(ServerState.Stopping);
-		
+
 		try {
 			MongoHelper.stopMongoServerAndCloseIt(server.getMongo(),
-					server.getUserName(), server.getPassword());			
+					server.getUserName(), server.getPassword());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MongoException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			server.setServerState(ServerState.Stopped);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Terminates the server.
 	 */
 	public static void terminate(Server server) {
 		if (server.getServerState() == ServerState.Stopped)
 			return;
-		
+
 		try {
 			server.setServerState(ServerState.Stopping);
-//			if (Trace.isTraceEnabled())
-//				Trace.trace(Trace.FINER, "Killing the Tomcat process");
+			// if (Trace.isTraceEnabled())
+			// Trace.trace(Trace.FINER, "Killing the Tomcat process");
 			ILaunch launch = server.getData(ILaunch.class);
 			if (launch != null) {
 				launch.terminate();
 				stopImpl(server);
 			}
 		} catch (Exception e) {
-			//Trace.trace(Trace.SEVERE, "Error killing the process", e);
+			// Trace.trace(Trace.SEVERE, "Error killing the process", e);
 		}
 	}
-	
+
 	public static void stopImpl(Server server) {
-		IDebugEventSetListener processListener = server.getData(IDebugEventSetListener.class);
+		PingThread ping = server.getData(PingThread.class);
+		if (ping != null) {
+			ping.stop();
+			ping = null;
+		}
+		IDebugEventSetListener processListener = server
+				.getData(IDebugEventSetListener.class);
 		if (processListener != null) {
 			DebugPlugin.getDefault().removeDebugEventListener(processListener);
 			processListener = null;
 		}
 		server.setServerState(ServerState.Stopped);
 	}
-	
+
 }

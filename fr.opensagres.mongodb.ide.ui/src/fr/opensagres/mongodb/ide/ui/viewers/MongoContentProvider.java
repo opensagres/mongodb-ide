@@ -4,6 +4,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import fr.opensagres.mongodb.ide.core.IServerManager;
+import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.TreeContainerNode;
 import fr.opensagres.mongodb.ide.core.model.TreeSimpleNode;
 
@@ -41,6 +42,9 @@ public class MongoContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
+		if (element instanceof Server) {
+			return ((Server) element).isConnected();
+		}
 		return element instanceof TreeContainerNode;
 	}
 

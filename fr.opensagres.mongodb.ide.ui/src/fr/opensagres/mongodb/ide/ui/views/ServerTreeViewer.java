@@ -18,6 +18,7 @@ import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.model.ServerState;
 
 /**
  * Tree view showing servers and their associations.
@@ -66,7 +67,7 @@ public class ServerTreeViewer extends TreeViewer {
 				Server server = event.getServer();
 				if ((eventKind & ServerEvent.SERVER_CHANGE) != 0) {
 					// server change event
-					refreshServer(server);
+					refreshServer(server);					
 				}
 			}
 		};
@@ -108,6 +109,9 @@ public class ServerTreeViewer extends TreeViewer {
 
 			private void refresh(Server server) {
 				ServerTreeViewer.this.refresh(server);
+				if (ServerState.Started.equals(server.getServerState())) {
+					ServerTreeViewer.this.expandToLevel(server, 1);
+				}
 			}
 		});
 	}

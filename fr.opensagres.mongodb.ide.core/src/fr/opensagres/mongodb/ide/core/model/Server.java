@@ -103,11 +103,13 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 
 	@Override
 	protected void doGetChildren() throws Exception {
-		Mongo mongo = getMongo();
-		List<String> names = mongo.getDatabaseNames();
-		for (String name : names) {
-			Database database = new Database(name);
-			super.addNode(database);
+		if (isConnected()) {
+			Mongo mongo = getMongo();
+			List<String> names = mongo.getDatabaseNames();
+			for (String name : names) {
+				Database database = new Database(name);
+				super.addNode(database);
+			}
 		}
 	}
 
@@ -136,10 +138,14 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 
 	public void setServerState(ServerState serverState) {
 		this.serverState = serverState;
+		// remove tree item of the server node
+		clearNodes(true);
+		// fire events
+		fireServerStateChangeEvent();
 		if (serverState == ServerState.Stopped) {
+			// close mongo.
 			disposeMongo();
 		}
-		fireServerStateChangeEvent();
 	}
 
 	public void start() throws Exception {
@@ -282,5 +288,10 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	public int getStopTimeout() {
 		// TODO Auto-generated method stub
 		return 1;
+	}
+
+	public boolean isConnected() {
+		return serverState == ServerState.Started
+				|| serverState == ServerState.Connected;
 	}
 }

@@ -3,6 +3,7 @@ package fr.opensagres.mongodb.ide.ui.viewers;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.TreeSimpleNode;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 
@@ -30,7 +31,15 @@ public class MongoLabelProvider extends LabelProvider {
 		TreeSimpleNode node = (TreeSimpleNode) element;
 		switch (node.getType()) {
 		case Server:
-			return ImageResources.getImage(ImageResources.IMG_SERVER_16);
+			Server server = (Server) element;
+			switch (server.getServerState()) {
+			case Started:
+				return ImageResources.getImage(ImageResources.IMG_SERVER_STARTED_16);
+			case Stopped:
+				return ImageResources.getImage(ImageResources.IMG_SERVER_STOPPED_16);				
+			default:
+				return ImageResources.getImage(ImageResources.IMG_SERVER_16);
+			}
 		case Database:
 			return ImageResources.getImage(ImageResources.IMG_DATABASE_16);
 		case Collection:

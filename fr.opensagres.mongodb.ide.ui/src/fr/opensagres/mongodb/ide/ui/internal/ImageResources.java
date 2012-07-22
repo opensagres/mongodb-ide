@@ -23,6 +23,8 @@ public class ImageResources {
 	public static final String PATH_ELCL_16 = ICONS_PATH + "elcl16/"; //$NON-NLS-1$
 
 	public static final String IMG_SERVER_16 = "server_16";
+	public static final String IMG_SERVER_STARTED_16 = "server_started_16";
+	public static final String IMG_SERVER_STOPPED_16 = "server_stopped_16";
 	public static final String IMG_SERVER_NEW_16 = "server_new_16";
 	public static final String IMG_REFRESH_16 = "refresh_16";
 	public static final String IMG_DELETE_16 = "delete_16";
@@ -41,6 +43,8 @@ public class ImageResources {
 	public static void initialize(ImageRegistry imageRegistry) {
 		// registerImage(imageRegistry, Activator.PLUGIN_ID, MISSING);
 		registerImage(imageRegistry, IMG_SERVER_16, PATH_OBJ_16 + "server.gif");
+		registerImage(imageRegistry, IMG_SERVER_STARTED_16, PATH_OBJ_16 + "server_started.gif");
+		registerImage(imageRegistry, IMG_SERVER_STOPPED_16, PATH_OBJ_16 + "server_stopped.gif");
 		registerImage(imageRegistry, IMG_SERVER_NEW_16, PATH_OBJ_16
 				+ "server-new.png");
 		registerImage(imageRegistry, IMG_REFRESH_16, PATH_OBJ_16

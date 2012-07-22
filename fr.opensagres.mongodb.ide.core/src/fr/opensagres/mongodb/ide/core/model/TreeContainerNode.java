@@ -21,9 +21,16 @@ public abstract class TreeContainerNode<Parent extends TreeContainerNode, T exte
 	}
 
 	public void clearNodes() {
-		children.clear();
+		clearNodes(false);
 	}
 
+	public void clearNodes(boolean updateStatus) {
+		children.clear();
+		if (updateStatus) {
+			this.status = NodeStatus.Stopped;
+		}
+	}
+	
 	public List<T> getChildren() {
 		if (getStatus() != NodeStatus.Started) {
 			clearNodes();

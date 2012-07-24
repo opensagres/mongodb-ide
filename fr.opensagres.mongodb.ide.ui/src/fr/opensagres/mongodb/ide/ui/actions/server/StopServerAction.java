@@ -91,7 +91,7 @@ public class StopServerAction extends AbstractServerAction {
 
 	@Override
 	public boolean accept(Database database) {
-		return database.getParent().hasRuntime();
+		return database.canStopShell();
 	}
 
 	@Override

@@ -100,4 +100,12 @@ public class Database extends TreeContainerNode<Server, Collection> {
 	public void setLaunch(Object launch) {
 		this.launch = launch;
 	}
+
+	public boolean canStartShell() {
+		return getParent().hasRuntime() && launch == null;
+	}
+
+	public boolean canStopShell() {
+		return launch != null;
+	}
 }

@@ -62,16 +62,6 @@ public class StartServerAction extends AbstractServerAction {
 		}
 	}
 
-	@Override
-	public boolean accept(Database database) {
-		return database.getParent().hasRuntime();
-	}
-
-	@Override
-	public void perform(Database database) {
-		database.startShell();
-	}
-
 	/**
 	 * Return true if this server can currently be acted on.
 	 * 
@@ -143,4 +133,15 @@ public class StartServerAction extends AbstractServerAction {
 		super.selectionChanged(sel);
 		updateText(sel);
 	}
+	
+	@Override
+	public boolean accept(Database database) {
+		return database.canStartShell();
+	}
+
+	@Override
+	public void perform(Database database) {
+		database.startShell();
+	}
+
 }

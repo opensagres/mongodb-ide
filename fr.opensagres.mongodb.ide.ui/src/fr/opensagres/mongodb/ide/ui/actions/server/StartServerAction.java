@@ -6,6 +6,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.ServerState;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
@@ -17,9 +18,12 @@ public class StartServerAction extends AbstractServerAction {
 		super(shell, selectionProvider, "start");
 		setToolTipText(Messages.actionStartToolTip);
 		setText(Messages.actionStart);
-		setImageDescriptor(ImageResources.getImageDescriptor(ImageResources.IMG_ELCL_START));
-		setHoverImageDescriptor(ImageResources.getImageDescriptor(ImageResources.IMG_CLCL_START));
-		setDisabledImageDescriptor(ImageResources.getImageDescriptor(ImageResources.IMG_DLCL_START));
+		setImageDescriptor(ImageResources
+				.getImageDescriptor(ImageResources.IMG_ELCL_START));
+		setHoverImageDescriptor(ImageResources
+				.getImageDescriptor(ImageResources.IMG_CLCL_START));
+		setDisabledImageDescriptor(ImageResources
+				.getImageDescriptor(ImageResources.IMG_DLCL_START));
 		// setActionDefinitionId("org.eclipse.wst.server.run");
 		try {
 			selectionChanged((IStructuredSelection) selectionProvider
@@ -58,6 +62,16 @@ public class StartServerAction extends AbstractServerAction {
 		}
 	}
 
+	@Override
+	public boolean accept(Database database) {
+		return database.getParent().hasRuntime();
+	}
+
+	@Override
+	public void perform(Database database) {
+		database.startShell();
+	}
+
 	/**
 	 * Return true if this server can currently be acted on.
 	 * 
@@ -66,16 +80,16 @@ public class StartServerAction extends AbstractServerAction {
 	 *            a server
 	 */
 	public boolean accept(Server server) {
-//		if (server.getServerState() != ServerState.Started) { // start
-//			return server.canStart(launchMode).isOK();
-//		}
-//		// restart
-//		String mode2 = launchMode;
-//		if (mode2 == null)
-//			mode2 = server.getMode();
-//		return server.getServerType() != null
-//				&& UIDecoratorManager.getUIDecorator(server.getServerType())
-//						.canRestart() && server.canRestart(mode2).isOK();
+		// if (server.getServerState() != ServerState.Started) { // start
+		// return server.canStart(launchMode).isOK();
+		// }
+		// // restart
+		// String mode2 = launchMode;
+		// if (mode2 == null)
+		// mode2 = server.getMode();
+		// return server.getServerType() != null
+		// && UIDecoratorManager.getUIDecorator(server.getServerType())
+		// .canRestart() && server.canRestart(mode2).isOK();
 		return true;
 	}
 
@@ -89,7 +103,7 @@ public class StartServerAction extends AbstractServerAction {
 		start(server, shell);
 	}
 
-	public static void start(Server server, final Shell shell) {
+	public void start(Server server, final Shell shell) {
 		if (server.getServerState() != ServerState.Started) {
 			try {
 				server.start();
@@ -97,32 +111,32 @@ public class StartServerAction extends AbstractServerAction {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			if (!ServerUIPlugin.saveEditors())
-//				return;
+			// if (!ServerUIPlugin.saveEditors())
+			// return;
 
 			/*
 			 * final IAdaptable info = new IAdaptable() { public Object
 			 * getAdapter(Class adapter) { if (Shell.class.equals(adapter))
 			 * return shell; return null; } };
 			 */
-//			server.start(launchMode, (IOperationListener) null);
-		} 
-//		else {
-//			if (shell != null && !ServerUIPlugin.promptIfDirty(shell, server))
-//				return;
-//
-//			try {
-//				String launchMode2 = launchMode;
-//				if (launchMode2 == null)
-//					launchMode2 = server.getMode();
-//				server.restart(launchMode2, (IOperationListener) null);
-//			} catch (Exception e) {
-//				if (Trace.SEVERE) {
-//					Trace.trace(Trace.STRING_SEVERE, "Error restarting server",
-//							e);
-//				}
-//			}
-//		}
+			// server.start(launchMode, (IOperationListener) null);
+		}
+		// else {
+		// if (shell != null && !ServerUIPlugin.promptIfDirty(shell, server))
+		// return;
+		//
+		// try {
+		// String launchMode2 = launchMode;
+		// if (launchMode2 == null)
+		// launchMode2 = server.getMode();
+		// server.restart(launchMode2, (IOperationListener) null);
+		// } catch (Exception e) {
+		// if (Trace.SEVERE) {
+		// Trace.trace(Trace.STRING_SEVERE, "Error restarting server",
+		// e);
+		// }
+		// }
+		// }
 	}
 
 	public void selectionChanged(IStructuredSelection sel) {

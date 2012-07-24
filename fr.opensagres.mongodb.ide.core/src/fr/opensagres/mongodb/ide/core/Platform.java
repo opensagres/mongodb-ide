@@ -31,4 +31,8 @@ public class Platform {
 	public static IMongoRuntimeManager getMongoRuntimeManager() {
 		return MONGO_RUNTIME_MANAGER;
 	}
+
+	public static boolean hasServerLauncherManager() {
+		return serverLauncherManager != null;
+	}
 }

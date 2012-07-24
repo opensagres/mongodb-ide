@@ -109,8 +109,7 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		// process.setAttribute(IProcess.ATTR_CMDLINE,
 		// generateCommandLine(cmdLine));
 		onEnd(configuration, process, false);
-		
-		
+
 		// while (!process.isTerminated()) {
 		// try {
 		// if (monitor.isCanceled()) {
@@ -147,14 +146,16 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		// }
 	}
 
-	protected void onStart(ILaunchConfiguration configuration) throws CoreException {
+	protected void onStart(ILaunchConfiguration configuration)
+			throws CoreException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	protected void onEnd(ILaunchConfiguration configuration, IProcess newProcess, boolean error) throws CoreException {
+	protected void onEnd(ILaunchConfiguration configuration,
+			IProcess newProcess, boolean error) throws CoreException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	protected abstract String[] getArguments(
@@ -174,8 +175,6 @@ public abstract class ProcessLaunchConfigurationDelegate implements
 		}
 	}
 
-	protected MongoRuntime getRuntime(ILaunchConfiguration configuration)
-			throws CoreException {
-		return LaunchHelper.getRuntime(configuration);
-	}
+	protected abstract MongoRuntime getRuntime(
+			ILaunchConfiguration configuration) throws CoreException;
 }

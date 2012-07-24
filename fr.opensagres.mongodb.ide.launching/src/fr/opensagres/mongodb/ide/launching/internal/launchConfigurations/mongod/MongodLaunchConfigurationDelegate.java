@@ -32,10 +32,10 @@ public class MongodLaunchConfigurationDelegate extends
 			throws CoreException {
 		Server server = LaunchHelper.getServer(configuration);
 		server.setServerState(ServerState.Starting);
-		
+
 		PingThread ping = new PingThread(server, -1);
 		server.setData(ping);
-		
+
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class MongodLaunchConfigurationDelegate extends
 		Server server = LaunchHelper.getServer(configuration);
 		if (!error) {
 			addProcessListener(server, newProcess);
-			//server.setServerState(ServerState.Started);
+			// server.setServerState(ServerState.Started);
 		} else {
 			ServerLauncherManager.terminate(server);
 		}
@@ -78,7 +78,7 @@ public class MongodLaunchConfigurationDelegate extends
 				return runtime;
 			}
 		}
-		return super.getRuntime(configuration);
+		return null;
 	}
 
 	private void addProcessListener(final Server server,

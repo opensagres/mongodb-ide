@@ -1,17 +1,18 @@
 Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.6.0_30-b12 (Sun Microsystems Inc.)
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
 Bundle-ManifestVersion: 2
-Bundle-Name: Mongodb
-Bundle-SymbolicName: com.mongodb
-Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-ClassPath: .,
- lib/mongo-2.8.0.jar
-Export-Package: com.mongodb,
- com.mongodb.gridfs,
- com.mongodb.io,
- com.mongodb.util,
- org.bson,
- org.bson.io,
- org.bson.types,
- org.bson.util,
- org.bson.util.annotations
+Bundle-Name: MongoDB Java Driver
+Bundle-SymbolicName: org.mongodb.mongo-java-driver
+Bundle-Version: 2.8.0.RELEASE
+Import-Package: javax.management, javax.net, javax.net.ssl
+Export-Package: com.mongodb;version="2.8.0.RELEASE",com.mongodb.io;ver
+ sion="2.8.0.RELEASE",com.mongodb.util;version="2.8.0.RELEASE",com.mon
+ godb.gridfs;version="2.8.0.RELEASE",org.bson;version="2.8.0.RELEASE",
+ org.bson.util;version="2.8.0.RELEASE",org.bson.util.annotations;versi
+ on="2.8.0.RELEASE",org.bson.types;version="2.8.0.RELEASE",org.bson.io
+ ;version="2.8.0.RELEASE"
+Bundle-ClassPath: lib/mongo-2.8.0.jar,
+ .
+

@@ -7,13 +7,16 @@ import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchManager;
 
 import fr.opensagres.mongodb.ide.core.Platform;
-import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 
 public class LaunchHelper {
 
 	public static final String ATTR_SERVER_ID = "MongoServer";
+	public static final String ATTR_DATABASE_ID = "MongoDatabase";
 	public static final String ATTR_RUNTIME_ID = "MongoRuntime";
+	private static ILaunchConfigurationType mongodLaunchConfigurationType;
+	private static ILaunchConfigurationType mongoLaunchConfigurationType;
 
 	/**
 	 * Returns the server associated with the given launch configuration.
@@ -36,18 +39,43 @@ public class LaunchHelper {
 		return null;
 	}
 
-	public static MongoRuntime getRuntime(ILaunchConfiguration configuration)
+	public static Database getDatabase(ILaunchConfiguration configuration)
 			throws CoreException {
-		String runtimeId = configuration.getAttribute(ATTR_RUNTIME_ID,
+		String databaseId = configuration.getAttribute(ATTR_DATABASE_ID,
 				(String) null);
 
-		if (runtimeId != null)
-			return Platform.getMongoRuntimeManager().findRuntime(runtimeId);
+		if (databaseId != null) {
+			String[] ids = Database.getIds(databaseId);
+			String serverId = ids[0];
+			Server server = Platform.getServerManager().findServer(serverId);
+			if (server != null) {
+				String databaseName = ids[1];
+				return server.findDatabase(databaseName);
+			}
+		}
 		return null;
 	}
 
 	public static ILaunchConfigurationType getMongodLaunchConfigurationType() {
-		ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
-		return launchManager.getLaunchConfigurationType("fr.opensagres.mongodb.ide.launching.mongod.launchConfigurationType");
+		if (mongodLaunchConfigurationType != null) {
+			return mongodLaunchConfigurationType;
+		}
+		ILaunchManager launchManager = DebugPlugin.getDefault()
+				.getLaunchManager();
+		mongodLaunchConfigurationType = launchManager
+				.getLaunchConfigurationType("fr.opensagres.mongodb.ide.launching.mongod.launchConfigurationType");
+		return mongodLaunchConfigurationType;
 	}
+
+	public static ILaunchConfigurationType getMongoLaunchConfigurationType() {
+		if (mongoLaunchConfigurationType != null) {
+			return mongoLaunchConfigurationType;
+		}
+		ILaunchManager launchManager = DebugPlugin.getDefault()
+				.getLaunchManager();
+		mongoLaunchConfigurationType = launchManager
+				.getLaunchConfigurationType("fr.opensagres.mongodb.ide.launching.mongo.launchConfigurationType");
+		return mongoLaunchConfigurationType;
+	}
+
 }

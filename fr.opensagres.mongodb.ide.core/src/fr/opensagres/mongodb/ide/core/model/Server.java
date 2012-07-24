@@ -164,6 +164,10 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 		return runtime;
 	}
 
+	public boolean hasRuntime() {
+		return runtime != null;
+	}
+
 	public <T> T getData(Class<T> key) {
 		return (T) dataCache.get(key);
 	}
@@ -293,5 +297,17 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	public boolean isConnected() {
 		return serverState == ServerState.Started
 				|| serverState == ServerState.Connected;
+	}
+
+	public Database findDatabase(String databaseName) {
+		List<TreeSimpleNode> children = getChildren();
+		for (TreeSimpleNode child : children) {
+			if (NodeType.Database.equals(child.getType())) {
+				if (databaseName.equals(((Database) child).getName())) {
+					return (Database) child;
+				}
+			}
+		}
+		return null;
 	}
 }

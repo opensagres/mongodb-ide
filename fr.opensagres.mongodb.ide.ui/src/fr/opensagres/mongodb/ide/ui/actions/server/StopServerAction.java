@@ -16,6 +16,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
@@ -86,5 +87,15 @@ public class StopServerAction extends AbstractServerAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public boolean accept(Database database) {
+		return database.getParent().hasRuntime();
+	}
+
+	@Override
+	public void perform(Database database) {
+		database.stopShell();
 	}
 }

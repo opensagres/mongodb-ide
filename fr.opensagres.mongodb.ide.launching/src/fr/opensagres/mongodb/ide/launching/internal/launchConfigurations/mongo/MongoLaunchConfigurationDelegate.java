@@ -9,7 +9,9 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.IProcess;
 
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
+import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.launching.internal.LaunchHelper;
 import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.MongoProcessType;
 import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.ProcessLaunchConfigurationDelegate;
@@ -23,9 +25,22 @@ public class MongoLaunchConfigurationDelegate extends
 
 	@Override
 	protected String[] getArguments(ILaunchConfiguration configuration,
-			MongoRuntime runtime) throws CoreException{
+			MongoRuntime runtime) throws CoreException {
+		Database database = LaunchHelper.getDatabase(configuration);
+		Server server = database.getParent();
+		Integer port = server.getPort();
 
-		return null;
+		// see
+		// http://www.mongodb.org/display/DOCS/Overview+-+The+MongoDB+Interactive+Shell
+		StringBuilder arg = new StringBuilder();
+		arg.append(server.getHost());
+		if (port != null) {
+			arg.append(":");
+			arg.append(port.toString());
+		}
+		arg.append("/");
+		arg.append(database.getName());
+		return new String[] { arg.toString() };
 	}
 
 	@Override
@@ -35,4 +50,16 @@ public class MongoLaunchConfigurationDelegate extends
 				processAttributes);
 	}
 
+	@Override
+	protected MongoRuntime getRuntime(ILaunchConfiguration configuration)
+			throws CoreException {
+		Database database = LaunchHelper.getDatabase(configuration);
+		if (database != null) {
+			MongoRuntime runtime = database.getParent().getRuntime();
+			if (runtime != null) {
+				return runtime;
+			}
+		}
+		return null;
+	}
 }

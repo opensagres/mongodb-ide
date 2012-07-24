@@ -9,11 +9,11 @@ import org.eclipse.osgi.util.NLS;
 
 import com.mongodb.MongoException;
 
+import fr.opensagres.mongodb.MongoServerHelper;
 import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.ServerState;
-import fr.opensagres.mongodb.ide.core.utils.MongoHelper;
 import fr.opensagres.mongodb.ide.launching.internal.Activator;
 import fr.opensagres.mongodb.ide.launching.internal.Messages;
 import fr.opensagres.mongodb.ide.launching.internal.ServerLauncherManager;
@@ -188,7 +188,7 @@ public class StopJob extends ServerJob {
 			server.setServerState(ServerState.Stopping);
 
 		try {
-			MongoHelper.stopMongoServerAndCloseIt(server.getMongo(),
+			MongoServerHelper.stopMongoServerAndCloseIt(server.getMongo(),
 					server.getUserName(), server.getPassword());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

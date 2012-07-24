@@ -6,7 +6,7 @@ import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.model.RuntimeProcess;
 
-import fr.opensagres.mongodb.ide.core.utils.MongoHelper;
+import fr.opensagres.mongodb.MongoServerHelper;
 
 public class MongodProcess extends RuntimeProcess {
 
@@ -19,7 +19,7 @@ public class MongodProcess extends RuntimeProcess {
 	public void terminate() throws DebugException {
 		String host = "localhost";
 		Integer port = null;
-		MongoHelper.stopMongoServerWithoutError(host, port);
+		MongoServerHelper.stopMongoServerWithoutError(host, port);
 		super.terminate();
 	}
 

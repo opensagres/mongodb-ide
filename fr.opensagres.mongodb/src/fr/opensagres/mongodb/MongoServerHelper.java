@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.core.utils;
+package fr.opensagres.mongodb;
 
 import java.net.UnknownHostException;
 
@@ -8,7 +8,7 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 
-public class MongoHelper {
+public class MongoServerHelper {
 
 	public static void stopMongoServerWithoutError(String host, Integer port) {
 		try {
@@ -29,7 +29,7 @@ public class MongoHelper {
 	public static void stopMongoServer(String host, Integer port,
 			String username, String passwd) throws UnknownHostException,
 			MongoException {
-		Mongo mongo = createMongo(host, port);
+		Mongo mongo = MongoFactoryHelper.createMongo(host, port);
 		stopMongoServerAndCloseIt(mongo, username, passwd);
 	}
 
@@ -54,13 +54,5 @@ public class MongoHelper {
 				1));
 		shutdownResult.throwOnError();
 	}
-
-	public static Mongo createMongo(String host, Integer port)
-			throws UnknownHostException, MongoException {
-		if (port != null) {
-			return new Mongo(host, port);
-		} else {
-			return new Mongo(host);
-		}
-	}
+	
 }

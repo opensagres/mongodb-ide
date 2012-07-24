@@ -6,8 +6,11 @@ public class Messages extends NLS {
 
 	private static final String BUNDLE_NAME = "fr.opensagres.mongodb.ide.launching.internal.Messages";//$NON-NLS-1$
 
-	public static String Button_browse;
-	
+	public static String browseButton;
+	public static String addButton;
+	public static String editButton;
+	public static String removeButton;
+
 	// ****************** ServerLaunchConfigurationTab ******************
 
 	public static String ServerLaunchConfigurationTab_name;
@@ -15,16 +18,13 @@ public class Messages extends NLS {
 	// ****************** MongoRuntimePreferencePage ******************
 	public static String MongoRuntimePreferencePage_title;
 	public static String MongoRuntimePreferencePage_desc;
-
-	public static String InstalledRuntimesBlock_addButton;
-	public static String InstalledRuntimesBlock_editButton;
-	public static String InstalledRuntimesBlock_removeButton;
-
+	public static String InstalledRuntimesBlock_desc;
+		
 	public static String InstalledRuntimesBlock_2;
 
 	public static String InstalledRuntimesBlock_1;
 
-	public static String InstalledRuntimesBlock_0;
+
 
 	// ****************** AddRuntimeDialog ******************
 	public static String AddRuntimeDialog_title;
@@ -32,7 +32,6 @@ public class Messages extends NLS {
 	public static String AddRuntimeDialog_runtimeName;
 	public static String AddRuntimeDialog_installDir;
 	public static String AddRuntimeDialog_selectInstallDir;
-
 	
 	// MongodLaunchConfigurationTab
 	public static String jobStarting;

@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.debug.core,
  fr.opensagres.mongodb.ide.core;bundle-version="1.0.0"
 Bundle-Activator: fr.opensagres.mongodb.ide.launching.internal.Activator
 Bundle-ActivationPolicy: lazy
-Import-Package: com.mongodb
+Import-Package: com.mongodb,
+ fr.opensagres.mongodb

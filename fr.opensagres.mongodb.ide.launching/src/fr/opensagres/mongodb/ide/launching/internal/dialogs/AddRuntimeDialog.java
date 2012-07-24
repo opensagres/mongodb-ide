@@ -86,7 +86,7 @@ public class AddRuntimeDialog extends TitleAreaDialog {
 		});
 
 		Button browse = new Button(comp, SWT.NONE);
-		browse.setText(Messages.Button_browse);
+		browse.setText(Messages.browseButton);
 		browse.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
 				DirectoryDialog dialog = new DirectoryDialog(

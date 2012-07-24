@@ -103,8 +103,9 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 
 		GridData data;
 
+		// Description of the table
 		Label tableLabel = new Label(parent, SWT.NONE);
-		tableLabel.setText(Messages.InstalledRuntimesBlock_0);
+		tableLabel.setText(Messages.InstalledRuntimesBlock_desc);
 		data = new GridData();
 		data.horizontalSpan = 2;
 		tableLabel.setLayoutData(data);
@@ -202,7 +203,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		buttons.setFont(font);
 
 		fAddButton = createPushButton(buttons,
-				Messages.InstalledRuntimesBlock_addButton);
+				Messages.addButton);
 		fAddButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addRuntime();
@@ -211,7 +212,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		fAddButton.setEnabled(true);
 
 		fEditButton = createPushButton(buttons,
-				Messages.InstalledRuntimesBlock_editButton);
+				Messages.editButton);
 		fEditButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				editRuntime();
@@ -219,7 +220,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		});
 
 		fRemoveButton = createPushButton(buttons,
-				Messages.InstalledRuntimesBlock_removeButton);
+				Messages.removeButton);
 		fRemoveButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				removeRuntimes();

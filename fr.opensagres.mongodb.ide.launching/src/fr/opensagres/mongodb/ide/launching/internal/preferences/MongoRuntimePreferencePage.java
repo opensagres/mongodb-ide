@@ -119,13 +119,6 @@ public class MongoRuntimePreferencePage extends PreferencePage implements
 		// }
 	}
 
-	private void verifyDefaultVM(MongoRuntime install) {
-		if (install != null) {
-			runtimesBlock.setCheckedInstall(install);
-		} else {
-			runtimesBlock.setCheckedInstall(null);
-		}
-	}
 
 	private MongoRuntime getCurrentDefaultRuntime() {
 		return runtimesBlock.getCheckedInstall();

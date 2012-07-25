@@ -5,7 +5,8 @@ import java.util.Collection;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import fr.opensagres.mongodb.ide.core.model.InvalidInstallDirException;
+import com.mongodb.tools.process.InvalidMongoHomeDirException;
+
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 
 public class RuntimesContentHandler extends
@@ -26,7 +27,7 @@ public class RuntimesContentHandler extends
 						attributes.getValue(RuntimesConstants.NAME_ATTR),
 						attributes.getValue(RuntimesConstants.PATH_ATTR));
 				super.list.add(runtime);
-			} catch (InvalidInstallDirException e) {
+			} catch (InvalidMongoHomeDirException e) {
 				e.printStackTrace();
 			}
 		}

@@ -1,5 +1,7 @@
 package fr.opensagres.mongodb.ide.ui.editors.server;
 
-public class ServerEditor {
+import fr.opensagres.mongodb.ide.ui.editors.AbstractFormEditor;
+
+public class ServerEditor extends AbstractFormEditor {
 
 }

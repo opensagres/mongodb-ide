@@ -1,11 +1,11 @@
-package fr.opensagres.mongodb;
+package com.mongodb.tools.driver;
 
 import java.net.UnknownHostException;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 
-public class MongoFactoryHelper {
+public class MongoDriverFactory {
 
 	public static Mongo createMongo(String host, Integer port)
 			throws UnknownHostException, MongoException {

@@ -122,10 +122,11 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		fTable.setHeaderVisible(true);
 		fTable.setLinesVisible(true);
 
+		// Name column
 		TableColumn column1 = new TableColumn(fTable, SWT.NONE);
 		column1.setWidth(180);
 		column1.setResizable(true);
-		column1.setText(Messages.InstalledRuntimesBlock_1);
+		column1.setText(Messages.InstalledRuntimesBlock_nameColumn);
 		column1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -133,32 +134,20 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 			}
 		});
 
+		// Installation directory column
 		TableColumn column2 = new TableColumn(fTable, SWT.NONE);
 		column2.setWidth(180);
 		column2.setResizable(true);
-		column2.setText(Messages.InstalledRuntimesBlock_2);
+		column2.setText(Messages.InstalledRuntimesBlock_installDirColumn);
 		column2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				sortBySource();
+				sortByInstallDir();
 			}
 		});
 
-		// TableColumn column4 = new TableColumn(fTable, SWT.NONE);
-		// column4.setWidth(180);
-		// column4.setResizable(true);
-		// column4.setText(Messages.InstalledRuntimesBlock_4);
-		// column4.addSelectionListener(new SelectionAdapter()
-		// {
-		// @Override
-		// public void widgetSelected(SelectionEvent e)
-		// {
-		// sortByVersion();
-		// }
-		// });
-
 		tableViewer = new CheckboxTableViewer(fTable);
-		tableViewer.setLabelProvider(new VMLabelProvider());
+		tableViewer.setLabelProvider(new RuntimesLabelProvider());
 		tableViewer.setContentProvider(new RuntimesContentProvider());
 
 		tableViewer
@@ -202,8 +191,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		buttons.setLayout(layout);
 		buttons.setFont(font);
 
-		fAddButton = createPushButton(buttons,
-				Messages.addButton);
+		fAddButton = createPushButton(buttons, Messages.addButton);
 		fAddButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addRuntime();
@@ -211,16 +199,14 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		});
 		fAddButton.setEnabled(true);
 
-		fEditButton = createPushButton(buttons,
-				Messages.editButton);
+		fEditButton = createPushButton(buttons, Messages.editButton);
 		fEditButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				editRuntime();
 			}
 		});
 
-		fRemoveButton = createPushButton(buttons,
-				Messages.removeButton);
+		fRemoveButton = createPushButton(buttons, Messages.removeButton);
 		fRemoveButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				removeRuntimes();
@@ -279,13 +265,14 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 	// });
 	// }
 
-	private void sortBySource() {
+	private void sortByInstallDir() {
 		tableViewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
 				MongoRuntime left = (MongoRuntime) e1;
 				MongoRuntime right = (MongoRuntime) e2;
-				return left.getSource().compareToIgnoreCase(right.getSource());
+				return left.getInstallDir().compareToIgnoreCase(
+						right.getInstallDir());
 			}
 
 			@Override
@@ -325,14 +312,14 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		fEditButton.setEnabled(selectionCount == 1);
 		if (selectionCount > 0
 				&& selectionCount < tableViewer.getTable().getItemCount()) {
-			Iterator<?> iterator = selection.iterator();
-			while (iterator.hasNext()) {
-				MongoRuntime install = (MongoRuntime) iterator.next();
-				// if (install.isContributed()) {
-				fRemoveButton.setEnabled(false);
-				return;
-				// }
-			}
+			//Iterator<?> iterator = selection.iterator();
+//			while (iterator.hasNext()) {
+//				MongoRuntime install = (MongoRuntime) iterator.next();
+//				// if (install.isContributed()) {
+//				fRemoveButton.setEnabled(false);
+//				return;
+//				// }
+//			}
 			fRemoveButton.setEnabled(true);
 		} else {
 			fRemoveButton.setEnabled(false);
@@ -365,7 +352,6 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 
 	private void addRuntime() {
 		AddRuntimeDialog dialog = new AddRuntimeDialog(fAddButton.getShell());
-		// dialog.setTitle(Messages.AddRuntimeDialog_Add_Title);
 		if (dialog.open() == Window.OK) {
 			runtimeAdded(dialog.getRuntime());
 		}
@@ -390,28 +376,16 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 	private void editRuntime() {
 		IStructuredSelection selection = (IStructuredSelection) tableViewer
 				.getSelection();
-		MongoRuntime install = (MongoRuntime) selection.getFirstElement();
-		if (install == null) {
+		MongoRuntime runtime = (MongoRuntime) selection.getFirstElement();
+		if (runtime == null) {
 			return;
 		}
-		// if (!install.isContributed())
-		// {
-		// // RuntimeDetailsDialog dialog = new
-		// RuntimeDetailsDialog(getShell(), install);
-		// // dialog.open();
-		// // }
-		// // else
-		// // {
-		// AddRuntimeDialog dialog = new AddRuntimeDialog(this, getShell(),
-		// JAXPRuntime.getRuntimeTypesExclJREDefault(), install);
-		// dialog.setTitle(Messages.AddRuntimeDialog_Edit_Title);
-		// if (dialog.open() != Window.OK)
-		// {
-		// return;
-		// }
-		// // fillWithWorkspaceRuntimes();
-		// tableViewer.refresh();
-		// }
+		AddRuntimeDialog dialog = new AddRuntimeDialog(fAddButton.getShell(),
+				runtime);
+		if (dialog.open() == Window.OK) {
+			// refresh viewer
+			tableViewer.refresh(runtime);
+		}
 	}
 
 	private void removeRuntimes() {
@@ -496,7 +470,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		}
 	}
 
-	private static class VMLabelProvider extends LabelProvider implements
+	private static class RuntimesLabelProvider extends LabelProvider implements
 			ITableLabelProvider {
 		public String getColumnText(Object element, int columnIndex) {
 			if (element instanceof MongoRuntime) {
@@ -505,7 +479,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 				case 0:
 					return install.getName();
 				case 1:
-					return install.getSource();
+					return install.getInstallDir();
 					// case 2:
 					// if (install.getDebugger() != null)
 					// {

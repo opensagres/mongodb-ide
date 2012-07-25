@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.tools.driver.MongoDriverHelper;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.Platform;
@@ -116,9 +117,6 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	public Mongo getMongo() throws UnknownHostException, MongoException {
 		if (mongo == null) {
 			mongo = Platform.getMongoInstanceManager().createMongo(host, port);
-			if (serverState != ServerState.Started) {
-				this.serverState = ServerState.Connected;
-			}
 		}
 		return mongo;
 	}
@@ -149,11 +147,15 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	}
 
 	public void start() throws Exception {
-		Platform.getServerLauncherManager().start(this);
+		if (Platform.hasServerLauncherManager()) {
+			Platform.getServerLauncherManager().start(this);
+		}
 	}
 
 	public void stop(boolean force) throws Exception {
-		Platform.getServerLauncherManager().stop(this, force);
+		if (Platform.hasServerLauncherManager()) {
+			Platform.getServerLauncherManager().stop(this, force);
+		}
 	}
 
 	public void setRuntime(MongoRuntime runtime) {
@@ -182,9 +184,9 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	 * @return boolean
 	 */
 	public IStatus canStop() {
-
 		if (getServerState() == ServerState.Stopped
-				|| getServerState() == ServerState.Stopping)
+				|| getServerState() == ServerState.Stopping
+				|| getServerState() == ServerState.Disconnected)
 			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
 					Messages.errorStopAlreadyStopped, null);
 
@@ -299,6 +301,28 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 				|| serverState == ServerState.Connected;
 	}
 
+	public void connect() throws UnknownHostException, MongoException {
+		// Try to connect
+		MongoDriverHelper.tryConnection(getMongo());
+		// Connection is OK, update the server state as connected.
+		setServerState(ServerState.Connected);
+	}
+
+	public void disconnect() {
+		disposeMongo();
+		setServerState(ServerState.Disconnected);
+	}
+
+	public boolean canStartServer() {
+		if (!Platform.hasServerLauncherManager()) {
+			return false;
+		}
+		if (!hasRuntime()) {
+			return false;
+		}
+		return true;
+	}
+
 	public Database findDatabase(String databaseName) {
 		List<TreeSimpleNode> children = getChildren();
 		for (TreeSimpleNode child : children) {
@@ -309,5 +333,25 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 			}
 		}
 		return null;
+	}
+
+	public void unlock() {
+		Mongo mongo = null;
+		try {
+			mongo = getMongo();
+		} catch (Throwable e) {
+		}
+		if (mongo != null) {
+			mongo.unlock();
+		}
+	}
+
+	public boolean isLocked() {
+		try {
+			Mongo mongo = getMongo();
+			return mongo.isLocked();
+		} catch (Throwable e) {
+			return false;
+		}
 	}
 }

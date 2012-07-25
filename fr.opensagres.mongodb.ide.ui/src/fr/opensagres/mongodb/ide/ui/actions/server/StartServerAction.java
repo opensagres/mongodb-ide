@@ -1,10 +1,14 @@
 package fr.opensagres.mongodb.ide.ui.actions.server;
 
+import java.net.UnknownHostException;
 import java.util.Iterator;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
+
+import com.mongodb.MongoException;
 
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
@@ -70,6 +74,10 @@ public class StartServerAction extends AbstractServerAction {
 	 *            a server
 	 */
 	public boolean accept(Server server) {
+		if (server.getServerState() == ServerState.Connected) {
+			return false;
+		}
+
 		// if (server.getServerState() != ServerState.Started) { // start
 		// return server.canStart(launchMode).isOK();
 		// }
@@ -94,46 +102,60 @@ public class StartServerAction extends AbstractServerAction {
 	}
 
 	public void start(Server server, final Shell shell) {
-		if (server.getServerState() != ServerState.Started) {
+		if (!server.canStartServer()) {
+			// Server cannot start a MongoDB server (server is not local)
+			// connect it.
 			try {
-				server.start();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				server.connect();
+			} catch (Throwable e) {
+				MessageDialog.openError(shell, "Error connection",
+						e.getMessage());
 			}
-			// if (!ServerUIPlugin.saveEditors())
-			// return;
-
-			/*
-			 * final IAdaptable info = new IAdaptable() { public Object
-			 * getAdapter(Class adapter) { if (Shell.class.equals(adapter))
-			 * return shell; return null; } };
-			 */
-			// server.start(launchMode, (IOperationListener) null);
+		} else {
+			if (server.getServerState() != ServerState.Started) {
+				try {
+					// Start the Local MongoDB server by calling mongod process
+					// and connect it.
+					server.start();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
-		// else {
-		// if (shell != null && !ServerUIPlugin.promptIfDirty(shell, server))
+		// if (!ServerUIPlugin.saveEditors())
 		// return;
-		//
-		// try {
-		// String launchMode2 = launchMode;
-		// if (launchMode2 == null)
-		// launchMode2 = server.getMode();
-		// server.restart(launchMode2, (IOperationListener) null);
-		// } catch (Exception e) {
-		// if (Trace.SEVERE) {
-		// Trace.trace(Trace.STRING_SEVERE, "Error restarting server",
-		// e);
-		// }
-		// }
-		// }
+
+		/*
+		 * final IAdaptable info = new IAdaptable() { public Object
+		 * getAdapter(Class adapter) { if (Shell.class.equals(adapter)) return
+		 * shell; return null; } };
+		 */
+		// server.start(launchMode, (IOperationListener) null);
 	}
+
+	// else {
+	// if (shell != null && !ServerUIPlugin.promptIfDirty(shell, server))
+	// return;
+	//
+	// try {
+	// String launchMode2 = launchMode;
+	// if (launchMode2 == null)
+	// launchMode2 = server.getMode();
+	// server.restart(launchMode2, (IOperationListener) null);
+	// } catch (Exception e) {
+	// if (Trace.SEVERE) {
+	// Trace.trace(Trace.STRING_SEVERE, "Error restarting server",
+	// e);
+	// }
+	// }
+	// }
 
 	public void selectionChanged(IStructuredSelection sel) {
 		super.selectionChanged(sel);
 		updateText(sel);
 	}
-	
+
 	@Override
 	public boolean accept(Database database) {
 		return database.canStartShell();

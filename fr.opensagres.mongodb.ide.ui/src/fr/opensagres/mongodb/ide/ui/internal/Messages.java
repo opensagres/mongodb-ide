@@ -29,13 +29,17 @@ public class Messages extends NLS {
 	public static String DeleteAction_text;
 	public static String DeleteAction_toolTipText;
 
+	public static String actionNew;
 	public static String actionStart;
 	public static String actionStartToolTip;	
 	public static String actionStop;
 	public static String actionStopToolTip;
 	public static String actionRestart;	
 	public static String actionRestartToolTip;
-
+	public static String actionUnlock;
+	public static String actionUnlockToolTip;
+	public static String actionOpen;
+	
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

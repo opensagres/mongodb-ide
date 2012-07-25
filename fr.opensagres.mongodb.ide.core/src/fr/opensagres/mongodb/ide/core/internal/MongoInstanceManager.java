@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.tools.driver.MongoDriverFactory;
 
-import fr.opensagres.mongodb.MongoFactoryHelper;
 import fr.opensagres.mongodb.ide.core.IMongoInstanceManager;
 
 public class MongoInstanceManager extends ArrayList<Mongo> implements
@@ -17,7 +17,7 @@ public class MongoInstanceManager extends ArrayList<Mongo> implements
 
 	public Mongo createMongo(String host, Integer port)
 			throws UnknownHostException, MongoException {
-		Mongo mongo = MongoFactoryHelper.createMongo(host, port);
+		Mongo mongo = MongoDriverFactory.createMongo(host, port);
 		super.add(mongo);
 		return mongo;
 	}

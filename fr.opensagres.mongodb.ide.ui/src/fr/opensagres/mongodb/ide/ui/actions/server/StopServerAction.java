@@ -81,11 +81,17 @@ public class StopServerAction extends AbstractServerAction {
 		// }
 		// }
 
-		try {
-			server.stop(false);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (!server.canStartServer()) {
+			// Server cannot start a MongoDB server (server is not local)
+			// connect it.
+			server.disconnect();
+		} else {
+			try {
+				server.stop(false);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -81,5 +81,14 @@
       class="fr.opensagres.mongodb.ide.ui.internal.preferences.MongoPreferencePage">      
     </page>    
   </extension>
-     
+  
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.mongodb.ide.ui.editors.server.ServerEditor"
+           name="%ServerEditor.name"
+           icon="icons/obj16/server.gif"           
+           extensions="server"
+           class="fr.opensagres.mongodb.ide.ui.editors.server.ServerEditor" />
+  </extension>     
 </plugin>

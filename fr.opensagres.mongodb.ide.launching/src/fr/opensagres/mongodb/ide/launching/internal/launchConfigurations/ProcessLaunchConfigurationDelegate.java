@@ -19,7 +19,6 @@ import org.eclipse.osgi.util.NLS;
 
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.launching.internal.Activator;
-import fr.opensagres.mongodb.ide.launching.internal.LaunchHelper;
 
 public abstract class ProcessLaunchConfigurationDelegate implements
 		ILaunchConfigurationDelegate {

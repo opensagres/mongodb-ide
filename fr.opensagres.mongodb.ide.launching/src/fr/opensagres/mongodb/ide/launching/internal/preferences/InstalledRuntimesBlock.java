@@ -310,20 +310,21 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 				.getSelection();
 		int selectionCount = selection.size();
 		fEditButton.setEnabled(selectionCount == 1);
-		if (selectionCount > 0
-				&& selectionCount < tableViewer.getTable().getItemCount()) {
-			//Iterator<?> iterator = selection.iterator();
-//			while (iterator.hasNext()) {
-//				MongoRuntime install = (MongoRuntime) iterator.next();
-//				// if (install.isContributed()) {
-//				fRemoveButton.setEnabled(false);
-//				return;
-//				// }
-//			}
-			fRemoveButton.setEnabled(true);
-		} else {
-			fRemoveButton.setEnabled(false);
-		}
+		fRemoveButton.setEnabled(selectionCount == 1);
+//		if (selectionCount > 0
+//				&& selectionCount < tableViewer.getTable().getItemCount()) {
+//			//Iterator<?> iterator = selection.iterator();
+////			while (iterator.hasNext()) {
+////				MongoRuntime install = (MongoRuntime) iterator.next();
+////				// if (install.isContributed()) {
+////				fRemoveButton.setEnabled(false);
+////				return;
+////				// }
+////			}
+//			fRemoveButton.setEnabled(true);
+//		} else {
+//			fRemoveButton.setEnabled(false);
+//		}
 	}
 
 	protected Button createPushButton(Composite parent, String label) {

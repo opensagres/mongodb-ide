@@ -19,4 +19,14 @@ public class Document extends TreeSimpleNode<Collection> {
 	public String getLabel() {
 		return dbObject.toString();
 	}
+
+	@Override
+	public String getId() {
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "";
+	}
 }

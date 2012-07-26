@@ -90,5 +90,23 @@
            icon="icons/obj16/server.gif"           
            extensions="server"
            class="fr.opensagres.mongodb.ide.ui.editors.server.ServerEditor" />
-  </extension>     
+  </extension>
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.mongodb.ide.ui.editors.database.DatabaseEditor"
+           name="%DatabaseEditor.name"
+           icon="icons/obj16/database.png"           
+           extensions="database"
+           class="fr.opensagres.mongodb.ide.ui.editors.database.DatabaseEditor" />
+  </extension>
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.mongodb.ide.ui.editors.collection.CollectionEditor"
+           name="%CollectionEditor.name"
+           icon="icons/obj16/collection.png"           
+           extensions="collection"
+           class="fr.opensagres.mongodb.ide.ui.editors.collection.CollectionEditor" />
+  </extension>    
 </plugin>

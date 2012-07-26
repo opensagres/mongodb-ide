@@ -1,16 +1,16 @@
 package fr.opensagres.mongodb.ide.ui.views;
 
-import java.util.Iterator;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -22,15 +22,18 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 
 import fr.opensagres.mongodb.ide.core.Platform;
+import fr.opensagres.mongodb.ide.core.model.Collection;
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.actions.DeleteAction;
 import fr.opensagres.mongodb.ide.ui.actions.NewServerAction;
 import fr.opensagres.mongodb.ide.ui.actions.RefreshAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.OpenAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.StartServerAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.StopServerAction;
-import fr.opensagres.mongodb.ide.ui.actions.server.UnlockServerAction;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
+import fr.opensagres.mongodb.ide.ui.internal.Trace;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoContentProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoLabelProvider;
 
@@ -43,7 +46,7 @@ public class ServerExplorer extends ViewPart {
 	private Action newServerAction;
 	private Action startServerAction;
 	private Action stopServerAction;
-	//private UnlockServerAction unlockServerAction;
+	// private UnlockServerAction unlockServerAction;
 	private Action refreshAction;
 	private DeleteAction deleteAction;
 	private OpenAction openAction;
@@ -63,9 +66,30 @@ public class ServerExplorer extends ViewPart {
 
 	private void deferInitialization() {
 		initializeActions(viewer);
-		// hookContextMenu();
-		// contributeToActionBars();
 		viewer.initialize();
+		// Open Server, Database, Collection editor when user double click on
+		// the node
+		viewer.addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				try {
+					IStructuredSelection sel = (IStructuredSelection) event
+							.getSelection();
+					Object data = sel.getFirstElement();
+					if (data instanceof Server) {
+						ServerUI.editServer((Server) data);
+					} else if (data instanceof Database) {
+						ServerUI.editDatabase((Database) data);
+					} else if (data instanceof Collection) {
+						ServerUI.editCollection((Collection) data);
+					}
+				} catch (Exception e) {
+					if (Trace.SEVERE) {
+						Trace.trace(Trace.STRING_SEVERE,
+								"Could not open server", e);
+					}
+				}
+			}
+		});
 
 		MenuManager menuManager = new MenuManager("#PopupMenu");
 		menuManager.setRemoveAllWhenShown(true);
@@ -101,9 +125,9 @@ public class ServerExplorer extends ViewPart {
 		stopServerAction = new StopServerAction(shell, provider);
 		actionBars.setGlobalActionHandler(
 				"fr.opensagres.mongodb.ide.server.stop", stopServerAction);
-//		unlockServerAction = new UnlockServerAction(shell, provider);
-//		actionBars.setGlobalActionHandler(
-//				"fr.opensagres.mongodb.ide.server.unlock", unlockServerAction);
+		// unlockServerAction = new UnlockServerAction(shell, provider);
+		// actionBars.setGlobalActionHandler(
+		// "fr.opensagres.mongodb.ide.server.unlock", unlockServerAction);
 
 		// create the refresh action
 		refreshAction = new RefreshAction(viewer);
@@ -112,8 +136,9 @@ public class ServerExplorer extends ViewPart {
 
 		// create the open action
 		openAction = new OpenAction(provider);
-		actionBars.setGlobalActionHandler("org.eclipse.ui.navigator.Open", openAction);
-	
+		actionBars.setGlobalActionHandler("org.eclipse.ui.navigator.Open",
+				openAction);
+
 		deleteAction = new DeleteAction(viewer);
 		newServerAction = new NewServerAction();
 
@@ -134,15 +159,15 @@ public class ServerExplorer extends ViewPart {
 	protected void fillContextMenu(Shell shell, IMenuManager menu) {
 		// get selection but avoid no selection or multiple selection
 		Server server = null;
+		Database database = null;
 		IStructuredSelection selection = (IStructuredSelection) viewer
 				.getSelection();
-		if (!selection.isEmpty()) {
-			Iterator iterator = selection.iterator();
-			Object obj = iterator.next();
-			if (obj instanceof Server)
+		if (selection.size() == 1) {
+			Object obj = selection.getFirstElement();
+			if (obj instanceof Server) {
 				server = (Server) obj;
-			if (iterator.hasNext()) {
-				server = null;
+			} else if (obj instanceof Database) {
+				database = (Database) obj;
 			}
 		}
 
@@ -150,10 +175,12 @@ public class ServerExplorer extends ViewPart {
 		MenuManager newMenu = new MenuManager(Messages.actionNew);
 		fillNewContextMenu(null, selection, newMenu);
 		menu.add(newMenu);
-		if (server != null) {
+
+		// open action
+		if (server != null || database != null) {
 			menu.add(openAction);
 		}
-		
+
 		menu.add(refreshAction);
 		menu.add(new Separator());
 		menu.add(deleteAction);
@@ -163,7 +190,7 @@ public class ServerExplorer extends ViewPart {
 			// server actions
 			menu.add(startServerAction);
 			menu.add(stopServerAction);
-			//menu.add(unlockServerAction);
+			// menu.add(unlockServerAction);
 		}
 
 	}

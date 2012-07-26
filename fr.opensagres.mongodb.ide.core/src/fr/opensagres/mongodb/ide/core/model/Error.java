@@ -18,4 +18,14 @@ public class Error extends TreeSimpleNode {
 		return NodeType.Error;
 	}
 
+	@Override
+	public String getId() {
+		return null;
+	}
+	
+	@Override
+	public String getName() {
+		return null;
+	}
+
 }

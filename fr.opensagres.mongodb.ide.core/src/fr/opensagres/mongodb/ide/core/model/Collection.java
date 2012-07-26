@@ -10,12 +10,19 @@ import com.mongodb.MongoException;
 
 public class Collection extends TreeContainerNode<Database, Document> {
 
+	private String id;
 	private String name;
 	private DBCollection dbCollection;
 
 	public Collection(String name) {
 		this.name = name;
 		this.dbCollection = null;
+	}
+
+	@Override
+	protected void setParent(Database parent) {
+		super.setParent(parent);
+		this.id = computeId();
 	}
 
 	@Override
@@ -34,13 +41,14 @@ public class Collection extends TreeContainerNode<Database, Document> {
 
 	public void setName(String name) {
 		this.name = name;
+		this.id = computeId();
 	}
 
 	@Override
 	protected void doGetChildren() throws Exception {
 		DBCollection dbCollection = getDBCollection();
 		DBCursor cur = dbCollection.find();
-		while(cur.hasNext()) {
+		while (cur.hasNext()) {
 			DBObject object = cur.next();
 			super.addNode(new Document(object));
 		}
@@ -53,5 +61,9 @@ public class Collection extends TreeContainerNode<Database, Document> {
 			dbCollection = db.getCollection(getName());
 		}
 		return dbCollection;
+	}
+
+	public String getId() {
+		return id;
 	}
 }

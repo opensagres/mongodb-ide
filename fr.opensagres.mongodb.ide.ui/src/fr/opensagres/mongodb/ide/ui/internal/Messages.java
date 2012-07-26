@@ -39,6 +39,9 @@ public class Messages extends NLS {
 	public static String actionUnlock;
 	public static String actionUnlockToolTip;
 	public static String actionOpen;
+
+	// Editor
+	public static String OverviewPage_title;
 	
 	static {
 		// load message values from bundle file

@@ -10,7 +10,6 @@ import fr.opensagres.mongodb.ide.core.Platform;
 
 public class Database extends TreeContainerNode<Server, Collection> {
 
-	private static final String SEPARATOR = "____";
 	private String name;
 	private String id;
 	private DB db;
@@ -25,10 +24,6 @@ public class Database extends TreeContainerNode<Server, Collection> {
 	protected void setParent(Server parent) {
 		super.setParent(parent);
 		this.id = computeId();
-	}
-
-	private String computeId() {
-		return getParent().getId() + SEPARATOR + name;
 	}
 
 	public static String[] getIds(String databaseId) {

@@ -325,7 +325,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 //		} else {
 //			fRemoveButton.setEnabled(false);
 //		}
-	}
+	} 
 
 	protected Button createPushButton(Composite parent, String label) {
 		Button button = new Button(parent, SWT.PUSH);

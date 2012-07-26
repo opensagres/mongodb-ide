@@ -14,7 +14,8 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Perspective"
+            name="%perspectiveName"
+            icon="icons/eview16/mongoperspective.png"
             class="fr.opensagres.mongodb.ide.ui.Perspective"
             id="fr.opensagres.mongodb.ide.ui.perspective">
       </perspective>
@@ -47,7 +48,7 @@
          </view>
       </perspectiveExtension>
    </extension>
-   <extension
+   <!--<extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu">
@@ -59,7 +60,7 @@
             </command>
          </menu>
       </menuContribution>
-   </extension>
+   </extension>-->
    <extension
          point="org.eclipse.ui.newWizards">
       <category
@@ -68,7 +69,7 @@
       </category>                     
       <wizard
             class="fr.opensagres.mongodb.ide.ui.wizards.NewServerWizard"
-            icon="icons/table_go.png"
+            icon="icons/ctool16/wiz_new_server.gif"
             id="fr.opensagres.mongodb.ide.ui.wizards.NewServerWizard"
             category="fr.opensagres.mongodb.ide.ui"
             name="%NewServerWizard.name">

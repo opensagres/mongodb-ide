@@ -16,11 +16,14 @@ import org.eclipse.swt.widgets.Text;
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.core.utils.StringUtils;
+import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.viewers.RuntimeContentProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.RuntimeLabelProvider;
 
 public class NewServerWizardPage extends WizardPage {
+
+	private static final String PAGE_NAME = "NewServerWizardPage";
 
 	private Text nameText;
 	private Combo hostCombo;
@@ -28,15 +31,16 @@ public class NewServerWizardPage extends WizardPage {
 	private ComboViewer runtimeViewer;
 
 	protected NewServerWizardPage() {
-		super("ee");
+		super(PAGE_NAME);
+		super.setTitle(Messages.NewServerWizardPage_title);
+		super.setDescription(Messages.NewServerWizardPage_desc);
+		super.setImageDescriptor(ImageResources
+				.getImageDescriptor(ImageResources.IMG_WIZBAN_NEW_SERVER));
 	}
 
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
-
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		super.setTitle(Messages.NewServerWizardPage_title);
 
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;

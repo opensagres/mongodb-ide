@@ -8,6 +8,7 @@ import org.eclipse.ui.IWorkbenchWizard;
 
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.ui.internal.Messages;
 
 public class NewServerWizard extends Wizard implements INewWizard {
 
@@ -17,6 +18,7 @@ public class NewServerWizard extends Wizard implements INewWizard {
 
 	public NewServerWizard() {
 		super();
+		super.setWindowTitle(Messages.NewServerWizard_title);
 		super.setNeedsProgressMonitor(true);
 		page = new NewServerWizardPage();
 	}

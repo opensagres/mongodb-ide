@@ -8,7 +8,9 @@ public class Messages extends NLS {
 
 	// ****************** NewServerWizardPage ******************
 
+	public static String NewServerWizard_title;
 	public static String NewServerWizardPage_title;
+	public static String NewServerWizardPage_desc;
 	public static String NewServerWizardPage_name_label;
 	public static String NewServerWizardPage_host_label;
 	public static String NewServerWizardPage_port_label;

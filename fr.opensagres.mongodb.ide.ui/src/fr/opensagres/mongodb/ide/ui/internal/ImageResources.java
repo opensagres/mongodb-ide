@@ -21,6 +21,7 @@ public class ImageResources {
 	public static final String PATH_CLCL_16 = ICONS_PATH + "clcl16/"; //$NON-NLS-1$
 	public static final String PATH_DLCL_16 = ICONS_PATH + "dlcl16/"; //$NON-NLS-1$
 	public static final String PATH_ELCL_16 = ICONS_PATH + "elcl16/"; //$NON-NLS-1$
+	public static final String PATH_WIZBAN = ICONS_PATH + "wizban/";//$NON-NLS-1$
 
 	public static final String IMG_SERVER_16 = "server_16";
 	public static final String IMG_SERVER_STARTED_16 = "server_started_16";
@@ -40,11 +41,15 @@ public class ImageResources {
 	public static final String IMG_CLCL_STOP = "stop_clcl_16";
 	public static final String IMG_DLCL_STOP = "stop_dlcl_16";
 
+	public static final String IMG_WIZBAN_NEW_SERVER = "newServerWiz";
+
 	public static void initialize(ImageRegistry imageRegistry) {
 		// registerImage(imageRegistry, Activator.PLUGIN_ID, MISSING);
 		registerImage(imageRegistry, IMG_SERVER_16, PATH_OBJ_16 + "server.gif");
-		registerImage(imageRegistry, IMG_SERVER_STARTED_16, PATH_OBJ_16 + "server_started.gif");
-		registerImage(imageRegistry, IMG_SERVER_STOPPED_16, PATH_OBJ_16 + "server_stopped.gif");
+		registerImage(imageRegistry, IMG_SERVER_STARTED_16, PATH_OBJ_16
+				+ "server_started.gif");
+		registerImage(imageRegistry, IMG_SERVER_STOPPED_16, PATH_OBJ_16
+				+ "server_stopped.gif");
 		registerImage(imageRegistry, IMG_SERVER_NEW_16, PATH_OBJ_16
 				+ "server-new.png");
 		registerImage(imageRegistry, IMG_REFRESH_16, PATH_OBJ_16
@@ -70,6 +75,9 @@ public class ImageResources {
 				+ "launch_stop.gif");
 		registerImage(imageRegistry, IMG_DLCL_STOP, PATH_DLCL_16
 				+ "launch_stop.gif");
+		
+		registerImage(imageRegistry, IMG_WIZBAN_NEW_SERVER, PATH_WIZBAN
+				+ "new_server_wiz.png");		
 	}
 
 	private static void registerImage(ImageRegistry registry, String key,

@@ -42,8 +42,13 @@ public class Messages extends NLS {
 	public static String actionUnlockToolTip;
 	public static String actionOpen;
 
-	// Editor
+	// Editors
+	public static String DocumentsPage_title;
 	public static String OverviewPage_title;
+	public static String serverEditorOverviewGeneralSection;
+	public static String serverEditorOverviewGeneralDescription;
+	public static String serverEditorOverviewTimeoutSection;
+	public static String serverEditorOverviewTimeoutDescription;
 	
 	static {
 		// load message values from bundle file

@@ -15,5 +15,6 @@ Bundle-Activator: fr.opensagres.mongodb.ide.launching.internal.Activator
 Bundle-ActivationPolicy: lazy
 Import-Package: com.mongodb,
  com.mongodb.tools.driver,
+ com.mongodb.tools.driver.pagination,
  com.mongodb.tools.process,
  com.mongodb.tools.process.mongod

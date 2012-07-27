@@ -5,6 +5,7 @@ Bundle-SymbolicName: com.mongodb.tools
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: com.mongodb.tools.driver,
+ com.mongodb.tools.driver.pagination,
  com.mongodb.tools.process,
  com.mongodb.tools.process.mongo,
  com.mongodb.tools.process.mongod

@@ -2,7 +2,6 @@ package fr.opensagres.mongodb.ide.ui.editors.database;
 
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractEditorInput;
-import fr.opensagres.mongodb.ide.ui.editors.server.ServerEditorInput;
 
 public class DatabaseEditorInput extends AbstractEditorInput {
 

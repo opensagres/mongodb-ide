@@ -13,4 +13,5 @@ Export-Package: fr.opensagres.mongodb.ide.core,
  fr.opensagres.mongodb.ide.core.utils
 Import-Package: com.mongodb,
  com.mongodb.tools.driver,
+ com.mongodb.tools.driver.pagination,
  com.mongodb.tools.process

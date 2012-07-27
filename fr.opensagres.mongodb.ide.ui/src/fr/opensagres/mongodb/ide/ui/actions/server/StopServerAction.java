@@ -10,8 +10,6 @@
  *******************************************************************************/
 package fr.opensagres.mongodb.ide.ui.actions.server;
 
-import org.eclipse.core.runtime.jobs.IJobManager;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;

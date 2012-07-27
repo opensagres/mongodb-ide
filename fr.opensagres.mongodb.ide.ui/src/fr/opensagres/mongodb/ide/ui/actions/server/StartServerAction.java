@@ -1,14 +1,11 @@
 package fr.opensagres.mongodb.ide.ui.actions.server;
 
-import java.net.UnknownHostException;
 import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
-
-import com.mongodb.MongoException;
 
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;

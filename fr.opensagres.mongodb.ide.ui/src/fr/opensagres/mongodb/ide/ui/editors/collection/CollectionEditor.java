@@ -13,6 +13,7 @@ public class CollectionEditor extends AbstractFormEditor {
 	protected void addPages() {
 		try {
 			super.addPage(new OverviewPage(this));
+			super.addPage(new DocumentsPage(this));
 		} catch (PartInitException e) {
 			Trace.trace(Trace.STRING_SEVERE,
 					"Error while adding page in the editor ", e);

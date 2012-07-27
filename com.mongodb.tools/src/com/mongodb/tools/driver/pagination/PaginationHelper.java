@@ -33,7 +33,7 @@ public class PaginationHelper {
 					(SortOrder.DESCENDING == order) ? -1 : 1);
 			cursor.sort(orderBy);
 		}
-		cursor = cursor.skip((pageNumber - 1) * itemsPerPage).limit(
+		cursor = cursor.skip((pageNumber ) * itemsPerPage).limit(
 				itemsPerPage);
 		List<DBObject> content = cursor.toArray();
 		int totalItems = dbCursor.count();

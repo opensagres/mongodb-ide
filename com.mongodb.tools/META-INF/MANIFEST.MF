@@ -8,5 +8,9 @@ Export-Package: com.mongodb.tools.driver,
  com.mongodb.tools.driver.pagination,
  com.mongodb.tools.process,
  com.mongodb.tools.process.mongo,
- com.mongodb.tools.process.mongod
+ com.mongodb.tools.process.mongod,
+ com.mongodb.tools.shell
 Import-Package: com.mongodb
+Bundle-ClassPath: lib/com.mongodb.rhino.jar,
+ .,
+ lib/js.jar

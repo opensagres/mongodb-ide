@@ -3,6 +3,9 @@ package fr.opensagres.mongodb.ide.core.internal;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import com.mongodb.tools.shell.ShellCommandManager;
+import com.mongodb.tools.shell.SysoutShellListener;
+
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.utils.BundleUtils;
 
@@ -29,6 +32,8 @@ public class Activator extends Plugin {
 		// Force the start of the bundle "fr.opensagres.mongodb.ide.launching"
 		// to register the instance of IServerLauncherManager
 		BundleUtils.startBundle("fr.opensagres.mongodb.ide.launching");
+		
+		ShellCommandManager.getInstance().addShellListener(SysoutShellListener.getInstance());
 	}
 
 	public void stop(BundleContext context) throws Exception {
@@ -36,6 +41,8 @@ public class Activator extends Plugin {
 		super.stop(context);
 		Platform.getServerManager().dispose();
 		Platform.getMongoInstanceManager().dispose();
+		
+		ShellCommandManager.getInstance().removeShellListener(SysoutShellListener.getInstance());
 	}
 
 	/**

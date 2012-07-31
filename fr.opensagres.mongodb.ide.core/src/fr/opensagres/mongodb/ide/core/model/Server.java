@@ -12,6 +12,8 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.tools.driver.MongoDriverHelper;
+import com.mongodb.tools.driver.pagination.ShellCommandManagerTest;
+import com.mongodb.tools.shell.ShellCommandManager;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.Platform;
@@ -116,7 +118,7 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 
 	public Mongo getMongo() throws UnknownHostException, MongoException {
 		if (mongo == null) {
-			mongo = Platform.getMongoInstanceManager().createMongo(host, port);
+			mongo = ShellCommandManager.getInstance().connect(host, port);
 		}
 		return mongo;
 	}
@@ -126,7 +128,7 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	}
 
 	public void disposeMongo() {
-		Platform.getMongoInstanceManager().dispose(mongo);
+		ShellCommandManager.getInstance().disconnect(mongo);
 		mongo = null;
 	}
 

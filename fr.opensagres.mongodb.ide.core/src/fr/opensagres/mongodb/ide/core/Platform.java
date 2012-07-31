@@ -1,13 +1,13 @@
 package fr.opensagres.mongodb.ide.core;
 
-import fr.opensagres.mongodb.ide.core.internal.MongoInstanceManager;
+import com.mongodb.tools.driver.MongoInstanceManager;
+
 import fr.opensagres.mongodb.ide.core.internal.MongoRuntimeManager;
 import fr.opensagres.mongodb.ide.core.internal.ServerManager;
 
 public class Platform {
 
 	private final static IServerManager SERVER_MANAGER_INSTANCE = new ServerManager();
-	private final static IMongoInstanceManager MONGO_INSTANCE_MANAGER_INSTANCE = new MongoInstanceManager();
 	private static IServerLauncherManager serverLauncherManager;
 	private static IMongoRuntimeManager MONGO_RUNTIME_MANAGER = new MongoRuntimeManager();
 
@@ -15,8 +15,8 @@ public class Platform {
 		return SERVER_MANAGER_INSTANCE;
 	}
 
-	public static IMongoInstanceManager getMongoInstanceManager() {
-		return MONGO_INSTANCE_MANAGER_INSTANCE;
+	public static MongoInstanceManager getMongoInstanceManager() {
+		return MongoInstanceManager.getInstance();
 	}
 
 	public static void setServerLauncherManager(

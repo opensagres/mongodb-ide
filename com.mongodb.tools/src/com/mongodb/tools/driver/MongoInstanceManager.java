@@ -1,16 +1,18 @@
-package fr.opensagres.mongodb.ide.core.internal;
+package com.mongodb.tools.driver;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
-import com.mongodb.tools.driver.MongoDriverFactory;
 
-import fr.opensagres.mongodb.ide.core.IMongoInstanceManager;
+public class MongoInstanceManager extends ArrayList<Mongo> {
 
-public class MongoInstanceManager extends ArrayList<Mongo> implements
-		IMongoInstanceManager {
+	public static final MongoInstanceManager INSTANCE = new MongoInstanceManager();
+
+	public static MongoInstanceManager getInstance() {
+		return INSTANCE;
+	}
 
 	public MongoInstanceManager() {
 	}

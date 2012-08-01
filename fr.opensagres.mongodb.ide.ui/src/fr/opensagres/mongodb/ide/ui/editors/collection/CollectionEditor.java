@@ -23,10 +23,16 @@ public class CollectionEditor extends AbstractFormEditor {
 
 	@Override
 	protected void createPages() {
+		// creates pages
 		super.createPages();
-		// Activate Documents Page.
+		// modify the title of the editor with the name of the collection.
+		Collection collection = getColllection();
+		if (collection != null) { 
+			super.setPartName(collection.getNameWithDB());
+		}
+		// select "Documents" tab.
 		super.setActivePage(DocumentsPage.ID);
-	}
+	} 
 
 	public Collection getColllection() {
 		return ((CollectionEditorInput) getEditorInput()).getCollection();

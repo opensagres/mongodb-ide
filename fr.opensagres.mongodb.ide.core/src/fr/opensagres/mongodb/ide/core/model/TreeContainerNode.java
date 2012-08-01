@@ -3,19 +3,19 @@ package fr.opensagres.mongodb.ide.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TreeContainerNode<Parent extends TreeContainerNode, T extends TreeSimpleNode>
+public abstract class TreeContainerNode<Parent extends TreeContainerNode>
 		extends TreeSimpleNode<Parent> {
 
 	private NodeStatus status;
 
-	private final List<T> children;
+	private final List<TreeSimpleNode> children;
 
 	public TreeContainerNode() {
-		this.children = new ArrayList<T>();
+		this.children = new ArrayList<TreeSimpleNode>();
 		this.status = NodeStatus.Stopped;
 	}
 
-	public void addNode(T node) {
+	public void addNode(TreeSimpleNode node) {
 		node.setParent(this);
 		children.add(node);
 	}
@@ -31,7 +31,7 @@ public abstract class TreeContainerNode<Parent extends TreeContainerNode, T exte
 		}
 	}
 	
-	public List<T> getChildren() {
+	public List<TreeSimpleNode> getChildren() {
 		if (getStatus() != NodeStatus.Started) {
 			clearNodes();
 			try {
@@ -39,7 +39,7 @@ public abstract class TreeContainerNode<Parent extends TreeContainerNode, T exte
 				this.status = NodeStatus.Started;
 			} catch (Throwable e) {
 				this.status = NodeStatus.StartedWithError;
-				this.addNode((T) new Error(e));
+				this.addNode(new Error(e));
 			}
 		}
 		return children;

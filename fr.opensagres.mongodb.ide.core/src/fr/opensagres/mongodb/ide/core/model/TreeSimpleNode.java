@@ -1,6 +1,6 @@
 package fr.opensagres.mongodb.ide.core.model;
 
-public abstract class TreeSimpleNode<Parent extends TreeContainerNode<?, ?>> {
+public abstract class TreeSimpleNode<Parent extends TreeContainerNode<?>> {
 
 	@SuppressWarnings("rawtypes")
 	public static final TreeSimpleNode[] EMPTY = new TreeSimpleNode[0];

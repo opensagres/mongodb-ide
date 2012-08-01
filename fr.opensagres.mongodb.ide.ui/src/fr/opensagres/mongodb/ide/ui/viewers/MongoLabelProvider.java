@@ -34,9 +34,11 @@ public class MongoLabelProvider extends LabelProvider {
 			Server server = (Server) element;
 			switch (server.getServerState()) {
 			case Started:
-				return ImageResources.getImage(ImageResources.IMG_SERVER_STARTED_16);
+				return ImageResources
+						.getImage(ImageResources.IMG_SERVER_STARTED_16);
 			case Stopped:
-				return ImageResources.getImage(ImageResources.IMG_SERVER_STOPPED_16);				
+				return ImageResources
+						.getImage(ImageResources.IMG_SERVER_STOPPED_16);
 			default:
 				return ImageResources.getImage(ImageResources.IMG_SERVER_16);
 			}
@@ -48,6 +50,15 @@ public class MongoLabelProvider extends LabelProvider {
 			return ImageResources.getImage(ImageResources.IMG_DOCUMENT_16);
 		case Error:
 			return ImageResources.getImage(ImageResources.IMG_ERROR_16);
+		case CollectionsCategory:
+		case GridFSCategory:
+		case StoredJavascriptCategory:
+		case IndexesCategory:
+			return ImageResources.getImage(ImageResources.IMG_CATEGORY_16);
+		case Users:
+			return ImageResources.getImage(ImageResources.IMG_USERS_16);
+		case Index:
+			return ImageResources.getImage(ImageResources.IMG_INDEX_16);
 		default:
 			return null;
 		}

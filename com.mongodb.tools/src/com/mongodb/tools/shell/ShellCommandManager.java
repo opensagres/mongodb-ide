@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.tools.driver.MongoDriverHelper;
@@ -100,6 +102,10 @@ public class ShellCommandManager {
 					new UseShellCommand(mongo, db));
 		}
 		return db;
+	}
+
+	public List<DBObject> getDBCollectionGetIndexes(DBCollection dbCollection) {
+		return dbCollection.getIndexInfo();
 	}
 
 	private boolean hasListeners() {

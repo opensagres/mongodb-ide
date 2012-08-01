@@ -33,7 +33,10 @@ public class ImageResources {
 	public static final String IMG_COLLECTION_16 = "collection_16";
 	public static final String IMG_DOCUMENT_16 = "document_16";
 	public static final String IMG_ERROR_16 = "error_16";
-
+	public static final String IMG_CATEGORY_16 = "category_16";
+	public static final String IMG_USERS_16 = "users_16";
+	public static final String IMG_INDEX_16 = "index_16";
+	
 	public static final String IMG_ELCL_START = "start_elcl_16";
 	public static final String IMG_CLCL_START = "start_clcl_16";
 	public static final String IMG_DLCL_START = "start_dlcl_16";
@@ -62,7 +65,10 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_DOCUMENT_16, PATH_OBJ_16
 				+ "document.gif");
 		registerImage(imageRegistry, IMG_ERROR_16, PATH_OBJ_16 + "error.gif");
-
+		registerImage(imageRegistry, IMG_CATEGORY_16, PATH_OBJ_16 + "category.gif");
+		registerImage(imageRegistry, IMG_USERS_16, PATH_OBJ_16 + "users.png");
+		registerImage(imageRegistry, IMG_INDEX_16, PATH_OBJ_16 + "index.gif");
+		
 		registerImage(imageRegistry, IMG_ELCL_START, PATH_ELCL_16
 				+ "launch_run.gif");
 		registerImage(imageRegistry, IMG_CLCL_START, PATH_CLCL_16

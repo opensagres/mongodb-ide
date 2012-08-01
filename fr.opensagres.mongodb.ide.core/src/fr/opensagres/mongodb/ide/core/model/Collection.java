@@ -4,11 +4,9 @@ import java.net.UnknownHostException;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
-public class Collection extends TreeContainerNode<Database, Document> {
+public class Collection extends TreeContainerNode<CollectionsCategory> {
 
 	private String id;
 	private String name;
@@ -20,7 +18,7 @@ public class Collection extends TreeContainerNode<Database, Document> {
 	}
 
 	@Override
-	protected void setParent(Database parent) {
+	protected void setParent(CollectionsCategory parent) {
 		super.setParent(parent);
 		this.id = computeId();
 	}
@@ -46,24 +44,37 @@ public class Collection extends TreeContainerNode<Database, Document> {
 
 	@Override
 	protected void doGetChildren() throws Exception {
-		DBCollection dbCollection = getDBCollection();
-		DBCursor cur = dbCollection.find();
-		while (cur.hasNext()) {
-			DBObject object = cur.next();
-			super.addNode(new Document(object));
-		}
+		// TODO display document with pagination in the tree
+		// DBCollection dbCollection = getDBCollection();
+		// DBCursor cur = dbCollection.find();
+		// while (cur.hasNext()) {
+		// DBObject object = cur.next();
+		// super.addNode(new Document(object));
+		// }
+		super.addNode(new IndexesCategory());
 	}
 
 	public DBCollection getDBCollection() throws UnknownHostException,
 			MongoException {
 		if (dbCollection == null) {
-			DB db = getParent().getDB();
+			DB db = getParent().getParent().getDB();
 			dbCollection = db.getCollection(getName());
 		}
 		return dbCollection;
 	}
 
+	public Database getDatabase() {
+		return getParent().getParent();
+	}
+
 	public String getId() {
 		return id;
+	}
+
+	public String getNameWithDB() {
+		StringBuilder name = new StringBuilder(getDatabase().getName());
+		name.append("/");
+		name.append(this.getName());
+		return name.toString();
 	}
 }

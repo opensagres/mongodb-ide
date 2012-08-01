@@ -35,6 +35,20 @@
       </view>
    </extension>      
    <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%Mongo.category"
+            id="fr.opensagres.mongodb.ide.ui">
+      </category>
+      <view
+            name="%ShellCommandView.name"
+            icon="icons/obj16/shellcommand.png"
+            category="fr.opensagres.mongodb.ide.ui"
+            class="fr.opensagres.mongodb.ide.ui.views.ShellCommandView"
+            id="fr.opensagres.mongodb.ide.ui.views.ShellCommandView">
+      </view>
+   </extension>   
+   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="*">

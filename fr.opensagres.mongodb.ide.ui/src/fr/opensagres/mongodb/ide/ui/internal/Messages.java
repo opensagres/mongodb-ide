@@ -49,6 +49,11 @@ public class Messages extends NLS {
 	public static String serverEditorOverviewGeneralDescription;
 	public static String serverEditorOverviewTimeoutSection;
 	public static String serverEditorOverviewTimeoutDescription;
+
+	// Columns
+	public static String columnKey;
+	public static String columnValue;
+	public static String columnType;
 	
 	static {
 		// load message values from bundle file

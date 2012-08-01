@@ -15,4 +15,5 @@ Import-Package: com.mongodb,
  com.mongodb.tools.driver,
  com.mongodb.tools.driver.pagination,
  com.mongodb.tools.process,
- com.mongodb.tools.shell
+ com.mongodb.tools.shell,
+ org.bson

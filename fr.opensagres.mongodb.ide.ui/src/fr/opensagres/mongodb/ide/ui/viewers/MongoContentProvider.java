@@ -42,10 +42,16 @@ public class MongoContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
-		if (element instanceof Server) {
-			return ((Server) element).isConnected();
+		if (element instanceof TreeSimpleNode) {
+			TreeSimpleNode node = (TreeSimpleNode) element;
+			switch (node.getType()) {
+			case Server:
+				return ((Server) element).isConnected();
+			default:
+				return element instanceof TreeContainerNode;
+			}
 		}
-		return element instanceof TreeContainerNode;
+		return false;
 	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {

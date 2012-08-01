@@ -1,20 +1,13 @@
 package fr.opensagres.mongodb.ide.ui.viewers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
-import fr.opensagres.mongodb.ide.core.model.TreeContainerNode;
-import fr.opensagres.mongodb.ide.core.model.TreeSimpleNode;
 
 public class DBObjectContentProvider implements ITreeContentProvider {
 
@@ -36,10 +29,6 @@ public class DBObjectContentProvider implements ITreeContentProvider {
 		}
 		if (inputElement instanceof Collection) {
 			return ((Collection) inputElement).toArray();
-		}
-		if (inputElement instanceof DBObject) {
-			// return ((DBObject) inputElement).toArray();
-			System.err.println("zz");
 		}
 		return EMPTY_OBJECTS;
 	}

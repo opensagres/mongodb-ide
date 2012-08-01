@@ -1,14 +1,13 @@
 package fr.opensagres.mongodb.ide.core.model;
 
 import java.net.UnknownHostException;
-import java.util.Set;
 
 import com.mongodb.DB;
 import com.mongodb.MongoException;
 
 import fr.opensagres.mongodb.ide.core.Platform;
 
-public class Database extends TreeContainerNode<Server, Collection> {
+public class Database extends TreeContainerNode<Server> {
 
 	private String name;
 	private String id;
@@ -55,12 +54,14 @@ public class Database extends TreeContainerNode<Server, Collection> {
 
 	@Override
 	protected void doGetChildren() throws Exception {
-		DB db = getDB();
-		Set<String> names = db.getCollectionNames();
-		for (String name : names) {
-			Collection collection = new Collection(name);
-			super.addNode(collection);
-		}
+		// Collections folder
+		super.addNode(new CollectionsCategory());
+		// Collections folder
+		super.addNode(new StoredJavascriptCategory());
+		// GridFS folder
+		super.addNode(new GridFSCategory());
+		// Users
+		super.addNode(new Users());
 	}
 
 	public DB getDB() throws UnknownHostException, MongoException {

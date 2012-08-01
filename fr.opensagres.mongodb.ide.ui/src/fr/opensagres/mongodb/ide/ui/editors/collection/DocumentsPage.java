@@ -2,14 +2,11 @@ package fr.opensagres.mongodb.ide.ui.editors.collection;
 
 import java.net.UnknownHostException;
 import java.util.Locale;
-import java.util.Map.Entry;
 
-import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.nebula.widgets.pagination.tree.PageableTree;
-import org.eclipse.nebula.widgets.pagination.tree.SortTreeColumnSelectionListener;
 import org.eclipse.nebula.widgets.pagination.tree.forms.FormPageableTree;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -21,7 +18,6 @@ import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
@@ -30,7 +26,10 @@ import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.viewers.DBObjectContentProvider;
+import fr.opensagres.mongodb.ide.ui.viewers.DBObjectKeyColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.DBObjectPageResultLoader;
+import fr.opensagres.mongodb.ide.ui.viewers.DBObjectTypeColumnLabelProvider;
+import fr.opensagres.mongodb.ide.ui.viewers.DBObjectValueColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoPageResultContentProvider;
 
 public class DocumentsPage extends AbstractToolbarFormPage {
@@ -65,7 +64,7 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 
 		// 1) Create pageable tree with 10 items per page
 		// This SWT Component create internally a SWT Tree+JFace TreeViewer
-		int pageSize = 10;
+		int pageSize = 50;
 		PageableTree pageableTree = new FormPageableTree(left, SWT.NONE,
 				SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL, toolkit,
 				pageSize, MongoPageResultContentProvider.getInstance(),
@@ -73,7 +72,8 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 				FormPageableTree.getDefaultPageRendererBottomFactory());
 		pageableTree.setLayoutData(new GridData(GridData.FILL_BOTH));
 		pageableTree.setLocale(Locale.ENGLISH);
-
+		pageableTree.getViewer().getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
+		
 		// 2) Initialize the tree viewer + SWT Tree
 		TreeViewer viewer = pageableTree.getViewer();
 		viewer.setContentProvider(DBObjectContentProvider.getInstance());
@@ -100,59 +100,20 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 	private static void createColumns(final TreeViewer viewer) {
 
 		// First column is for the Key
-		TreeViewerColumn col = createTreeViewerColumn(viewer, "Key", 150);
-		col.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				if (element instanceof BasicDBObject) {
-					return "{...}";
-				}
-				if (element instanceof Entry) {
-					Entry entry = (Entry) element;
-					Object key = entry.getKey();
-					return (key != null) ? key.toString() : "";
-				}
-				return "";
-			}
-		});
+		TreeViewerColumn col = createTreeViewerColumn(viewer, Messages.columnKey, 200);
+		col.setLabelProvider(DBObjectKeyColumnLabelProvider.getInstance());
 		// col.getColumn().addSelectionListener(
 		// new SortTreeColumnSelectionListener("name"));
 
 		// Second column is for the Value
-		col = createTreeViewerColumn(viewer, "Value", 150);
-		col.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				if (element instanceof DBObject) {
-					return "";
-				}
-				if (element instanceof Entry) {
-					Entry entry = (Entry) element;
-					Object value = entry.getValue();
-					if (value instanceof DBObject) {
-						return "";
-					}
-					return (value != null) ? value.toString() : "";
-				}
-				return "";
-			}
-		});
+		col = createTreeViewerColumn(viewer, Messages.columnValue, 300);
+		col.setLabelProvider(DBObjectValueColumnLabelProvider.getInstance());
 		// col.getColumn().addSelectionListener(
 		// new SortTreeColumnSelectionListener("address.name"));
 
 		// Third column is for the Type
-		col = createTreeViewerColumn(viewer, "Type", 150);
-		col.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				Object value = element;
-				if (element instanceof Entry) {
-					Entry entry = (Entry) element;
-					value = entry.getValue();
-				}
-				return (value != null) ? value.getClass().getSimpleName() : "";
-			}
-		});
+		col = createTreeViewerColumn(viewer, Messages.columnType, 100);
+		col.setLabelProvider(DBObjectTypeColumnLabelProvider.getInstance());
 		// col.getColumn().addSelectionListener(
 		// new SortTreeColumnSelectionListener("address.name"));
 

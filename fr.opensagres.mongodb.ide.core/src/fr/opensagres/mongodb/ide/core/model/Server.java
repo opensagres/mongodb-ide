@@ -12,7 +12,6 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.tools.driver.MongoDriverHelper;
-import com.mongodb.tools.driver.pagination.ShellCommandManagerTest;
 import com.mongodb.tools.shell.ShellCommandManager;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
@@ -23,7 +22,7 @@ import fr.opensagres.mongodb.ide.core.internal.Messages;
 import fr.opensagres.mongodb.ide.core.internal.ServerNotificationManager;
 import fr.opensagres.mongodb.ide.core.internal.Trace;
 
-public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
+public class Server extends TreeContainerNode<Server> implements
 		ISchedulingRule {
 
 	private final String id;
@@ -108,7 +107,8 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	protected void doGetChildren() throws Exception {
 		if (isConnected()) {
 			Mongo mongo = getMongo();
-			List<String> names = mongo.getDatabaseNames();
+			List<String> names = ShellCommandManager.getInstance().showDbs(
+					mongo);
 			for (String name : names) {
 				Database database = new Database(name);
 				super.addNode(database);
@@ -304,6 +304,7 @@ public class Server extends TreeContainerNode<Server, TreeSimpleNode> implements
 	}
 
 	public void connect() throws UnknownHostException, MongoException {
+		setServerState(ServerState.Connecting);
 		// Try to connect
 		MongoDriverHelper.tryConnection(getMongo());
 		// Connection is OK, update the server state as connected.

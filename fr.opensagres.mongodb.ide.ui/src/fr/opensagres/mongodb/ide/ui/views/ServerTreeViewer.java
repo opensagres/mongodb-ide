@@ -106,7 +106,7 @@ public class ServerTreeViewer extends TreeViewer {
 
 			private void refresh(Server server) {
 				ServerTreeViewer.this.refresh(server);
-				if (ServerState.Started.equals(server.getServerState())) {
+				if (server.isConnected()) {
 					ServerTreeViewer.this.expandToLevel(server, 1);
 				}
 			}

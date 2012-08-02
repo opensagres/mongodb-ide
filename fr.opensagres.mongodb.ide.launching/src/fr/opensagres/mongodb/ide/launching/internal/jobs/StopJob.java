@@ -189,7 +189,7 @@ public class StopJob extends ServerJob {
 
 		try {
 			MongoDriverHelper.stopMongoServerAndCloseIt(server.getMongo(),
-					server.getUserName(), server.getPassword());
+					server.getUsername(), server.getPassword());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

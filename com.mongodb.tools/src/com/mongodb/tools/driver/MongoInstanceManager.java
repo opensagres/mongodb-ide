@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 
 public class MongoInstanceManager extends ArrayList<Mongo> {
 
@@ -20,6 +21,13 @@ public class MongoInstanceManager extends ArrayList<Mongo> {
 	public Mongo createMongo(String host, Integer port)
 			throws UnknownHostException, MongoException {
 		Mongo mongo = MongoDriverFactory.createMongo(host, port);
+		super.add(mongo);
+		return mongo;
+	}
+
+	public Mongo createMongo(MongoURI mongoURI) throws MongoException,
+			UnknownHostException {
+		Mongo mongo = MongoDriverFactory.createMongo(mongoURI);
 		super.add(mongo);
 		return mongo;
 	}
@@ -41,4 +49,5 @@ public class MongoInstanceManager extends ArrayList<Mongo> {
 			super.remove(mongo);
 		}
 	}
+
 }

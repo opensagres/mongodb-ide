@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 import com.mongodb.tools.driver.MongoDriverHelper;
 import com.mongodb.tools.shell.ShellCommandManager;
 
@@ -21,31 +22,30 @@ import fr.opensagres.mongodb.ide.core.internal.Activator;
 import fr.opensagres.mongodb.ide.core.internal.Messages;
 import fr.opensagres.mongodb.ide.core.internal.ServerNotificationManager;
 import fr.opensagres.mongodb.ide.core.internal.Trace;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 
 public class Server extends TreeContainerNode<Server> implements
 		ISchedulingRule {
 
 	private final String id;
 	private String name;
+	private MongoURI mongoURI;
 	private String host;
 	private Integer port;
-	private String userName;
-	private String password;
 	private ServerState serverState;
 	private MongoRuntime runtime;
 	private Mongo mongo;
 	private ServerNotificationManager notificationManager;
 	private Map dataCache = new HashMap();
 
-	public Server(String name, String host, Integer port) {
-		this(String.valueOf(System.currentTimeMillis()), name, host, port);
+	public Server(String name, MongoURI mongoURI) {
+		this(String.valueOf(System.currentTimeMillis()), name, mongoURI);
 	}
 
-	public Server(String id, String name, String host, Integer port) {
+	public Server(String id, String name, MongoURI mongoURI) {
 		this.id = id;
+		this.mongoURI = mongoURI;
 		setName(name);
-		setHost(host);
-		setPort(port);
 		this.serverState = ServerState.Stopped;
 	}
 
@@ -61,41 +61,63 @@ public class Server extends TreeContainerNode<Server> implements
 		this.name = name;
 	}
 
+	public MongoURI getMongoURI() {
+		return mongoURI;
+	}
+
 	public String getHost() {
+		computeHostAndPortIfNeeded();
 		return host;
 	}
 
-	public void setHost(String host) {
-		this.host = host;
-	}
-
 	public Integer getPort() {
+		computeHostAndPortIfNeeded();
 		return port;
 	}
 
-	public void setPort(Integer port) {
-		this.port = port;
+	public String getDatabaseName() {
+		return mongoURI.getDatabase();
 	}
 
-	public String getUserName() {
-		return userName;
+	private void computeHostAndPortIfNeeded() {
+		if (host == null) {
+			// host + port
+			String hostAndPort = mongoURI.getHosts().get(0);
+			int index = hostAndPort.indexOf(":");
+			if (index > 0) {
+				host = hostAndPort.substring(0, index);
+				try {
+					port = Integer.parseInt(hostAndPort.substring(index + 1,
+							hostAndPort.length()));
+				} catch (Throwable e) {
+					Trace.trace(Trace.STRING_SEVERE, "Error parsing port", e);
+				}
+			} else {
+				host = hostAndPort;
+				port = null;
+			}
+		}
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String getUsername() {
+		return mongoURI.getUsername();
 	}
 
-	public String getPassword() {
-		return password;
+	public void setUsername(String username) {
+		// TODO
+	}
+
+	public char[] getPassword() {
+		return mongoURI.getPassword();
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		// TODO
 	}
 
 	@Override
 	public String getLabel() {
-		return name + " [" + host + ":" + port + "] - " + serverState;
+		return name + " [" + mongoURI + "] - " + serverState;
 	}
 
 	@Override
@@ -107,9 +129,19 @@ public class Server extends TreeContainerNode<Server> implements
 	protected void doGetChildren() throws Exception {
 		if (isConnected()) {
 			Mongo mongo = getMongo();
-			List<String> names = getShellCommandManager().showDbs(mongo);
-			for (String name : names) {
-				Database database = new Database(name);
+			String databaseName = getDatabaseName();
+			if (StringUtils.isEmpty(databaseName)) {
+				// Server connection doesn't contains database in the MongoURI
+				// Display list of DB (works only if there is admin privilege
+				// for this DB).
+				List<String> names = getShellCommandManager().showDbs(mongo);
+				for (String name : names) {
+					Database database = new Database(name);
+					super.addNode(database);
+				}
+			} else {
+				// Display just the database.
+				Database database = new Database(databaseName);
 				super.addNode(database);
 			}
 		}
@@ -117,7 +149,7 @@ public class Server extends TreeContainerNode<Server> implements
 
 	public Mongo getMongo() throws UnknownHostException, MongoException {
 		if (mongo == null) {
-			mongo = getShellCommandManager().connect(host, port);
+			mongo = getShellCommandManager().connect(mongoURI);
 		}
 		return mongo;
 	}
@@ -305,7 +337,7 @@ public class Server extends TreeContainerNode<Server> implements
 	public void connect() throws UnknownHostException, MongoException {
 		setServerState(ServerState.Connecting);
 		// Try to connect
-		MongoDriverHelper.tryConnection(getMongo());
+		// MongoDriverHelper.tryConnection(getMongo());
 		// Connection is OK, update the server state as connected.
 		setServerState(ServerState.Connected);
 	}

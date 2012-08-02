@@ -11,9 +11,16 @@ public class Messages extends NLS {
 	public static String NewServerWizard_title;
 	public static String NewServerWizardPage_title;
 	public static String NewServerWizardPage_desc;
+	public static String NewServerWizardPage_locationGroup_label;
+	public static String NewServerWizardPage_mongoURI_label;
 	public static String NewServerWizardPage_name_label;
 	public static String NewServerWizardPage_host_label;
 	public static String NewServerWizardPage_port_label;
+	public static String NewServerWizardPage_authenticationGroup_label;
+	public static String NewServerWizardPage_userName_label;
+	public static String NewServerWizardPage_password_label;
+	public static String NewServerWizardPage_databaseName_label;
+	public static String NewServerWizardPage_mongoURI_validation_notValid;
 	public static String NewServerWizardPage_name_validation_required;
 	public static String NewServerWizardPage_host_validation_required;
 	public static String NewServerWizardPage_port_validation_int;

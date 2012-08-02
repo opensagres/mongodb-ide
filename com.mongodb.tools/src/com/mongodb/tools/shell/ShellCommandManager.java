@@ -6,17 +6,17 @@ import java.util.Set;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
-import com.mongodb.tools.driver.MongoDriverHelper;
+import com.mongodb.MongoURI;
 import com.mongodb.tools.driver.MongoInstanceManager;
 import com.mongodb.tools.driver.pagination.Page;
 import com.mongodb.tools.driver.pagination.PaginationHelper;
 import com.mongodb.tools.driver.pagination.SortOrder;
 import com.mongodb.tools.shell.commands.CollectionFindShellCommand;
 import com.mongodb.tools.shell.commands.ConnectShellCommand;
+import com.mongodb.tools.shell.commands.DBAuthenticateShellCommand;
 import com.mongodb.tools.shell.commands.DisconnectShellCommand;
 import com.mongodb.tools.shell.commands.ShowCollectionsShellCommand;
 import com.mongodb.tools.shell.commands.ShowDbsShellCommand;
@@ -32,22 +32,21 @@ public class ShellCommandManager {
 
 	private ShellNotificationManager notificationManager;
 
-	public Mongo connect(String host, Integer port)
-			throws UnknownHostException, MongoException {
-		return connect(host, port, null);
+	public Mongo connect(MongoURI mongoURI) throws UnknownHostException,
+			MongoException {
+		return connect(mongoURI, null);
 	}
 
-	public Mongo connect(String host, Integer port, ShellContext shellContext)
+	public Mongo connect(MongoURI mongoURI, ShellContext shellContext)
 			throws UnknownHostException, MongoException {
-		Mongo mongo = MongoInstanceManager.getInstance()
-				.createMongo(host, port);
-		MongoDriverHelper.tryConnection(mongo);
+		Mongo mongo = MongoInstanceManager.getInstance().createMongo(mongoURI);
+		// MongoDriverHelper.tryConnection(mongo);
 		if (shellContext != null) {
 			shellContext.setMongo(mongo);
 		}
 		if (hasListeners()) {
 			getShellNotificationManager().broadcastChange(
-					new ConnectShellCommand(host, port, mongo));
+					new ConnectShellCommand(mongoURI, mongo));
 		}
 		return mongo;
 	}
@@ -107,6 +106,15 @@ public class ShellCommandManager {
 					new UseShellCommand(mongo, db));
 		}
 		return db;
+	}
+
+	public boolean authenticate(DB db, String username, char[] passwd) {
+		boolean result = db.authenticate(username, passwd);
+		if (hasListeners()) {
+			getShellNotificationManager().broadcastChange(
+					new DBAuthenticateShellCommand(db, username, passwd, result));
+		}
+		return result;
 	}
 
 	public List<DBObject> getDBCollectionGetIndexes(DBCollection dbCollection) {

@@ -6,9 +6,10 @@ public interface IShellCommand {
 	public static final int SHELL_DISCONNECTED = 0x0011;
 	public static final int SHELL_SHOW_DBS = 0x0012;
 	public static final int SHELL_USE = 0x0013;
-	public static final int SHELL_SHOW_COLLECTIONS = 0x0014;
-	public static final int SHELL_COLLECTION_FIND = 0x0015;
-	
+	public static final int SHELL_DB_AUTHENTICATE = 0x0014;
+	public static final int SHELL_SHOW_COLLECTIONS = 0x0015;
+	public static final int SHELL_COLLECTION_FIND = 0x0016;
+
 	int getKind();
 
 	String getCommand();

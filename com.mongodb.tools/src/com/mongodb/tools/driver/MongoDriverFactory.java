@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 
 public class MongoDriverFactory {
 
@@ -14,5 +15,10 @@ public class MongoDriverFactory {
 		} else {
 			return new Mongo(host);
 		}
+	}
+
+	public static Mongo createMongo(MongoURI mongoURI) throws MongoException,
+			UnknownHostException {
+		return new Mongo(mongoURI);
 	}
 }

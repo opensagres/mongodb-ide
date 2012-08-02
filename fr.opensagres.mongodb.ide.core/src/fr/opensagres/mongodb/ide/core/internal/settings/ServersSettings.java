@@ -32,10 +32,11 @@ public class ServersSettings extends AbstractSettings<Server> {
 		writer.append(ServersConstants.SERVER_ELT);
 		super.writeAttr(ServersConstants.ID_ATTR, t.getId(), writer);
 		super.writeAttr(ServersConstants.NAME_ATTR, t.getName(), writer);
-		super.writeAttr(ServersConstants.HOST_ATTR, t.getHost(), writer);
-		super.writeAttr(ServersConstants.PORT_ATTR, t.getPort(), writer);
+		super.writeAttr(ServersConstants.MONGO_URI_ATTR, t.getMongoURI()
+				.toString(), writer);
 		if (t.getRuntime() != null) {
-			super.writeAttr(ServersConstants.RUNTIME_ID_ATTR, t.getRuntime().getId(), writer);
+			super.writeAttr(ServersConstants.RUNTIME_ID_ATTR, t.getRuntime()
+					.getId(), writer);
 		}
 		writer.append("/>");
 

@@ -7,6 +7,7 @@ import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 
 public class MongoDriverHelper {
 
@@ -27,14 +28,14 @@ public class MongoDriverHelper {
 	}
 
 	public static void stopMongoServer(String host, Integer port,
-			String username, String passwd) throws UnknownHostException,
+			String username, char[] passwd) throws UnknownHostException,
 			MongoException {
 		Mongo mongo = MongoDriverFactory.createMongo(host, port);
 		stopMongoServerAndCloseIt(mongo, username, passwd);
 	}
 
 	public static void stopMongoServerAndCloseIt(Mongo mongo, String username,
-			String passwd) {
+			char[] passwd) {
 		try {
 			stopMongoServer(mongo, username, passwd);
 		} finally {
@@ -45,10 +46,10 @@ public class MongoDriverHelper {
 	}
 
 	public static void stopMongoServer(Mongo mongo, String username,
-			String passwd) {
+			char[] passwd) {
 		DB db = mongo.getDB("admin");
 		if (username != null) {
-			db.authenticate(username, passwd.toCharArray());
+			db.authenticate(username, passwd);
 		}
 		CommandResult shutdownResult = db.command(new BasicDBObject("shutdown",
 				1));
@@ -59,4 +60,42 @@ public class MongoDriverHelper {
 		mongo.getDatabaseNames();
 	}
 
+	/**
+	 * Seehttp://www.mongodb.org/display/DOCS/Connections
+	 * 
+	 * @param host
+	 * @param port
+	 * @param userName
+	 * @param password
+	 * @param databaseName
+	 * @return
+	 */
+	public static MongoURI createMongoURI(String host, Integer port,
+			String userName, String password, String databaseName) {
+		return new MongoURI(createStringMongoURI(host, port, userName,
+				password, databaseName));
+	}
+
+	public static String createStringMongoURI(String host, Integer port,
+			String userName, String password, String databaseName) {
+		StringBuilder uri = new StringBuilder("mongodb://");
+
+		if (userName != null && userName.length() > 0) {
+			// username:password@
+			uri.append(userName);
+			uri.append(":");
+			uri.append(password);
+			uri.append("@");
+		}
+		uri.append(host);
+		if (port != null) {
+			uri.append(":");
+			uri.append(String.valueOf(port));
+		}
+		if (databaseName != null && databaseName.length() > 0) {
+			uri.append("/");
+			uri.append(databaseName);
+		}
+		return uri.toString();
+	}
 }

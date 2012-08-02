@@ -6,6 +6,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoException;
 
 import fr.opensagres.mongodb.ide.core.Platform;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 
 public class Database extends TreeContainerNode<Server> {
 
@@ -67,7 +68,13 @@ public class Database extends TreeContainerNode<Server> {
 	public DB getDB() throws UnknownHostException, MongoException {
 		if (db == null) {
 			Server server = getParent();
-			db = server.getMongo().getDB(getName());
+			// 1) use databseName
+			db = getShellCommandManager().use(getName(), server.getMongo());
+			String username = server.getUsername();
+			// 2) authenticate if needed
+			if (StringUtils.isNotEmpty(username)) {
+				getShellCommandManager().authenticate(db, username, server.getPassword());
+			}
 		}
 		return db;
 

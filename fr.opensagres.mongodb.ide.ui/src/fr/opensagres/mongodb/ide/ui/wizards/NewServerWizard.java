@@ -8,6 +8,7 @@ import org.eclipse.ui.IWorkbenchWizard;
 
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.ui.dialogs.StatckTraceErrorDialog;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 
 public class NewServerWizard extends Wizard implements INewWizard {
@@ -30,14 +31,14 @@ public class NewServerWizard extends Wizard implements INewWizard {
 
 	@Override
 	public boolean performFinish() {
-		Server server = new Server(page.getName(), page.getHost(),
-				page.getPort());
+		Server server = new Server(page.getName(), page.getMongoURI());
 		server.setRuntime(page.getRuntime());
 		try {
 			Platform.getServerManager().addServer(server);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			StatckTraceErrorDialog.openError(getShell(), "dialogTitle",
+					"title", e);
 			return false;
 		}
 		return true;

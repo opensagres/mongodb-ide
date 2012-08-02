@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 import com.mongodb.tools.shell.ShellCommandManager;
 import com.mongodb.tools.shell.SysoutShellListener;
 
@@ -13,9 +14,10 @@ public class ShellCommandManagerTest {
 			MongoException {
 		ShellCommandManager manager = ShellCommandManager.getInstance();
 		manager.addShellListener(SysoutShellListener.getInstance());
-		
-		Mongo mongo = manager.connect("localhost", null);
-		
+
+		MongoURI mongoURI = new MongoURI("mongodb://localhost");
+		Mongo mongo = manager.connect(mongoURI);
+
 		manager.disconnect(mongo);
 	}
 }

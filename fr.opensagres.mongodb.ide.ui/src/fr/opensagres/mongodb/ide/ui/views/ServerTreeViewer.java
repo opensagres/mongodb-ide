@@ -15,7 +15,6 @@ import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
 import fr.opensagres.mongodb.ide.core.model.Server;
-import fr.opensagres.mongodb.ide.core.model.ServerState;
 
 /**
  * Tree view showing servers and their associations.

@@ -2,17 +2,14 @@ package com.mongodb.tools.shell;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.MongoURI;
 import com.mongodb.tools.driver.pagination.SortOrder;
 
 public class ShellScriptBuilder {
 
-	public static String connect(String host, Integer port) {
+	public static String connect(MongoURI mongoURI) {
 		StringBuilder command = new StringBuilder("connect ");
-		command.append(host);
-		if (port != null) {
-			command.append(":");
-			command.append(port);
-		}
+		command.append(mongoURI);
 		return command.toString();
 	}
 
@@ -83,6 +80,15 @@ public class ShellScriptBuilder {
 
 	public static String showCollections() {
 		return "show collections";
+	}
+
+	public static String dbAuthenticate(String username, char[] passwd) {
+		StringBuilder command = new StringBuilder("db.authenticate(");
+		command.append(username);
+		command.append(",");
+		command.append(passwd);
+		command.append(")");
+		return command.toString();
 	}
 
 }

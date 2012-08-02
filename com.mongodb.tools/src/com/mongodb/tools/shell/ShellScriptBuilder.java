@@ -1,5 +1,9 @@
 package com.mongodb.tools.shell;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.tools.driver.pagination.SortOrder;
+
 public class ShellScriptBuilder {
 
 	public static String connect(String host, Integer port) {
@@ -44,6 +48,36 @@ public class ShellScriptBuilder {
 	public static String use(String name) {
 		StringBuilder command = new StringBuilder("use ");
 		command.append(name);
+		return command.toString();
+	}
+
+	public static String collectionFind(String collectionName,
+			Integer pageNumber, Integer itemsPerPage, String sortName,
+			SortOrder order) {
+		StringBuilder command = new StringBuilder("db.");
+		command.append(collectionName);
+		command.append(".find()");
+
+		if (sortName != null && order != null) {
+			DBObject orderBy = new BasicDBObject(sortName,
+					(SortOrder.DESCENDING == order) ? -1 : 1);
+			command.append(".sort(");
+			// sort({name : 1, age : -1})
+			// TODO manage sort!!!
+			command.append(")");
+		}
+		if (pageNumber != null) {
+			if (itemsPerPage != null) {
+				// skip
+				command.append(".skip(");
+				command.append(String.valueOf((pageNumber) * itemsPerPage));
+				command.append(")");
+			}
+			// limit
+			command.append(".limit(");
+			command.append(itemsPerPage);
+			command.append(")");
+		}
 		return command.toString();
 	}
 

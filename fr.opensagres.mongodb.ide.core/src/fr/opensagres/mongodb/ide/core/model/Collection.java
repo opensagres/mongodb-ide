@@ -77,4 +77,5 @@ public class Collection extends TreeContainerNode<CollectionsCategory> {
 		name.append(this.getName());
 		return name.toString();
 	}
+
 }

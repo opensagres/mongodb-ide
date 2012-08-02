@@ -32,12 +32,12 @@ import com.mongodb.tools.shell.IShellCommandListener;
 import com.mongodb.tools.shell.ShellCommandManager;
 import com.mongodb.tools.shell.SysoutShellListener;
 
-public class ShellCommandView extends ViewPart implements IShellCommandListener {
+public class ShellCommandsView extends ViewPart implements IShellCommandListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "fr.opensagres.mongodb.ide.ui.views.ShellCommandView";
+	public static final String ID = "fr.opensagres.mongodb.ide.ui.views.ShellCommandsView";
 
 	private TableViewer viewer;
 	private Action action1;
@@ -60,7 +60,7 @@ public class ShellCommandView extends ViewPart implements IShellCommandListener 
 		}
 
 		public Object[] getElements(Object parent) {
-			return new String[] { "One", "Two", "Three" };
+			return new Object[0];
 		}
 	}
 
@@ -87,7 +87,7 @@ public class ShellCommandView extends ViewPart implements IShellCommandListener 
 	/**
 	 * The constructor.
 	 */
-	public ShellCommandView() {
+	public ShellCommandsView() {
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class ShellCommandView extends ViewPart implements IShellCommandListener 
 				| SWT.V_SCROLL);
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setSorter(new NameSorter());
+		//viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
 
 		// Create the help context id for the viewer's control
@@ -120,7 +120,7 @@ public class ShellCommandView extends ViewPart implements IShellCommandListener 
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(new IMenuListener() {
 			public void menuAboutToShow(IMenuManager manager) {
-				ShellCommandView.this.fillContextMenu(manager);
+				ShellCommandsView.this.fillContextMenu(manager);
 			}
 		});
 		Menu menu = menuMgr.createContextMenu(viewer.getControl());

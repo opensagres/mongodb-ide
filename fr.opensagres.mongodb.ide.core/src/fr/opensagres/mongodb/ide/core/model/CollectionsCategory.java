@@ -17,7 +17,7 @@ public class CollectionsCategory extends TreeContainerNode<Database> {
 	@Override
 	protected void doGetChildren() throws Exception {
 		DB db = getParent().getDB();
-		Set<String> names = db.getCollectionNames();
+		Set<String> names = getShellCommandManager().showCollections(db);
 		for (String name : names) {
 			Collection collection = new Collection(name);
 			super.addNode(collection);
@@ -46,5 +46,5 @@ public class CollectionsCategory extends TreeContainerNode<Database> {
 	public NodeType getType() {
 		return NodeType.CollectionsCategory;
 	}
-	
+
 }

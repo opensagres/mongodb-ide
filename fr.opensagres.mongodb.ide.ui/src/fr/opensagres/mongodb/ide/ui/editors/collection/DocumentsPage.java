@@ -88,7 +88,7 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 
 		// 3) Set current page to 0 to refresh the tree
 		pageableTree.setPageLoader(new DBObjectPageResultLoader<DBObject>(
-				dbCollection));
+				dbCollection, getColllection().getShellCommandManager()));
 		pageableTree.setCurrentPage(0);
 
 	}

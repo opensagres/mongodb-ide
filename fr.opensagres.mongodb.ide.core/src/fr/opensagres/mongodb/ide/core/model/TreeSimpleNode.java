@@ -1,5 +1,7 @@
 package fr.opensagres.mongodb.ide.core.model;
 
+import com.mongodb.tools.shell.ShellCommandManager;
+
 public abstract class TreeSimpleNode<Parent extends TreeContainerNode<?>> {
 
 	@SuppressWarnings("rawtypes")
@@ -28,4 +30,8 @@ public abstract class TreeSimpleNode<Parent extends TreeContainerNode<?>> {
 	public abstract String getLabel();
 
 	public abstract NodeType getType();
+	
+	public ShellCommandManager getShellCommandManager() {
+		return getParent().getShellCommandManager();
+	}
 }

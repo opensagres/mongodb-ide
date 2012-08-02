@@ -6,11 +6,16 @@ import java.util.Set;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.tools.driver.MongoDriverHelper;
 import com.mongodb.tools.driver.MongoInstanceManager;
+import com.mongodb.tools.driver.pagination.Page;
+import com.mongodb.tools.driver.pagination.PaginationHelper;
+import com.mongodb.tools.driver.pagination.SortOrder;
+import com.mongodb.tools.shell.commands.CollectionFindShellCommand;
 import com.mongodb.tools.shell.commands.ConnectShellCommand;
 import com.mongodb.tools.shell.commands.DisconnectShellCommand;
 import com.mongodb.tools.shell.commands.ShowCollectionsShellCommand;
@@ -106,6 +111,23 @@ public class ShellCommandManager {
 
 	public List<DBObject> getDBCollectionGetIndexes(DBCollection dbCollection) {
 		return dbCollection.getIndexInfo();
+	}
+
+	public Page paginate(DBCollection collection, int pageNumber,
+			int itemsPerPage) {
+		return paginate(collection, pageNumber, itemsPerPage, null, null);
+	}
+
+	public Page paginate(DBCollection collection, int pageNumber,
+			int itemsPerPage, String sortName, SortOrder order) {
+		Page page = PaginationHelper.paginate(collection, pageNumber,
+				itemsPerPage, sortName, order);
+		if (hasListeners()) {
+			getShellNotificationManager().broadcastChange(
+					new CollectionFindShellCommand(collection, pageNumber,
+							itemsPerPage, sortName, order));
+		}
+		return page;
 	}
 
 	private boolean hasListeners() {

@@ -107,8 +107,7 @@ public class Server extends TreeContainerNode<Server> implements
 	protected void doGetChildren() throws Exception {
 		if (isConnected()) {
 			Mongo mongo = getMongo();
-			List<String> names = ShellCommandManager.getInstance().showDbs(
-					mongo);
+			List<String> names = getShellCommandManager().showDbs(mongo);
 			for (String name : names) {
 				Database database = new Database(name);
 				super.addNode(database);
@@ -118,7 +117,7 @@ public class Server extends TreeContainerNode<Server> implements
 
 	public Mongo getMongo() throws UnknownHostException, MongoException {
 		if (mongo == null) {
-			mongo = ShellCommandManager.getInstance().connect(host, port);
+			mongo = getShellCommandManager().connect(host, port);
 		}
 		return mongo;
 	}
@@ -357,4 +356,10 @@ public class Server extends TreeContainerNode<Server> implements
 			return false;
 		}
 	}
+
+	@Override
+	public ShellCommandManager getShellCommandManager() {
+		return ShellCommandManager.getInstance();
+	}
+
 }

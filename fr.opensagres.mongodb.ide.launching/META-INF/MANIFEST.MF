@@ -9,7 +9,6 @@ Require-Bundle: org.eclipse.debug.core,
  org.eclipse.debug.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.ant.launching;bundle-version="1.0.100",
  fr.opensagres.mongodb.ide.core;bundle-version="1.0.0"
 Bundle-Activator: fr.opensagres.mongodb.ide.launching.internal.Activator
 Bundle-ActivationPolicy: lazy

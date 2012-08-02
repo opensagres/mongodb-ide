@@ -33,23 +33,9 @@ public class PaginationHelper {
 					(SortOrder.DESCENDING == order) ? -1 : 1);
 			cursor.sort(orderBy);
 		}
-		cursor = cursor.skip((pageNumber ) * itemsPerPage).limit(
-				itemsPerPage);
+		cursor = cursor.skip((pageNumber) * itemsPerPage).limit(itemsPerPage);
 		List<DBObject> content = cursor.toArray();
 		int totalItems = dbCursor.count();
 		return new Page(content, totalItems);
-		// List<Map> items = new ArrayList<Map>(dbCursor.length());
-		// for (DBObject dbObject : dbObjects) {
-		// items.add(dbObject.toMap());
-		// }
-		// model.addAttribute("items", items);
-		//
-		// int totalItems = dbCursor.count();
-		// int numPages = ((int) Math.floor(totalItems / itemsPerPage)) + 1;
-		// model.addAttribute("numPages", numPages);
-		// model.addAttribute("page", pageNumber);
-		// model.addAttribute("itemsPerPage", itemsPerPage);
-		// model.addAttribute("collectionName", collectionName);
-		// return "data/collection";
 	}
 }

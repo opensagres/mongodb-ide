@@ -18,7 +18,7 @@ import org.eclipse.nebula.widgets.pagination.PageableController;
 
 import com.mongodb.DBCollection;
 import com.mongodb.tools.driver.pagination.Page;
-import com.mongodb.tools.driver.pagination.PaginationHelper;
+import com.mongodb.tools.shell.ShellCommandManager;
 
 /**
  * Implementation of {@link IPageLoader} with java {@link List}.
@@ -27,15 +27,19 @@ import com.mongodb.tools.driver.pagination.PaginationHelper;
 public class DBObjectPageResultLoader<T> implements IPageLoader<Page<T>> {
 
 	private final DBCollection dbCollection;
+	private final ShellCommandManager shellCommandManager;
 
-	public DBObjectPageResultLoader(DBCollection collection) {
+	public DBObjectPageResultLoader(DBCollection collection,
+			ShellCommandManager shellCommandManager) {
 		this.dbCollection = collection;
+		this.shellCommandManager = shellCommandManager;
 	}
 
 	public Page<T> loadPage(PageableController controller) {
 		int pageNumber = controller.getCurrentPage();
 		int itemsPerPage = controller.getPageSize();
-		return PaginationHelper.paginate(dbCollection, pageNumber, itemsPerPage);
+		return shellCommandManager
+				.paginate(dbCollection, pageNumber, itemsPerPage);
 	}
 
 }

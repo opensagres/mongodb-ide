@@ -15,7 +15,7 @@ public class IndexesCategory extends TreeContainerNode<Collection> {
 	@Override
 	protected void doGetChildren() throws Exception {
 		DBCollection dbCollection = getParent().getDBCollection();
-		List<DBObject> infos = ShellCommandManager.getInstance()
+		List<DBObject> infos = getParent().getShellCommandManager()
 				.getDBCollectionGetIndexes(dbCollection);
 		for (DBObject dbObject : infos) {
 			super.addNode(new Index(dbObject));

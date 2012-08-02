@@ -41,14 +41,14 @@
             id="fr.opensagres.mongodb.ide.ui">
       </category>
       <view
-            name="%ShellCommandView.name"
-            icon="icons/obj16/shellcommand.png"
+            name="%ShellCommandsView.name"
+            icon="icons/obj16/shellcommand.gif"
             category="fr.opensagres.mongodb.ide.ui"
-            class="fr.opensagres.mongodb.ide.ui.views.ShellCommandView"
-            id="fr.opensagres.mongodb.ide.ui.views.ShellCommandView">
+            class="fr.opensagres.mongodb.ide.ui.views.ShellCommandsView"
+            id="fr.opensagres.mongodb.ide.ui.views.ShellCommandsView">
       </view>
    </extension>   
-   <extension
+   <!--<extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="*">
@@ -61,7 +61,7 @@
                id="fr.opensagres.mongodb.ide.ui.views.ServerExplorer">
          </view>
       </perspectiveExtension>
-   </extension>
+   </extension>-->
    <!--<extension
          point="org.eclipse.ui.menus">
       <menuContribution

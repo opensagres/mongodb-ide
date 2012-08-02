@@ -3,6 +3,8 @@ package fr.opensagres.mongodb.ide.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mongodb.tools.shell.ShellCommandManager;
+
 public abstract class TreeContainerNode<Parent extends TreeContainerNode>
 		extends TreeSimpleNode<Parent> {
 
@@ -48,6 +50,6 @@ public abstract class TreeContainerNode<Parent extends TreeContainerNode>
 	public NodeStatus getStatus() {
 		return status;
 	}
-
+	
 	protected abstract void doGetChildren() throws Exception;
 }

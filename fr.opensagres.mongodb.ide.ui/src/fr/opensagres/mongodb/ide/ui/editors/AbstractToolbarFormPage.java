@@ -13,6 +13,10 @@ public abstract class AbstractToolbarFormPage extends AbstractFormPage {
 		super(editor, id, title);
 	}
 
+	public AbstractToolbarFormPage(String id, String title) {
+		super(id, title);
+	}
+
 	@Override
 	protected final void createFormContent(IManagedForm managedForm) {
 		final ScrolledForm form = managedForm.getForm();

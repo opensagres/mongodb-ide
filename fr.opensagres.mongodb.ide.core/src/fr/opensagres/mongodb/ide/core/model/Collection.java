@@ -28,7 +28,6 @@ public class Collection extends TreeContainerNode<CollectionsCategory> {
 		return NodeType.Collection;
 	}
 
-	@Override
 	public String getLabel() {
 		return getName();
 	}

@@ -22,7 +22,7 @@ import fr.opensagres.mongodb.ide.ui.internal.Messages;
 /**
  * Stop (terminate) a server.
  */
-public class StopServerAction extends AbstractServerAction {
+public class StopServerAction extends TreeNodeActionAdapter {
 
 	public StopServerAction(Shell shell, ISelectionProvider selectionProvider) {
 		super(shell, selectionProvider, Messages.actionStop);
@@ -49,7 +49,8 @@ public class StopServerAction extends AbstractServerAction {
 	 * @param server
 	 *            a server
 	 */
-	public boolean accept(Server server) {
+	@Override
+	protected boolean accept(Server server) {
 		return server.canStop().isOK();
 	}
 
@@ -59,7 +60,8 @@ public class StopServerAction extends AbstractServerAction {
 	 * @param server
 	 *            a server
 	 */
-	public void perform(Server server) {
+	@Override
+	protected void perform(Server server) {
 		stop(server, shell);
 	}
 
@@ -94,12 +96,12 @@ public class StopServerAction extends AbstractServerAction {
 	}
 
 	@Override
-	public boolean accept(Database database) {
+	protected boolean accept(Database database) {
 		return database.canStopShell();
 	}
 
 	@Override
-	public void perform(Database database) {
+	protected void perform(Database database) {
 		database.stopShell();
 	}
 }

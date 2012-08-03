@@ -91,4 +91,8 @@ public class ShellScriptBuilder {
 		return command.toString();
 	}
 
+	public static String systemUsers() {
+		return "db.system.users.find()";
+	}
+
 }

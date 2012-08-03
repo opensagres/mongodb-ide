@@ -6,7 +6,6 @@ public class Users extends TreeSimpleNode<Database> {
 
 	private String id;
 
-	@Override
 	public String getId() {
 		if (id == null) {
 			this.id = computeId();
@@ -14,12 +13,10 @@ public class Users extends TreeSimpleNode<Database> {
 		return id;
 	}
 
-	@Override
 	public String getName() {
 		return Messages.Users_label;
 	}
 
-	@Override
 	public String getLabel() {
 		return Messages.Users_label;
 	}

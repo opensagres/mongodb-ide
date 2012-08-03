@@ -2,7 +2,7 @@ package fr.opensagres.mongodb.ide.core.model;
 
 import com.mongodb.tools.shell.ShellCommandManager;
 
-public abstract class TreeSimpleNode<Parent extends TreeContainerNode<?>> {
+public abstract class TreeSimpleNode<Parent extends TreeContainerNode<?>> implements IModelIdentity{
 
 	@SuppressWarnings("rawtypes")
 	public static final TreeSimpleNode[] EMPTY = new TreeSimpleNode[0];
@@ -22,12 +22,6 @@ public abstract class TreeSimpleNode<Parent extends TreeContainerNode<?>> {
 	protected String computeId() {
 		return getParent().getId() + SEPARATOR + getName();
 	}
-
-	public abstract String getId();
-	
-	public abstract String getName();
-
-	public abstract String getLabel();
 
 	public abstract NodeType getType();
 	

@@ -24,7 +24,6 @@ public class CollectionsCategory extends TreeContainerNode<Database> {
 		}
 	}
 
-	@Override
 	public String getId() {
 		if (id == null) {
 			this.id = computeId();
@@ -32,12 +31,10 @@ public class CollectionsCategory extends TreeContainerNode<Database> {
 		return id;
 	}
 
-	@Override
 	public String getName() {
 		return Messages.Collections_label;
 	}
 
-	@Override
 	public String getLabel() {
 		return Messages.Collections_label;
 	}

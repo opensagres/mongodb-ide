@@ -115,7 +115,6 @@ public class Server extends TreeContainerNode<Server> implements
 		// TODO
 	}
 
-	@Override
 	public String getLabel() {
 		return name + " [" + mongoURI + "] - " + serverState;
 	}

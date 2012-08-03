@@ -31,6 +31,7 @@ import fr.opensagres.mongodb.ide.ui.viewers.DBObjectPageResultLoader;
 import fr.opensagres.mongodb.ide.ui.viewers.DBObjectTypeColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.DBObjectValueColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoPageResultContentProvider;
+import fr.opensagres.mongodb.ide.ui.viewers.ViewerHelper;
 
 public class DocumentsPage extends AbstractToolbarFormPage {
 
@@ -72,8 +73,9 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 				FormPageableTree.getDefaultPageRendererBottomFactory());
 		pageableTree.setLayoutData(new GridData(GridData.FILL_BOTH));
 		pageableTree.setLocale(Locale.ENGLISH);
-		pageableTree.getViewer().getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-		
+		pageableTree.getViewer().getTree()
+				.setLayoutData(new GridData(GridData.FILL_BOTH));
+
 		// 2) Initialize the tree viewer + SWT Tree
 		TreeViewer viewer = pageableTree.getViewer();
 		viewer.setContentProvider(DBObjectContentProvider.getInstance());
@@ -94,41 +96,30 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 	}
 
 	public Collection getColllection() {
-		return ((CollectionEditor) getEditor()).getColllection();
+		return ((CollectionEditor) getEditor()).getModelObject();
 	}
 
 	private static void createColumns(final TreeViewer viewer) {
 
 		// First column is for the Key
-		TreeViewerColumn col = createTreeViewerColumn(viewer, Messages.columnKey, 200);
-		col.setLabelProvider(DBObjectKeyColumnLabelProvider.getInstance());
+		TreeViewerColumn col = ViewerHelper.createColumn(viewer,
+				Messages.columnKey, 200,
+				DBObjectKeyColumnLabelProvider.getInstance());
 		// col.getColumn().addSelectionListener(
 		// new SortTreeColumnSelectionListener("name"));
 
 		// Second column is for the Value
-		col = createTreeViewerColumn(viewer, Messages.columnValue, 300);
-		col.setLabelProvider(DBObjectValueColumnLabelProvider.getInstance());
+		col = ViewerHelper.createColumn(viewer, Messages.columnValue, 300,
+				DBObjectValueColumnLabelProvider.getInstance());
 		// col.getColumn().addSelectionListener(
 		// new SortTreeColumnSelectionListener("address.name"));
 
 		// Third column is for the Type
-		col = createTreeViewerColumn(viewer, Messages.columnType, 100);
-		col.setLabelProvider(DBObjectTypeColumnLabelProvider.getInstance());
+		col = ViewerHelper.createColumn(viewer, Messages.columnType, 100,
+				DBObjectTypeColumnLabelProvider.getInstance());
 		// col.getColumn().addSelectionListener(
 		// new SortTreeColumnSelectionListener("address.name"));
 
-	}
-
-	private static TreeViewerColumn createTreeViewerColumn(TreeViewer viewer,
-			String title, int bound) {
-		final TreeViewerColumn viewerColumn = new TreeViewerColumn(viewer,
-				SWT.NONE);
-		final TreeColumn column = viewerColumn.getColumn();
-		column.setText(title);
-		column.setWidth(bound);
-		column.setResizable(true);
-		column.setMoveable(true);
-		return viewerColumn;
 	}
 
 }

@@ -6,8 +6,12 @@ public class Messages extends NLS {
 
 	private static final String BUNDLE_NAME = "fr.opensagres.mongodb.ide.ui.internal.Messages";//$NON-NLS-1$
 
-	// ****************** NewServerWizardPage ******************
+	// Buttons
+	public static String addButton_label;
+	public static String removeButton_label;
+	public static String searchButton_label;
 
+	// ****************** NewServerWizardPage ******************
 	public static String NewServerWizard_title;
 	public static String NewServerWizardPage_title;
 	public static String NewServerWizardPage_desc;
@@ -25,7 +29,7 @@ public class Messages extends NLS {
 	public static String NewServerWizardPage_host_validation_required;
 	public static String NewServerWizardPage_port_validation_int;
 	public static String NewServerWizardPage_runtime_label;
-	
+
 	// ****************** NewServerAction ******************
 	public static String NewServerAction_text;
 	public static String NewServerAction_toolTipText;
@@ -40,28 +44,47 @@ public class Messages extends NLS {
 
 	public static String actionNew;
 	public static String actionStart;
-	public static String actionStartToolTip;	
+	public static String actionStartToolTip;
 	public static String actionStop;
 	public static String actionStopToolTip;
-	public static String actionRestart;	
+	public static String actionRestart;
 	public static String actionRestartToolTip;
 	public static String actionUnlock;
 	public static String actionUnlockToolTip;
 	public static String actionOpen;
 
 	// Editors
-	public static String DocumentsPage_title;
 	public static String OverviewPage_title;
 	public static String serverEditorOverviewGeneralSection;
 	public static String serverEditorOverviewGeneralDescription;
 	public static String serverEditorOverviewTimeoutSection;
 	public static String serverEditorOverviewTimeoutDescription;
 
+	// Editor Database
+	public static String StaticsPage_title;
+
+	// Collection Editor 
+	public static String DocumentsPage_title;
+	
+	// Document Editor
+	public static String JSONTextPage_title;
+	
+	// Editor Users
+	public static String UsersPage_title;
+
 	// Columns
 	public static String columnKey;
 	public static String columnValue;
 	public static String columnType;
+	public static String columnUsername;
+	public static String columnReadonly;
 	
+	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_title;
+	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_desc;
+	public static String UserEditor_UsersPage_UserDetailsPage_title;
+	public static String UserEditor_UsersPage_UserDetailsPage_desc;
+	public static String UserEditor_UsersPage_UserDetailsPage_userLabel_label;
+
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

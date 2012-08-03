@@ -7,7 +7,7 @@
       <branding
             servletName="mongodb-ide"
             themeId="org.eclipse.rap.design.example.business.theme"
-            defaultEntrypointId="fr.opensagres.mongodb.ide.ui.applications"
+            defaultEntrypointId="fr.opensagres.mongodb.ide.ui.application"
             title="MongoDB IDE"
             id="fr.opensagres.mongodb.ide.ui.branding">
       </branding>

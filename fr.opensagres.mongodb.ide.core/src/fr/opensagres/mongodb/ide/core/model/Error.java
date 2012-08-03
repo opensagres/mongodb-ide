@@ -8,22 +8,18 @@ public class Error extends TreeSimpleNode {
 		this.exception = exception;
 	}
 
-	@Override
 	public String getLabel() {
 		return exception.toString();
 	}
 
-	@Override
 	public NodeType getType() {
 		return NodeType.Error;
 	}
 
-	@Override
 	public String getId() {
 		return null;
 	}
 	
-	@Override
 	public String getName() {
 		return null;
 	}

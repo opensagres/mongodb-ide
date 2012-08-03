@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.misc.StatusUtil;
 
-public class StatckTraceErrorDialog {
+public class StackTraceErrorDialog {
 
 	public static void openError(Shell parent, String dialogTitle, String title, Throwable e) {
 		

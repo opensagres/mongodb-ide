@@ -4,7 +4,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 
-@SuppressWarnings("rawtypes")
 public class RuntimeLabelProvider extends LabelProvider {
 
 	private static RuntimeLabelProvider instance;

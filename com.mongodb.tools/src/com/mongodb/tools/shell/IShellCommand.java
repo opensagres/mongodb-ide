@@ -9,6 +9,7 @@ public interface IShellCommand {
 	public static final int SHELL_DB_AUTHENTICATE = 0x0014;
 	public static final int SHELL_SHOW_COLLECTIONS = 0x0015;
 	public static final int SHELL_COLLECTION_FIND = 0x0016;
+	public static final int SHELL_GET_SYSTEM_USERS = 0x0017;
 
 	int getKind();
 

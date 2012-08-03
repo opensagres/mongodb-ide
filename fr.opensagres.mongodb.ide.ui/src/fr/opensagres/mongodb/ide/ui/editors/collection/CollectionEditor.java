@@ -1,40 +1,40 @@
 package fr.opensagres.mongodb.ide.ui.editors.collection;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.PartInitException;
 
 import fr.opensagres.mongodb.ide.core.model.Collection;
-import fr.opensagres.mongodb.ide.ui.editors.AbstractFormEditor;
-import fr.opensagres.mongodb.ide.ui.internal.Trace;
+import fr.opensagres.mongodb.ide.ui.editors.BasicModelFormEditor;
 
-public class CollectionEditor extends AbstractFormEditor {
+public class CollectionEditor extends
+		BasicModelFormEditor<CollectionEditorInput, Collection> {
 
 	public static final String ID = "fr.opensagres.mongodb.ide.ui.editors.collection.CollectionEditor";
 
 	@Override
-	protected void addPages() {
-		try {
-			super.addPage(new OverviewPage(this));
-			super.addPage(new DocumentsPage(this));
-		} catch (PartInitException e) {
-			Trace.trace(Trace.STRING_SEVERE,
-					"Error while adding page in the editor ", e);
-		}
+	protected void doAddPages() throws PartInitException {
+		super.addPage(new OverviewPage(this));
+		super.addPage(new DocumentsPage(this));
 	}
 
 	@Override
-	protected void createPages() {
-		// creates pages
-		super.createPages();
-		// modify the title of the editor with the name of the collection.
-		Collection collection = getColllection();
-		if (collection != null) { 
-			super.setPartName(collection.getNameWithDB());
+	protected String getOverridePartName() {
+		// modify the title of the editor with collection name.
+		Collection collection = getModelObject();
+		if (collection != null) {
+			return collection.getNameWithDB();
 		}
-		// select "Documents" tab.
-		super.setActivePage(DocumentsPage.ID);
-	} 
+		return null;
+	}
 
-	public Collection getColllection() {
-		return ((CollectionEditorInput) getEditorInput()).getCollection();
+	@Override
+	protected String getActivePageIdOnLoad() {
+		// select "Documents" tab.
+		return DocumentsPage.ID;
+	}
+
+	@Override
+	protected void onSave(IProgressMonitor monitor) {
+
 	}
 }

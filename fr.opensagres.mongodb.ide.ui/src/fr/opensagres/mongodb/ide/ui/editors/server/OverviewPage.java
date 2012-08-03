@@ -14,6 +14,7 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
 import fr.opensagres.mongodb.ide.ui.FormLayoutFactory;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
+import fr.opensagres.mongodb.ide.ui.singlesourcing.SingleSourcingUtils;
 
 public class OverviewPage extends AbstractToolbarFormPage {
 
@@ -73,7 +74,7 @@ public class OverviewPage extends AbstractToolbarFormPage {
 		gd_firstNameText.widthHint = 150;
 		firstNameText.setLayoutData(gd_firstNameText);
 
-		toolkit.paintBordersFor(sbody);
+		SingleSourcingUtils.FormToolkit_paintBordersFor(toolkit, sbody);
 
 	}
 

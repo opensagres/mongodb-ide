@@ -1,5 +1,7 @@
 package fr.opensagres.mongodb.ide.ui;
 
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
@@ -19,4 +21,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		super(configurer);
 	}
 
+	@Override
+	protected void makeActions(IWorkbenchWindow window) {
+		// Creates the actions and registers them. Registering also
+		// provides automatic disposal of the actions when the window is closed.
+		register(ActionFactory.SAVE.create(window));
+	}
 }

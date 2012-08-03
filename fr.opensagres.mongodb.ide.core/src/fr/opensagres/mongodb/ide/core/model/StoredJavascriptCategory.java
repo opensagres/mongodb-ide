@@ -16,7 +16,6 @@ public class StoredJavascriptCategory extends TreeContainerNode<Database> {
 
 	}
 
-	@Override
 	public String getId() {
 		if (id == null) {
 			this.id = computeId();
@@ -24,12 +23,10 @@ public class StoredJavascriptCategory extends TreeContainerNode<Database> {
 		return id;
 	}
 
-	@Override
 	public String getName() {
 		return Messages.StoredJavascript_label;
 	}
 
-	@Override
 	public String getLabel() {
 		return Messages.StoredJavascript_label;
 	}

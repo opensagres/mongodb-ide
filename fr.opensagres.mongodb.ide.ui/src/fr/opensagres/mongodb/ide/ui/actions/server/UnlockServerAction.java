@@ -4,12 +4,11 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 
-import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 
-public class UnlockServerAction extends AbstractServerAction {
+public class UnlockServerAction extends TreeNodeActionAdapter {
 
 	public UnlockServerAction(Shell shell, ISelectionProvider selectionProvider) {
 		super(shell, selectionProvider, "unlock");
@@ -30,17 +29,12 @@ public class UnlockServerAction extends AbstractServerAction {
 	}
 
 	@Override
-	public void perform(Server server) {
+	protected void perform(Server server) {
 		server.unlock();
 	}
 
 	@Override
-	public void perform(Database database) {
-
-	}
-
-	@Override
-	public boolean accept(Server server) {
+	protected boolean accept(Server server) {
 		return server.isLocked();
 	}
 

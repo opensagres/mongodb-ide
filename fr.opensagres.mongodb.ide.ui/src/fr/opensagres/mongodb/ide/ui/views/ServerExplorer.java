@@ -12,11 +12,9 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
@@ -25,6 +23,7 @@ import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.model.Users;
 import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.actions.DeleteAction;
 import fr.opensagres.mongodb.ide.ui.actions.NewServerAction;
@@ -54,9 +53,9 @@ public class ServerExplorer extends ViewPart {
 	public void createPartControl(Composite parent) {
 		viewer = new ServerTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL);
-		Tree tree = viewer.getTree();
-		tree.setLayoutData(new GridData(GridData.FILL_BOTH));
-		tree.setFont(parent.getFont());
+		// Tree tree = viewer.getTree();
+		// tree.setLayoutData(new GridData(GridData.FILL_BOTH));
+		// tree.setFont(parent.getFont());
 		viewer.setContentProvider(MongoContentProvider.getInstance());
 		viewer.setLabelProvider(MongoLabelProvider.getInstance());
 		viewer.setInput(Platform.getServerManager());
@@ -81,6 +80,8 @@ public class ServerExplorer extends ViewPart {
 						ServerUI.editDatabase((Database) data);
 					} else if (data instanceof Collection) {
 						ServerUI.editCollection((Collection) data);
+					} else if (data instanceof Users) {
+						ServerUI.editUsers((Users) data);
 					}
 				} catch (Exception e) {
 					if (Trace.SEVERE) {
@@ -160,6 +161,8 @@ public class ServerExplorer extends ViewPart {
 		// get selection but avoid no selection or multiple selection
 		Server server = null;
 		Database database = null;
+		Collection collection = null;
+		Users users = null;
 		IStructuredSelection selection = (IStructuredSelection) viewer
 				.getSelection();
 		if (selection.size() == 1) {
@@ -168,6 +171,10 @@ public class ServerExplorer extends ViewPart {
 				server = (Server) obj;
 			} else if (obj instanceof Database) {
 				database = (Database) obj;
+			} else if (obj instanceof Collection) {
+				collection = (Collection) obj;
+			} else if (obj instanceof Users) {
+				users = (Users) obj;
 			}
 		}
 
@@ -177,7 +184,8 @@ public class ServerExplorer extends ViewPart {
 		menu.add(newMenu);
 
 		// open action
-		if (server != null || database != null) {
+		if (server != null || database != null || collection != null
+				|| users != null) {
 			menu.add(openAction);
 		}
 

@@ -1,8 +1,10 @@
 package fr.opensagres.mongodb.ide.core.model;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
 import com.mongodb.DB;
+import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
 import fr.opensagres.mongodb.ide.core.Platform;
@@ -48,7 +50,6 @@ public class Database extends TreeContainerNode<Server> {
 		return NodeType.Database;
 	}
 
-	@Override
 	public String getLabel() {
 		return getName();
 	}
@@ -73,7 +74,8 @@ public class Database extends TreeContainerNode<Server> {
 			String username = server.getUsername();
 			// 2) authenticate if needed
 			if (StringUtils.isNotEmpty(username)) {
-				getShellCommandManager().authenticate(db, username, server.getPassword());
+				getShellCommandManager().authenticate(db, username,
+						server.getPassword());
 			}
 		}
 		return db;
@@ -110,5 +112,10 @@ public class Database extends TreeContainerNode<Server> {
 
 	public boolean canStopShell() {
 		return launch != null;
+	}
+
+	public List<DBObject> getUsers() throws UnknownHostException,
+			MongoException {
+		return getShellCommandManager().getSystemUsers(getDB());
 	}
 }

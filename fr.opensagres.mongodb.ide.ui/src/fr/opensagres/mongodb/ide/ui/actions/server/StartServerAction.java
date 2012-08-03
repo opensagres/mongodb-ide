@@ -13,7 +13,7 @@ import fr.opensagres.mongodb.ide.core.model.ServerState;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 
-public class StartServerAction extends AbstractServerAction {
+public class StartServerAction extends TreeNodeActionAdapter {
 
 	public StartServerAction(Shell shell, ISelectionProvider selectionProvider) {
 		super(shell, selectionProvider, "start");
@@ -70,7 +70,8 @@ public class StartServerAction extends AbstractServerAction {
 	 * @param server
 	 *            a server
 	 */
-	public boolean accept(Server server) {
+	@Override
+	protected boolean accept(Server server) {
 		if (server.getServerState() == ServerState.Connected) {
 			return false;
 		}
@@ -94,7 +95,8 @@ public class StartServerAction extends AbstractServerAction {
 	 * @param server
 	 *            a server
 	 */
-	public void perform(Server server) {
+	@Override
+	protected void perform(Server server) {
 		start(server, shell);
 	}
 

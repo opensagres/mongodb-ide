@@ -31,7 +31,8 @@
             class="fr.opensagres.mongodb.ide.ui.views.ServerExplorer"
             id="fr.opensagres.mongodb.ide.ui.views.ServerExplorer"
             category="fr.opensagres.mongodb.ide.ui"
-            icon="icons/obj16/mongo.png" >
+            icon="icons/obj16/mongo.png"
+            allowMultiple="false" >
       </view>
    </extension>      
    <extension
@@ -42,7 +43,7 @@
       </category>
       <view
             name="%ShellCommandsView.name"
-            icon="icons/obj16/shellcommand.gif"
+            icon="icons/obj16/shellcommand.png"
             category="fr.opensagres.mongodb.ide.ui"
             class="fr.opensagres.mongodb.ide.ui.views.ShellCommandsView"
             id="fr.opensagres.mongodb.ide.ui.views.ShellCommandsView">
@@ -124,4 +125,22 @@
            extensions="collection"
            class="fr.opensagres.mongodb.ide.ui.editors.collection.CollectionEditor" />
   </extension>    
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.mongodb.ide.ui.editors.users.UsersEditor"
+           name="%UsersEditor.name"
+           icon="icons/obj16/users.png"           
+           extensions="users"
+           class="fr.opensagres.mongodb.ide.ui.editors.users.UsersEditor" />
+  </extension>
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor"
+           name="%DocumentEditor.name"
+           icon="icons/obj16/document.png"           
+           extensions="document"
+           class="fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor" />
+  </extension>      
 </plugin>

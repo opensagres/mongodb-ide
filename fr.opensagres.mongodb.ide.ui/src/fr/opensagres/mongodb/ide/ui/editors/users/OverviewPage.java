@@ -1,7 +1,6 @@
 package fr.opensagres.mongodb.ide.ui.editors.users;
 
 import org.eclipse.ui.forms.IManagedForm;
-import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
@@ -11,7 +10,7 @@ public class OverviewPage extends AbstractToolbarFormPage {
 
 	public static final String ID = "overview";
 
-	public OverviewPage(FormEditor editor) {
+	public OverviewPage(UsersEditor editor) {
 		super(editor, ID, Messages.OverviewPage_title);
 	}
 

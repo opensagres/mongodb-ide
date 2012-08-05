@@ -1,5 +1,7 @@
 package fr.opensagres.mongodb.ide.core.model;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +14,6 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
-import com.mongodb.tools.driver.MongoDriverHelper;
 import com.mongodb.tools.shell.ShellCommandManager;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
@@ -22,6 +23,8 @@ import fr.opensagres.mongodb.ide.core.internal.Activator;
 import fr.opensagres.mongodb.ide.core.internal.Messages;
 import fr.opensagres.mongodb.ide.core.internal.ServerNotificationManager;
 import fr.opensagres.mongodb.ide.core.internal.Trace;
+import fr.opensagres.mongodb.ide.core.internal.settings.AbstractSettings;
+import fr.opensagres.mongodb.ide.core.internal.settings.ServersConstants;
 import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 
 public class Server extends TreeContainerNode<Server> implements
@@ -304,6 +307,24 @@ public class Server extends TreeContainerNode<Server> implements
 	}
 
 	/**
+	 * Fire a server listener saved change event.
+	 */
+	protected void fireServerSavedChangeEvent() {
+		if (Trace.LISTENERS) {
+			Trace.trace(Trace.STRING_LISTENERS,
+					"->- Firing server state change event: " + getName() + ", "
+							+ getServerState() + " ->-");
+		}
+
+		if (notificationManager == null || notificationManager.hasNoListeners())
+			return;
+
+		getServerNotificationManager().broadcastChange(
+				new ServerEvent(ServerEvent.SERVER_SAVED, this,
+						getServerState()));
+	}
+
+	/**
 	 * Returns the event notification manager.
 	 * 
 	 * @return the notification manager
@@ -391,6 +412,23 @@ public class Server extends TreeContainerNode<Server> implements
 	@Override
 	public ShellCommandManager getShellCommandManager() {
 		return ShellCommandManager.getInstance();
+	}
+
+	public void save(Writer writer) throws IOException {
+		writer.append("<");
+		writer.append(ServersConstants.SERVER_ELT);
+		AbstractSettings.writeAttr(ServersConstants.ID_ATTR, this.getId(),
+				writer);
+		AbstractSettings.writeAttr(ServersConstants.NAME_ATTR, this.getName(),
+				writer);
+		AbstractSettings.writeAttr(ServersConstants.MONGO_URI_ATTR, this
+				.getMongoURI().toString(), writer);
+		if (this.getRuntime() != null) {
+			AbstractSettings.writeAttr(ServersConstants.RUNTIME_ID_ATTR, this
+					.getRuntime().getId(), writer);
+		}
+		writer.append("/>");
+		fireServerSavedChangeEvent();
 	}
 
 }

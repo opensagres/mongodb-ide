@@ -11,7 +11,6 @@
  *******************************************************************************/
 package fr.opensagres.mongodb.ide.ui.editors;
 
-import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 
 /**
@@ -20,12 +19,17 @@ import org.eclipse.ui.forms.editor.FormPage;
  */
 public class AbstractFormPage extends FormPage {
 
-	public AbstractFormPage(FormEditor editor, String id, String title) {
+	public AbstractFormPage(AbstractFormEditor editor, String id, String title) {
 		super(editor, id, title);
 	}
 
 	public AbstractFormPage(String id, String title) {
 		super(id, title);
+	}
+
+	@Override
+	public AbstractFormEditor getEditor() {
+		return (AbstractFormEditor) super.getEditor();
 	}
 
 }

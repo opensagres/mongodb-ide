@@ -22,8 +22,8 @@ public class ImageResources {
 	public static final String PATH_DLCL_16 = ICONS_PATH + "dlcl16/"; //$NON-NLS-1$
 	public static final String PATH_ELCL_16 = ICONS_PATH + "elcl16/"; //$NON-NLS-1$
 	public static final String PATH_WIZBAN = ICONS_PATH + "wizban/";//$NON-NLS-1$
-	public static final String PATH_CHECKBOXES = ICONS_PATH + "checboxes/"; //$NON-NLS-1$
-	
+	public static final String PATH_CHECKBOXES = ICONS_PATH + "checkboxes/"; //$NON-NLS-1$
+
 	public static final String IMG_SERVER_16 = "server_16";
 	public static final String IMG_SERVER_STARTED_16 = "server_started_16";
 	public static final String IMG_SERVER_STOPPED_16 = "server_stopped_16";
@@ -39,14 +39,20 @@ public class ImageResources {
 	public static final String IMG_INDEX_16 = "index_16";
 	public static final String IMG_TH_HORIZONTAL_16 = "th_horizontal_16";
 	public static final String IMG_TH_VERTICAL_16 = "th_vertical_16";
-	
+
 	public static final String IMG_ELCL_START = "start_elcl_16";
 	public static final String IMG_CLCL_START = "start_clcl_16";
 	public static final String IMG_DLCL_START = "start_dlcl_16";
 	public static final String IMG_ELCL_STOP = "stop_elcl_16";
 	public static final String IMG_CLCL_STOP = "stop_clcl_16";
 	public static final String IMG_DLCL_STOP = "stop_dlcl_16";
-	
+
+	// checkbox
+	public static final String IMG_DISABLED_CHECKED = "disabled_checked";
+	public static final String IMG_DISABLED_UNCHECKED = "disabled_unchecked";
+	public static final String IMG_ENABLED_CHECKED = "enabled_checked";
+	public static final String IMG_ENABLED_UNCHECKED = "enabled_unchecked";
+
 	public static final String IMG_WIZBAN_NEW_SERVER = "newServerWiz";
 
 	public static void initialize(ImageRegistry imageRegistry) {
@@ -68,12 +74,15 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_DOCUMENT_16, PATH_OBJ_16
 				+ "document.gif");
 		registerImage(imageRegistry, IMG_ERROR_16, PATH_OBJ_16 + "error.gif");
-		registerImage(imageRegistry, IMG_CATEGORY_16, PATH_OBJ_16 + "category.gif");
+		registerImage(imageRegistry, IMG_CATEGORY_16, PATH_OBJ_16
+				+ "category.gif");
 		registerImage(imageRegistry, IMG_USERS_16, PATH_OBJ_16 + "users.png");
 		registerImage(imageRegistry, IMG_INDEX_16, PATH_OBJ_16 + "index.png");
-		registerImage(imageRegistry, IMG_TH_HORIZONTAL_16, PATH_OBJ_16 + "th_horizontal.gif");
-		registerImage(imageRegistry, IMG_TH_VERTICAL_16, PATH_OBJ_16 + "th_vertical.gif");
-		
+		registerImage(imageRegistry, IMG_TH_HORIZONTAL_16, PATH_OBJ_16
+				+ "th_horizontal.gif");
+		registerImage(imageRegistry, IMG_TH_VERTICAL_16, PATH_OBJ_16
+				+ "th_vertical.gif");
+
 		registerImage(imageRegistry, IMG_ELCL_START, PATH_ELCL_16
 				+ "launch_run.gif");
 		registerImage(imageRegistry, IMG_CLCL_START, PATH_CLCL_16
@@ -86,9 +95,18 @@ public class ImageResources {
 				+ "launch_stop.gif");
 		registerImage(imageRegistry, IMG_DLCL_STOP, PATH_DLCL_16
 				+ "launch_stop.gif");
-		
+
 		registerImage(imageRegistry, IMG_WIZBAN_NEW_SERVER, PATH_WIZBAN
-				+ "new_server_wiz.png");		
+				+ "new_server_wiz.png");
+
+		registerImage(imageRegistry, IMG_DISABLED_CHECKED, PATH_CHECKBOXES
+				+ "disabled_checked.gif");
+		registerImage(imageRegistry, IMG_DISABLED_UNCHECKED, PATH_CHECKBOXES
+				+ "disabled_unchecked.gif");
+		registerImage(imageRegistry, IMG_ENABLED_CHECKED, PATH_CHECKBOXES
+				+ "enabled_checked.gif");
+		registerImage(imageRegistry, IMG_ENABLED_UNCHECKED, PATH_CHECKBOXES
+				+ "enabled_unchecked.gif");
 	}
 
 	private static void registerImage(ImageRegistry registry, String key,

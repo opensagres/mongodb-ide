@@ -1,7 +1,6 @@
 package fr.opensagres.mongodb.ide.ui.editors.users;
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.forms.editor.FormEditor;
 
 import fr.opensagres.mongodb.ide.ui.editors.AbstractMasterDetailsBlock;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractMasterDetailsFormPage;
@@ -11,8 +10,8 @@ import fr.opensagres.mongodb.ide.ui.internal.Messages;
 public class UsersPage extends AbstractMasterDetailsFormPage {
 
 	public static final String ID = "users";
-	
-	public UsersPage(FormEditor editor) {
+
+	public UsersPage(UsersEditor editor) {
 		super(editor, ID, Messages.UsersPage_title);
 	}
 

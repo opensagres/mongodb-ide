@@ -27,6 +27,13 @@ public class DBUserLabelProvider extends LabelProvider implements
 		switch (columnIndex) {
 		case 0:
 			return ImageResources.getImage(ImageResources.IMG_USERS_16);
+		case 1:
+			if (DBObjectHelper.isReadonlyOfUser(((DBObject) element))) {
+				return ImageResources
+						.getImage(ImageResources.IMG_ENABLED_CHECKED);
+			}
+			return ImageResources
+					.getImage(ImageResources.IMG_ENABLED_UNCHECKED);
 		}
 		return null;
 	}
@@ -35,9 +42,6 @@ public class DBUserLabelProvider extends LabelProvider implements
 		switch (columnIndex) {
 		case 0:
 			return DBObjectHelper.getUsernameOfUser(((DBObject) element));
-		case 1:
-			return String.valueOf((DBObjectHelper
-					.isReadonlyOfUser(((DBObject) element))));
 		}
 		return null;
 	}

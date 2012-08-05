@@ -27,19 +27,8 @@ public class ServersSettings extends AbstractSettings<Server> {
 	}
 
 	@Override
-	protected void save(Server t, Writer writer) throws IOException {
-		writer.append("<");
-		writer.append(ServersConstants.SERVER_ELT);
-		super.writeAttr(ServersConstants.ID_ATTR, t.getId(), writer);
-		super.writeAttr(ServersConstants.NAME_ATTR, t.getName(), writer);
-		super.writeAttr(ServersConstants.MONGO_URI_ATTR, t.getMongoURI()
-				.toString(), writer);
-		if (t.getRuntime() != null) {
-			super.writeAttr(ServersConstants.RUNTIME_ID_ATTR, t.getRuntime()
-					.getId(), writer);
-		}
-		writer.append("/>");
-
+	protected void save(Server server, Writer writer) throws IOException {
+		server.save(writer);
 	}
 
 }

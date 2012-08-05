@@ -9,7 +9,8 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 
 public abstract class AbstractToolbarFormPage extends AbstractFormPage {
 
-	public AbstractToolbarFormPage(FormEditor editor, String id, String title) {
+	public AbstractToolbarFormPage(AbstractFormEditor editor, String id,
+			String title) {
 		super(editor, id, title);
 	}
 
@@ -24,7 +25,7 @@ public abstract class AbstractToolbarFormPage extends AbstractFormPage {
 		toolkit.decorateFormHeading(form.getForm());
 
 		IToolBarManager manager = form.getToolBarManager();
-		((AbstractFormEditor) getEditor()).contributeToToolbar(manager);
+		getEditor().contributeToToolbar(manager);
 		form.updateToolBar();
 		form.setText(getFormTitleText());
 		Image titleImage = getFormTitleImage();

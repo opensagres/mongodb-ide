@@ -4,7 +4,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.PartInitException;
 
 import fr.opensagres.mongodb.ide.core.model.Database;
-import fr.opensagres.mongodb.ide.ui.editors.AbstractFormEditor;
 import fr.opensagres.mongodb.ide.ui.editors.BasicModelFormEditor;
 
 public class DatabaseEditor extends
@@ -28,11 +27,11 @@ public class DatabaseEditor extends
 		return null;
 	}
 
-	@Override
-	protected String getActivePageIdOnLoad() {
-		// select statics page on the load of the database editor.
-		return StaticsPage.ID;
-	}
+//	@Override
+//	protected String getActivePageIdOnLoad() {
+//		// select statics page on the load of the database editor.
+//		return StaticsPage.ID;
+//	}
 	
 	@Override
 	protected void onSave(IProgressMonitor monitor) {

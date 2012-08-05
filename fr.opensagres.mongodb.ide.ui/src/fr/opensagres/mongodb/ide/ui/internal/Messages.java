@@ -55,12 +55,23 @@ public class Messages extends NLS {
 
 	// Editors
 	public static String OverviewPage_title;
+	public static String server_label;
+	public static String database_label;
+	public static String collection_label;
+	
+	// Server editor
 	public static String serverEditorOverviewGeneralSection;
 	public static String serverEditorOverviewGeneralDescription;
 	public static String serverEditorOverviewTimeoutSection;
 	public static String serverEditorOverviewTimeoutDescription;
-
+	public static String serverNameLabel;
+	public static String hostLabel;
+	public static String portLabel;
+	public static String databaseLabel;
+	
 	// Editor Database
+	public static String databaseEditorOverviewGeneralDescription;
+	public static String databaseEditorOverviewGeneralSection;
 	public static String StaticsPage_title;
 
 	// Collection Editor 
@@ -84,6 +95,7 @@ public class Messages extends NLS {
 	public static String UserEditor_UsersPage_UserDetailsPage_title;
 	public static String UserEditor_UsersPage_UserDetailsPage_desc;
 	public static String UserEditor_UsersPage_UserDetailsPage_userLabel_label;
+
 
 	static {
 		// load message values from bundle file

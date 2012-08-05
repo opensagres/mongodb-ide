@@ -28,6 +28,8 @@ public class ServerEvent {
 	 */
 	public static final int SERVER_CHANGE = 0x0010;
 
+	public static final int SERVER_SAVED = 0x0011;
+	
 	/**
 	 * Returns the server involved in the change event.
 	 * 

@@ -13,9 +13,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.forms.IManagedForm;
-import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import com.mongodb.DBCollection;
@@ -37,7 +35,7 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 
 	public static final String ID = "documents";
 
-	public DocumentsPage(FormEditor editor) {
+	public DocumentsPage(CollectionEditor editor) {
 		super(editor, ID, Messages.DocumentsPage_title);
 	}
 

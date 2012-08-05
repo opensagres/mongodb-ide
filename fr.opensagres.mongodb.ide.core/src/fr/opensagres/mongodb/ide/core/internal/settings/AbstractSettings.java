@@ -46,12 +46,12 @@ public abstract class AbstractSettings<T> {
 
 	protected abstract void save(T t, Writer out) throws IOException;
 
-	protected void writeAttr(String name, Integer value, Writer writer)
+	public static void writeAttr(String name, Integer value, Writer writer)
 			throws IOException {
 		writeAttr(name, value != null ? value.toString() : "", writer);
 	}
 
-	protected void writeAttr(String name, String value, Writer writer)
+	public static void writeAttr(String name, String value, Writer writer)
 			throws IOException {
 		writer.append(" ");
 		writer.append(name);

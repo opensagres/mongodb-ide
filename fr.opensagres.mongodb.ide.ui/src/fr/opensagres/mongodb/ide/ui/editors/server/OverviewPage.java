@@ -6,11 +6,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
-import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 
+import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 import fr.opensagres.mongodb.ide.ui.FormLayoutFactory;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
@@ -19,8 +20,12 @@ import fr.opensagres.mongodb.ide.ui.singlesourcing.SingleSourcingUtils;
 public class OverviewPage extends AbstractToolbarFormPage {
 
 	public static final String ID = "overview";
+	private Text hostText;
+	private Text serverNameText;
+	private Text portText;
+	private Text databaseText;
 
-	public OverviewPage(FormEditor editor) {
+	public OverviewPage(ServerEditor editor) {
 		super(editor, ID, Messages.OverviewPage_title);
 	}
 
@@ -67,15 +72,52 @@ public class OverviewPage extends AbstractToolbarFormPage {
 		glayout.numColumns = 2;
 		sbody.setLayout(glayout);
 
-		// First name
-		toolkit.createLabel(sbody, "vvv");
-		Text firstNameText = toolkit.createText(sbody, "", SWT.SINGLE);
-		GridData gd_firstNameText = new GridData(GridData.FILL_HORIZONTAL);
-		gd_firstNameText.widthHint = 150;
-		firstNameText.setLayoutData(gd_firstNameText);
+		// Server name
+		toolkit.createLabel(sbody, Messages.serverNameLabel);
+		serverNameText = toolkit.createText(sbody, "", SWT.SINGLE);
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		serverNameText.setLayoutData(gridData);
+
+		// Host
+		toolkit.createLabel(sbody, Messages.hostLabel);
+		hostText = toolkit.createText(sbody, "", SWT.SINGLE);
+		gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		hostText.setLayoutData(gridData);
+
+		// Port
+		toolkit.createLabel(sbody, Messages.portLabel);
+		portText = toolkit.createText(sbody, "", SWT.SINGLE);
+		gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		portText.setLayoutData(gridData);
+
+		// Database
+		toolkit.createLabel(sbody, Messages.databaseLabel);
+		databaseText = toolkit.createText(sbody, "", SWT.SINGLE);
+		gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		databaseText.setLayoutData(gridData);
 
 		SingleSourcingUtils.FormToolkit_paintBordersFor(toolkit, sbody);
 
+		initialize();
+
+	}
+
+	private void initialize() {
+		Server server = ((ServerEditor) getEditor()).getModelObject();
+		serverNameText.setText(server.getName());
+		hostText.setText(server.getHost());
+		Integer port = server.getPort();
+		if (port != null) {
+			hostText.setText(String.valueOf(port));
+		}
+		String database = server.getDatabaseName();
+		if (StringUtils.isNotEmpty(database)) {
+			databaseText.setText(database);
+		}
 	}
 
 	protected void createTimeoutSection(Composite rightColumnComp,

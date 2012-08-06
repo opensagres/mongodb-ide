@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: fr.opensagres.mongodb.ide.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
@@ -9,6 +10,7 @@ Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: fr.opensagres.mongodb.ide.core,
+ fr.opensagres.mongodb.ide.core.extensions,
  fr.opensagres.mongodb.ide.core.model,
  fr.opensagres.mongodb.ide.core.utils
 Import-Package: com.mongodb,

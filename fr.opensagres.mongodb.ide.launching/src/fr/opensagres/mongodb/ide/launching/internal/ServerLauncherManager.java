@@ -13,22 +13,19 @@ import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 
-import fr.opensagres.mongodb.ide.core.IServerLauncherManager;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.ServerState;
 import fr.opensagres.mongodb.ide.launching.internal.jobs.StartJob;
-import fr.opensagres.mongodb.ide.launching.internal.jobs.StartShellJob;
 import fr.opensagres.mongodb.ide.launching.internal.jobs.StopJob;
-import fr.opensagres.mongodb.ide.launching.internal.jobs.StopShellJob;
 import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongod.PingThread;
 
-public class ServerLauncherManager implements IServerLauncherManager {
+public class ServerLauncherManager  {
 
 	protected static final char[] INVALID_CHARS = new char[] { '\\', '/', ':',
 			'*', '?', '"', '<', '>', '|', '\0', '@', '&' };
 
-	public void start(Server server) throws Exception {
+	public static void start(Server server) throws Exception {
 		// see bug 250999 - debug UI must be loaded before looking for debug
 		// consoles
 		org.eclipse.debug.ui.console.IConsole.class.toString();
@@ -39,7 +36,7 @@ public class ServerLauncherManager implements IServerLauncherManager {
 
 	}
 
-	public void stop(Server server, boolean force) throws Exception {
+	public static void stop(Server server, boolean force) throws Exception {
 		if (server.getServerState() == ServerState.Stopped)
 			return;
 		// see bug 250999 - debug UI must be loaded before looking for debug
@@ -49,7 +46,7 @@ public class ServerLauncherManager implements IServerLauncherManager {
 		StopJob job = new StopJob(server, force);
 		job.schedule();
 	}
-
+	
 	/**
 	 * Return the launch configuration for this server. If one does not exist,
 	 * it will be created if "create" is true, and otherwise will return
@@ -136,26 +133,6 @@ public class ServerLauncherManager implements IServerLauncherManager {
 			processListener = null;
 		}
 		server.setServerState(ServerState.Stopped);
-	}
-
-	public void startShell(Database database) {
-		// see bug 250999 - debug UI must be loaded before looking for debug
-		// consoles
-		org.eclipse.debug.ui.console.IConsole.class.toString();
-
-		StartShellJob startJob = new StartShellJob(database);
-		startJob.schedule();
-
-	}
-
-	public void stopShell(Database database) {
-		// see bug 250999 - debug UI must be loaded before looking for debug
-		// consoles
-		org.eclipse.debug.ui.console.IConsole.class.toString();
-
-		StopShellJob stopJob = new StopShellJob(database);
-		stopJob.schedule();
-
 	}
 
 	public static ILaunchConfiguration getLaunchConfiguration(

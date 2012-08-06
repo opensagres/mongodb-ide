@@ -74,7 +74,7 @@ public class OverviewPage extends AbstractToolbarFormPage  {
 		glayout.numColumns = 2;
 		sbody.setLayout(glayout);
 
-		// Server
+		// Server name
 		Database database = ((DatabaseEditor) getEditor()).getModelObject();
 		Server server = database.getParent();
 		serverLabel = UIFieldsFactory.createServerField(sbody, toolkit, server);

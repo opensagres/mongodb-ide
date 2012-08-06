@@ -24,6 +24,7 @@ import com.mongodb.tools.driver.MongoDriverHelper;
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.core.utils.StringUtils;
+import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.viewers.RuntimeContentProvider;
@@ -116,8 +117,7 @@ public class NewServerWizardPage extends WizardPage {
 		Label hostLabel = new Label(container, SWT.NONE);
 		hostLabel.setText(Messages.NewServerWizardPage_host_label);
 		hostCombo = new Combo(container, SWT.BORDER);
-		hostCombo.add("localhost");
-		hostCombo.add("127.0.0.1");
+		hostCombo.setItems(ServerUI.getLocalhosts());
 		hostCombo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateMongoURIField(hostCombo);
@@ -130,7 +130,7 @@ public class NewServerWizardPage extends WizardPage {
 		Label portLabel = new Label(container, SWT.NONE);
 		portLabel.setText(Messages.NewServerWizardPage_port_label);
 		portCombo = new Combo(container, SWT.BORDER);
-		portCombo.add("27017");
+		portCombo.setItems(ServerUI.getDefaultPorts());
 		portCombo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateMongoURIField(portCombo);

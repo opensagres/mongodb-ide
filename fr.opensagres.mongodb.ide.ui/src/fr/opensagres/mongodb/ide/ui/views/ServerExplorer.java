@@ -1,5 +1,8 @@
 package fr.opensagres.mongodb.ide.ui.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
@@ -20,6 +23,8 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 
 import fr.opensagres.mongodb.ide.core.Platform;
+import fr.opensagres.mongodb.ide.core.extensions.IServerRunnerType;
+import fr.opensagres.mongodb.ide.core.extensions.IShellRunnerType;
 import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
@@ -29,8 +34,12 @@ import fr.opensagres.mongodb.ide.ui.actions.DeleteAction;
 import fr.opensagres.mongodb.ide.ui.actions.NewServerAction;
 import fr.opensagres.mongodb.ide.ui.actions.RefreshAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.OpenAction;
+import fr.opensagres.mongodb.ide.ui.actions.server.ServerRunnerAction;
+import fr.opensagres.mongodb.ide.ui.actions.server.ShellRunnerAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.StartServerAction;
+import fr.opensagres.mongodb.ide.ui.actions.server.StartShellAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.StopServerAction;
+import fr.opensagres.mongodb.ide.ui.actions.server.StopShellAction;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.internal.Trace;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoContentProvider;
@@ -45,10 +54,17 @@ public class ServerExplorer extends ViewPart {
 	private Action newServerAction;
 	private Action startServerAction;
 	private Action stopServerAction;
+	private Action startShellAction;
+	private Action stopShellAction;
 	// private UnlockServerAction unlockServerAction;
 	private Action refreshAction;
 	private DeleteAction deleteAction;
 	private OpenAction openAction;
+
+	private List<Action> serverStartActions;
+	private List<Action> serverStopActions;
+	private List<Action> shellStartActions;
+	private List<Action> shellStopActions;
 
 	public void createPartControl(Composite parent) {
 		viewer = new ServerTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
@@ -117,15 +133,53 @@ public class ServerExplorer extends ViewPart {
 		Shell shell = getSite().getShell();
 		IActionBars actionBars = getViewSite().getActionBars();
 
-		// create the start actions
-		startServerAction = new StartServerAction(shell, provider);
+		// Server Actions
+		serverStartActions = new ArrayList<Action>();
+		serverStopActions = new ArrayList<Action>();
+		java.util.Collection<IServerRunnerType> serverRunners = Platform
+				.getServerRunnerRegistry().getRunners();
+		for (IServerRunnerType serverRunner : serverRunners) {
+			serverStartActions.add(new ServerRunnerAction(serverRunner, true,
+					provider));
+			serverStopActions.add(new ServerRunnerAction(serverRunner, false,
+					provider));
+		}
+
+		// create the start server actions
+		startServerAction = new StartServerAction(shell, provider,
+				serverStartActions);
 		actionBars.setGlobalActionHandler(
 				"fr.opensagres.mongodb.ide.server.start", startServerAction);
 
-		// create the stop action
-		stopServerAction = new StopServerAction(shell, provider);
+		// create the stop server action
+		stopServerAction = new StopServerAction(shell, provider,
+				serverStopActions);
 		actionBars.setGlobalActionHandler(
 				"fr.opensagres.mongodb.ide.server.stop", stopServerAction);
+
+		// Shell Actions
+		shellStartActions = new ArrayList<Action>();
+		shellStopActions = new ArrayList<Action>();
+		java.util.Collection<IShellRunnerType> shellRunners = Platform
+				.getShellRunnerRegistry().getRunners();
+		for (IShellRunnerType shellRunner : shellRunners) {
+			shellStartActions.add(new ShellRunnerAction(shellRunner, true,
+					provider));
+			shellStopActions.add(new ShellRunnerAction(shellRunner, false,
+					provider));
+		}
+
+		// create the start shell actions
+		startShellAction = new StartShellAction(shell, provider,
+				shellStartActions);
+		actionBars.setGlobalActionHandler(
+				"fr.opensagres.mongodb.ide.shell.start", startShellAction);
+
+		// create the stop shell action
+		stopShellAction = new StopShellAction(shell, provider, shellStopActions);
+		actionBars.setGlobalActionHandler(
+				"fr.opensagres.mongodb.ide.shell.stop", stopShellAction);
+
 		// unlockServerAction = new UnlockServerAction(shell, provider);
 		// actionBars.setGlobalActionHandler(
 		// "fr.opensagres.mongodb.ide.server.unlock", unlockServerAction);
@@ -148,6 +202,8 @@ public class ServerExplorer extends ViewPart {
 				.getToolBarManager();
 		toolbarOfActionBars.add(startServerAction);
 		toolbarOfActionBars.add(stopServerAction);
+		toolbarOfActionBars.add(startShellAction);
+		toolbarOfActionBars.add(stopShellAction);
 		toolbarOfActionBars.add(refreshAction);
 		toolbarOfActionBars.add(new Separator(
 				IWorkbenchActionConstants.MB_ADDITIONS));
@@ -195,10 +251,32 @@ public class ServerExplorer extends ViewPart {
 
 		if (server != null) {
 			menu.add(new Separator());
-			// server actions
-			menu.add(startServerAction);
-			menu.add(stopServerAction);
+			// Start server actions
+			for (Action action : serverStartActions) {
+				menu.add(action);
+			}
+			menu.add(new Separator());
+			// Stop server actions
+			for (Action action : serverStopActions) {
+				menu.add(action);
+			}
+
+			// menu.add(startServerAction);
+			// menu.add(stopServerAction);
 			// menu.add(unlockServerAction);
+		}
+
+		if (database != null) {
+			menu.add(new Separator());
+			// Start shell actions
+			for (Action action : shellStartActions) {
+				menu.add(action);
+			}
+			menu.add(new Separator());
+			// Stop shell actions
+			for (Action action : shellStopActions) {
+				menu.add(action);
+			}
 		}
 
 	}

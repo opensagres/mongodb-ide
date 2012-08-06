@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.registry;
+package fr.opensagres.mongodb.ide.ui.internal;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

@@ -64,6 +64,7 @@ public class Messages extends NLS {
 	public static String serverEditorOverviewGeneralDescription;
 	public static String serverEditorOverviewTimeoutSection;
 	public static String serverEditorOverviewTimeoutDescription;
+	public static String mongoURILabel;	
 	public static String serverNameLabel;
 	public static String hostLabel;
 	public static String portLabel;
@@ -95,7 +96,6 @@ public class Messages extends NLS {
 	public static String UserEditor_UsersPage_UserDetailsPage_title;
 	public static String UserEditor_UsersPage_UserDetailsPage_desc;
 	public static String UserEditor_UsersPage_UserDetailsPage_userLabel_label;
-
 
 	static {
 		// load message values from bundle file

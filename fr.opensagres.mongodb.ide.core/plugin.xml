@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+  <extension-point id="serverRunners" name="%serverRunnersContributionName"
+		schema="schema/serverRunners.exsd" />
+  <extension-point id="shellRunners" name="%shellRunnersContributionName"
+		schema="schema/shellRunners.exsd" />
+
+  <!-- Start/Stop Server (mongod) with cmd/sh --> 
+  <extension point="fr.opensagres.mongodb.ide.core.serverRunners">
+	  <runner
+	        id="fr.opensagres.mongodb.ide.core.extensions.ExternalServerRunner"
+	        class="fr.opensagres.mongodb.ide.core.internal.extensions.ExternalServerRunner"
+	        startName="%ExternalServerRunner.startName"
+	        stopName="%ExternalServerRunner.stopName"
+	        startDescription="%ExternalServerRunner.startDesc"
+	        stopDescription="%ExternalServerRunner.stopDesc" >
+	  </runner>   
+  </extension>
+
+  <!-- Connect/Disconnect Server with Java API Mongo --> 
+  <extension point="fr.opensagres.mongodb.ide.core.serverRunners">
+	  <runner
+	        id="fr.opensagres.mongodb.ide.core.extensions.ConnectServerRunner"
+	        class="fr.opensagres.mongodb.ide.core.internal.extensions.ConnectServerRunner"
+	        startName="%ConnectServerRunner.startName"
+	        stopName="%ConnectServerRunner.stopName"
+	        startDescription="%ConnectServerRunner.startDesc"
+	        stopDescription="%ConnectServerRunner.stopDesc" >
+	  </runner>   
+  </extension>
+    		
+  <!-- Start/Stop Shell Console (mongo) with cmd/sh --> 
+  <extension point="fr.opensagres.mongodb.ide.core.shellRunners">
+	  <runner
+	        id="fr.opensagres.mongodb.ide.core.extensions.ExternalShellRunner"
+	        class="fr.opensagres.mongodb.ide.core.internal.extensions.ExternalShellRunner"
+	        startName="%ExternalShellRunner.startName"
+	        stopName="%ExternalShellRunner.stopName"
+	        startDescription="%ExternalShellRunner.startDesc"
+	        stopDescription="%ExternalShellRunner.stopDesc" >
+	  </runner>   
+  </extension>
+
+</plugin>

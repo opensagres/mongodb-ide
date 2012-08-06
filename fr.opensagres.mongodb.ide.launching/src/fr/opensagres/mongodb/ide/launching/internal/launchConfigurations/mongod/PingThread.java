@@ -4,6 +4,7 @@ import com.mongodb.tools.driver.MongoDriverHelper;
 
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.ServerState;
+import fr.opensagres.mongodb.ide.launching.internal.ServerLauncherManager;
 import fr.opensagres.mongodb.ide.launching.internal.Trace;
 
 /**
@@ -60,7 +61,7 @@ public class PingThread {
 			try {
 				if (count == maxPings) {
 					try {
-						server.stop(false);
+						ServerLauncherManager.stop(server, false);
 					} catch (Exception e) {
 						Trace.trace(Trace.STRING_FINEST,
 								"Ping: could not stop server");

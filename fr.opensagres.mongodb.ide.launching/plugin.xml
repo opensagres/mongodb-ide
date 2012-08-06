@@ -2,6 +2,30 @@
 <?eclipse version="3.4"?>
 <plugin>
 
+  <!-- Start Server (mongod) with Launch --> 
+  <extension point="fr.opensagres.mongodb.ide.core.serverRunners">
+	  <runner
+	        id="fr.opensagres.mongodb.ide.launching.extensions.InternalServerRunner"
+	        class="fr.opensagres.mongodb.ide.launching.internal.extensions.InternalServerRunner"
+	        startName="%InternalServerRunner.startName"
+	        stopName="%InternalServerRunner.stopName"
+	        startDescription="%InternalServerRunner.startDesc"
+	        stopDescription="%InternalServerRunner.stopDesc" >
+	  </runner>   
+  </extension>
+  		
+  <!-- Start Shell Console (mongo) with Launch --> 
+  <extension point="fr.opensagres.mongodb.ide.core.shellRunners">
+	  <runner
+	        id="fr.opensagres.mongodb.ide.launching.extensions.InternalShellRunner"
+	        class="fr.opensagres.mongodb.ide.launching.internal.extensions.InternalShellRunner"
+	        startName="%InternalShellRunner.startName"
+	        stopName="%InternalShellRunner.stopName"
+	        startDescription="%InternalShellRunner.startDesc"
+	        stopDescription="%InternalShellRunner.stopDesc" >
+	  </runner>   
+  </extension>
+  
   <!-- MongoDB Core Launching -->
   
   <extension point="org.eclipse.debug.core.launchConfigurationTypes">

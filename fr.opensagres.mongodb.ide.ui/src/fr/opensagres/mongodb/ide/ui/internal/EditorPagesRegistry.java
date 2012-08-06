@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.registry;
+package fr.opensagres.mongodb.ide.ui.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
-import fr.opensagres.mongodb.ide.ui.internal.Activator;
+import fr.opensagres.mongodb.ide.core.extensions.AbstractRegistry;
 
 public class EditorPagesRegistry extends AbstractRegistry {
 

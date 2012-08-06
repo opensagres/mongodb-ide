@@ -10,36 +10,33 @@
  *******************************************************************************/
 package fr.opensagres.mongodb.ide.ui.actions.server;
 
+import java.util.List;
+
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.model.ServerState;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 
 /**
  * Stop (terminate) a server.
  */
-public class StopServerAction extends TreeNodeActionAdapter {
+public class StopServerAction extends TreeNodeActionGroupAdapter {
 
-	public StopServerAction(Shell shell, ISelectionProvider selectionProvider) {
-		super(shell, selectionProvider, Messages.actionStop);
-		setToolTipText(Messages.actionStopToolTip);
+	public StopServerAction(Shell shell, ISelectionProvider selectionProvider,
+			List<Action> actions) {
+		super(shell, selectionProvider, actions);
 		setImageDescriptor(ImageResources
 				.getImageDescriptor(ImageResources.IMG_ELCL_STOP));
 		setHoverImageDescriptor(ImageResources
 				.getImageDescriptor(ImageResources.IMG_CLCL_STOP));
 		setDisabledImageDescriptor(ImageResources
 				.getImageDescriptor(ImageResources.IMG_DLCL_STOP));
-		// setActionDefinitionId("org.eclipse.wst.server.stop");
-		try {
-			selectionChanged((IStructuredSelection) selectionProvider
-					.getSelection());
-		} catch (Exception e) {
-			// ignore
-		}
 	}
 
 	/**
@@ -51,57 +48,11 @@ public class StopServerAction extends TreeNodeActionAdapter {
 	 */
 	@Override
 	protected boolean accept(Server server) {
-		return server.canStop().isOK();
-	}
-
-	/**
-	 * Perform action on this server.
-	 * 
-	 * @param server
-	 *            a server
-	 */
-	@Override
-	protected void perform(Server server) {
-		stop(server, shell);
-	}
-
-	public static void stop(Server server, Shell shell) {
-		// ServerUIPlugin.addTerminationWatch(shell, server,
-		// ServerUIPlugin.STOP); // TODO - should redo
-		//
-		// IJobManager jobManager = Job.getJobManager();
-		// Job[] jobs = jobManager.find(ServerUtil.SERVER_JOB_FAMILY);
-		// for (Job j: jobs) {
-		// if (j instanceof Server.StartJob) {
-		// Server.StartJob startJob = (Server.StartJob) j;
-		// if (startJob.getServer().equals(server)) {
-		// startJob.cancel();
-		// return;
-		// }
-		// }
-		// }
-
-		if (!server.canStartServer()) {
-			// Server cannot start a MongoDB server (server is not local)
-			// connect it.
-			server.disconnect();
-		} else {
-			try {
-				server.stop(false);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		for (Action action : actions) {
+			if (((AbstractTreeNodeAction) action).accept(server)) {
+				return true;
 			}
 		}
-	}
-
-	@Override
-	protected boolean accept(Database database) {
-		return database.canStopShell();
-	}
-
-	@Override
-	protected void perform(Database database) {
-		database.stopShell();
+		return false;
 	}
 }

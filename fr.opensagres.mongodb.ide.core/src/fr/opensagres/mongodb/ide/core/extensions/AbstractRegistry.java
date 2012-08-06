@@ -1,15 +1,10 @@
-package fr.opensagres.mongodb.ide.ui.registry;
+package fr.opensagres.mongodb.ide.core.extensions;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public abstract class AbstractRegistry implements IRegistryChangeListener {
 
@@ -60,24 +55,24 @@ public abstract class AbstractRegistry implements IRegistryChangeListener {
 		return registryListenerIntialized;
 	}
 
-	protected Image getIconImage(IConfigurationElement cfig) {
-		ImageDescriptor imageDescriptor = getIconImageDescriptor(cfig);
-		if (imageDescriptor != null) {
-			return JFaceResources.getResources().createImageWithDefault(
-					imageDescriptor);
-
-		}
-		return null;
-	}
-
-	protected ImageDescriptor getIconImageDescriptor(IConfigurationElement cfig) {
-		String strIcon = cfig.getAttribute(ICON_ATTR);//$NON-NLS-1$
-		if (strIcon != null) {
-			return AbstractUIPlugin.imageDescriptorFromPlugin(
-					cfig.getNamespaceIdentifier(), strIcon);
-		}
-		return null;
-	}
+//	protected Image getIconImage(IConfigurationElement cfig) {
+//		ImageDescriptor imageDescriptor = getIconImageDescriptor(cfig);
+//		if (imageDescriptor != null) {
+//			return JFaceResources.getResources().createImageWithDefault(
+//					imageDescriptor);
+//
+//		}
+//		return null;
+//	}
+//
+//	protected ImageDescriptor getIconImageDescriptor(IConfigurationElement cfig) {
+//		String strIcon = cfig.getAttribute(ICON_ATTR);//$NON-NLS-1$
+//		if (strIcon != null) {
+//			return AbstractUIPlugin.imageDescriptorFromPlugin(
+//					cfig.getNamespaceIdentifier(), strIcon);
+//		}
+//		return null;
+//	}
 
 	protected abstract void loadRegistry();
 

@@ -79,19 +79,6 @@ public class Database extends TreeContainerNode<Server> {
 			}
 		}
 		return db;
-
-	}
-
-	public void startShell() {
-		if (Platform.hasServerLauncherManager()) {
-			Platform.getServerLauncherManager().startShell(this);
-		}
-	}
-
-	public void stopShell() {
-		if (Platform.hasServerLauncherManager()) {
-			Platform.getServerLauncherManager().stopShell(this);
-		}
 	}
 
 	public String getId() {

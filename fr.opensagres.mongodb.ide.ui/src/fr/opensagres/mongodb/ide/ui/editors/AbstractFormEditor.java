@@ -22,9 +22,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
 
 import fr.opensagres.mongodb.ide.core.utils.StringUtils;
+import fr.opensagres.mongodb.ide.ui.internal.EditorPageDescriptor;
+import fr.opensagres.mongodb.ide.ui.internal.EditorPagesRegistry;
 import fr.opensagres.mongodb.ide.ui.internal.Trace;
-import fr.opensagres.mongodb.ide.ui.registry.EditorPageDescriptor;
-import fr.opensagres.mongodb.ide.ui.registry.EditorPagesRegistry;
 
 /**
  * Abstract Form Editor.

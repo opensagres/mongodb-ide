@@ -17,7 +17,6 @@ import com.mongodb.MongoURI;
 import com.mongodb.tools.shell.ShellCommandManager;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
-import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
 import fr.opensagres.mongodb.ide.core.internal.Activator;
 import fr.opensagres.mongodb.ide.core.internal.Messages;
@@ -181,17 +180,17 @@ public class Server extends TreeContainerNode<Server> implements
 		}
 	}
 
-	public void start() throws Exception {
-		if (Platform.hasServerLauncherManager()) {
-			Platform.getServerLauncherManager().start(this);
-		}
-	}
-
-	public void stop(boolean force) throws Exception {
-		if (Platform.hasServerLauncherManager()) {
-			Platform.getServerLauncherManager().stop(this, force);
-		}
-	}
+//	public void start() throws Exception {
+//		if (Platform.hasServerLauncherManager()) {
+//			Platform.getServerLauncherManager().start(this);
+//		}
+//	}
+//
+//	public void stop(boolean force) throws Exception {
+//		if (Platform.hasServerLauncherManager()) {
+//			Platform.getServerLauncherManager().stop(this, force);
+//		}
+//	}
 
 	public void setRuntime(MongoRuntime runtime) {
 		this.runtime = runtime;
@@ -218,15 +217,15 @@ public class Server extends TreeContainerNode<Server> implements
 	 * 
 	 * @return boolean
 	 */
-	public IStatus canStop() {
-		if (getServerState() == ServerState.Stopped
-				|| getServerState() == ServerState.Stopping
-				|| getServerState() == ServerState.Disconnected)
-			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-					Messages.errorStopAlreadyStopped, null);
-
-		return Status.OK_STATUS;
-	}
+//	public IStatus canStop() {
+//		if (getServerState() == ServerState.Stopped
+//				|| getServerState() == ServerState.Stopping
+//				|| getServerState() == ServerState.Disconnected)
+//			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+//					Messages.errorStopAlreadyStopped, null);
+//
+//		return Status.OK_STATUS;
+//	}
 
 	/**
 	 * Adds the given server state listener to this server. Once registered, a
@@ -354,28 +353,18 @@ public class Server extends TreeContainerNode<Server> implements
 				|| serverState == ServerState.Connected;
 	}
 
-	public void connect() throws UnknownHostException, MongoException {
-		setServerState(ServerState.Connecting);
-		// Try to connect
-		// MongoDriverHelper.tryConnection(getMongo());
-		// Connection is OK, update the server state as connected.
-		setServerState(ServerState.Connected);
-	}
+//	public void connect() throws UnknownHostException, MongoException {
+//		setServerState(ServerState.Connecting);
+//		// Try to connect
+//		// MongoDriverHelper.tryConnection(getMongo());
+//		// Connection is OK, update the server state as connected.
+//		setServerState(ServerState.Connected);
+//	}
 
-	public void disconnect() {
-		disposeMongo();
-		setServerState(ServerState.Disconnected);
-	}
-
-	public boolean canStartServer() {
-		if (!Platform.hasServerLauncherManager()) {
-			return false;
-		}
-		if (!hasRuntime()) {
-			return false;
-		}
-		return true;
-	}
+//	public void disconnect() {
+//		disposeMongo();
+//		setServerState(ServerState.Disconnected);
+//	}
 
 	public Database findDatabase(String databaseName) {
 		List<TreeSimpleNode> children = getChildren();

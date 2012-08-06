@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: fr.opensagres.mongodb.ide.ui; singleton:=true
 Bundle-Version: 1.0.0.qualifier

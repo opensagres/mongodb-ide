@@ -3,6 +3,7 @@ package fr.opensagres.mongodb.ide.ui.editors.server;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
@@ -13,6 +14,7 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 import fr.opensagres.mongodb.ide.ui.FormLayoutFactory;
+import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.singlesourcing.SingleSourcingUtils;
@@ -20,11 +22,13 @@ import fr.opensagres.mongodb.ide.ui.singlesourcing.SingleSourcingUtils;
 public class OverviewPage extends AbstractToolbarFormPage {
 
 	public static final String ID = "overview";
-	private Text hostText;
+	
+	private Text mongoURIText;
 	private Text serverNameText;
-	private Text portText;
+	private Combo hostCombo;
+	private Combo portCombo;
 	private Text databaseText;
-
+	
 	public OverviewPage(ServerEditor editor) {
 		super(editor, ID, Messages.OverviewPage_title);
 	}
@@ -79,19 +83,28 @@ public class OverviewPage extends AbstractToolbarFormPage {
 		gridData.widthHint = 150;
 		serverNameText.setLayoutData(gridData);
 
-		// Host
-		toolkit.createLabel(sbody, Messages.hostLabel);
-		hostText = toolkit.createText(sbody, "", SWT.SINGLE);
+		// Mongo URI
+		toolkit.createLabel(sbody, Messages.mongoURILabel);
+		mongoURIText = toolkit.createText(sbody, "", SWT.SINGLE);
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
-		hostText.setLayoutData(gridData);
+		mongoURIText.setLayoutData(gridData);
+
+		// Host
+		toolkit.createLabel(sbody, Messages.hostLabel);
+		hostCombo = new Combo(sbody, SWT.BORDER);
+		hostCombo.setItems(ServerUI.getLocalhosts());
+		gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		hostCombo.setLayoutData(gridData);
 
 		// Port
 		toolkit.createLabel(sbody, Messages.portLabel);
-		portText = toolkit.createText(sbody, "", SWT.SINGLE);
+		portCombo = new Combo(sbody, SWT.BORDER);
+		portCombo.setItems(ServerUI.getDefaultPorts());
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
-		portText.setLayoutData(gridData);
+		portCombo.setLayoutData(gridData);
 
 		// Database
 		toolkit.createLabel(sbody, Messages.databaseLabel);
@@ -108,11 +121,12 @@ public class OverviewPage extends AbstractToolbarFormPage {
 
 	private void initialize() {
 		Server server = ((ServerEditor) getEditor()).getModelObject();
+		mongoURIText.setText(server.getMongoURI().toString());
 		serverNameText.setText(server.getName());
-		hostText.setText(server.getHost());
+		hostCombo.setText(server.getHost());
 		Integer port = server.getPort();
 		if (port != null) {
-			hostText.setText(String.valueOf(port));
+			portCombo.setText(String.valueOf(port));
 		}
 		String database = server.getDatabaseName();
 		if (StringUtils.isNotEmpty(database)) {

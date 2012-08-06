@@ -63,8 +63,7 @@ public class StartJob extends ServerJob {
 							} catch (Exception e) {
 								if (Trace.SEVERE) {
 									Trace.trace(Trace.STRING_SEVERE,
-											"Error notifying server start",
-											e);
+											"Error notifying server start", e);
 								}
 							}
 						}
@@ -90,8 +89,8 @@ public class StartJob extends ServerJob {
 						totalTimeout = 1;
 					boolean userCancelled = false;
 					int retryPeriod = 1000;
-					while (!notified[0] && totalTimeout > 0
-							&& !userCancelled && !timer.alreadyDone) {
+					while (!notified[0] && totalTimeout > 0 && !userCancelled
+							&& !timer.alreadyDone) {
 						Thread.sleep(retryPeriod);
 						if (serverTimeout > 0)
 							totalTimeout -= retryPeriod;
@@ -100,8 +99,7 @@ public class StartJob extends ServerJob {
 							// user canceled - set the server state to
 							// stopped
 							userCancelled = true;
-							ILaunch launch = getServer().getData(
-									ILaunch.class);
+							ILaunch launch = getServer().getData(ILaunch.class);
 							if (launch != null && !launch.isTerminated())
 								launch.terminate();
 							// notify waiter
@@ -115,8 +113,7 @@ public class StartJob extends ServerJob {
 							}
 						}
 					}
-					if (!userCancelled && !timer.alreadyDone
-							&& !notified[0]) {
+					if (!userCancelled && !timer.alreadyDone && !notified[0]) {
 						// notify waiter
 						synchronized (notified) {
 							if (Trace.FINEST) {
@@ -185,36 +182,36 @@ public class StartJob extends ServerJob {
 		if (timer.timeout) {
 			// stop(false);
 			try {
-				server.stop(false);
+				ServerLauncherManager.stop(server, false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-					NLS.bind(Messages.errorStartTimeout, new String[] {
-							getName(), (serverTimeout / 1000) + "" }), null);
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, NLS.bind(
+					Messages.errorStartTimeout, new String[] { getName(),
+							(serverTimeout / 1000) + "" }), null);
 		}
 
 		if (!monitor.isCanceled()
 				&& server.getServerState() == ServerState.Stopped)
-			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-					NLS.bind(Messages.errorStartFailed, getName()), null);
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, NLS.bind(
+					Messages.errorStartFailed, getName()), null);
 
 		if (Trace.FINEST) {
 			Trace.trace(Trace.STRING_FINEST, "synchronousStart 4");
 		}
 		return Status.OK_STATUS;
 	}
-	
+
 	private void startImpl2(String launchMode2, IProgressMonitor monitor)
 			throws CoreException {
 		Server server = getServer();
 		try {
-			ILaunchConfiguration launchConfig = ServerLauncherManager.getLaunchConfiguration(
-					server, true, monitor);
+			ILaunchConfiguration launchConfig = ServerLauncherManager
+					.getLaunchConfiguration(server, true, monitor);
 			if (launchConfig != null) {
-				ILaunch launch = launchConfig.launch(
-						ILaunchManager.RUN_MODE, monitor); // , true); -
+				ILaunch launch = launchConfig.launch(ILaunchManager.RUN_MODE,
+						monitor); // , true); -
 				// causes
 				// workspace
 				// lock

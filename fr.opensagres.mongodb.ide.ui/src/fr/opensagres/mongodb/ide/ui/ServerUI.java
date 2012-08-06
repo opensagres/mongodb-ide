@@ -24,6 +24,19 @@ import fr.opensagres.mongodb.ide.ui.internal.Trace;
 
 public class ServerUI {
 
+	private static final String[] LOCALHOSTS = new String[] { "localhost",
+			"127.0.0.1" };
+
+	private static final String[] DEFAULT_PORTS = new String[] { "27017" };
+
+	public static String[] getLocalhosts() {
+		return LOCALHOSTS;
+	}
+
+	public static String[] getDefaultPorts() {
+		return DEFAULT_PORTS;
+	}
+
 	/**
 	 * Open the given server with the server editor.
 	 * 
@@ -115,7 +128,7 @@ public class ServerUI {
 			}
 		}
 	}
-	
+
 	/**
 	 * Open the given document with the document editor.
 	 * 
@@ -133,9 +146,10 @@ public class ServerUI {
 			page.openEditor(input, DocumentEditor.ID);
 		} catch (Exception e) {
 			if (Trace.SEVERE) {
-				Trace.trace(Trace.STRING_SEVERE, "Error opening document editor",
-						e);
+				Trace.trace(Trace.STRING_SEVERE,
+						"Error opening document editor", e);
 			}
 		}
-	}	
+	}
+
 }

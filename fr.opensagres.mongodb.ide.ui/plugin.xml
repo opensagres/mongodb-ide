@@ -2,6 +2,9 @@
 <?eclipse version="3.4"?>
 <plugin>
 
+   <extension-point id="editorPages" name="%editorPagesContributionName"
+		schema="schema/editorPages.exsd" />
+		
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">

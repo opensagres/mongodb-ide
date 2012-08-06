@@ -3,7 +3,13 @@ package fr.opensagres.mongodb.ide.ui.editors.collection;
 import java.net.UnknownHostException;
 import java.util.Locale;
 
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.nebula.widgets.pagination.tree.PageableTree;
@@ -12,17 +18,25 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
 import fr.opensagres.mongodb.ide.core.model.Collection;
+import fr.opensagres.mongodb.ide.core.model.Database;
+import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.model.Users;
+import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
+import fr.opensagres.mongodb.ide.ui.internal.Trace;
 import fr.opensagres.mongodb.ide.ui.viewers.DBObjectContentProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.DBObjectKeyColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.DBObjectPageResultLoader;
@@ -91,6 +105,7 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 				dbCollection, getColllection().getShellCommandManager()));
 		pageableTree.setCurrentPage(0);
 
+		initialize(viewer);
 	}
 
 	public Collection getColllection() {
@@ -117,7 +132,71 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 				DBObjectTypeColumnLabelProvider.getInstance());
 		// col.getColumn().addSelectionListener(
 		// new SortTreeColumnSelectionListener("address.name"));
+//		
+//		TableColumnLayout layout = new TableColumnLayout();
+//		comp.setLayout( layout );
+//		// 4
+//		layout.setColumnData( column1, new ColumnWeightData( 30 ) );
+//		layout.setColumnData( column2, new ColumnWeightData( 60 ) );
 
 	}
 
+	private void initialize(final TreeViewer viewer) {
+		// Open Server, Database, Collection editor when user double click on
+		// the node
+		viewer.addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				try {
+					IStructuredSelection sel = (IStructuredSelection) event
+							.getSelection();
+					Object data = sel.getFirstElement();
+					if (data instanceof BasicDBObject) {
+						ServerUI.editDocument((BasicDBObject) data,
+								getColllection());
+					}
+				} catch (Exception e) {
+					if (Trace.SEVERE) {
+						Trace.trace(Trace.STRING_SEVERE,
+								"Could not open document", e);
+					}
+				}
+			}
+		});
+
+		MenuManager menuManager = new MenuManager("#PopupMenu");
+		menuManager.setRemoveAllWhenShown(true);
+		final Shell shell = getSite().getShell();
+		menuManager.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager mgr) {
+				fillContextMenu(shell, mgr, viewer);
+			}
+		});
+		Menu menu = menuManager.createContextMenu(viewer.getControl());
+		viewer.getControl().setMenu(menu);
+		getSite().registerContextMenu(menuManager, viewer);
+		getSite().setSelectionProvider(viewer);
+	}
+
+	protected void fillContextMenu(Shell shell, IMenuManager menu,
+			TreeViewer viewer) {
+		// get selection but avoid no selection or multiple selection
+		Server server = null;
+		Database database = null;
+		Collection collection = null;
+		Users users = null;
+		IStructuredSelection selection = (IStructuredSelection) viewer
+				.getSelection();
+		if (selection.size() == 1) {
+			Object obj = selection.getFirstElement();
+			if (obj instanceof Server) {
+				server = (Server) obj;
+			} else if (obj instanceof Database) {
+				database = (Database) obj;
+			} else if (obj instanceof Collection) {
+				collection = (Collection) obj;
+			} else if (obj instanceof Users) {
+				users = (Users) obj;
+			}
+		}
+	}
 }

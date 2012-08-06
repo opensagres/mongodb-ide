@@ -7,6 +7,7 @@ import com.mongodb.DBObject;
 
 import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
+import fr.opensagres.mongodb.ide.core.model.Document;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.Users;
 import fr.opensagres.mongodb.ide.ui.editors.collection.CollectionEditor;
@@ -130,11 +131,22 @@ public class ServerUI {
 	}
 
 	/**
+	 * Open the given DB Object with the document editor.
+	 * 
+	 * @param document
+	 */
+	public static void editDocument(DBObject dbObject, Collection collection) {
+		if (dbObject == null)
+			return;
+		editDocument(new Document(dbObject, collection));
+	}
+
+	/**
 	 * Open the given document with the document editor.
 	 * 
 	 * @param document
 	 */
-	public static void editDocument(DBObject document) {
+	public static void editDocument(Document document) {
 		if (document == null)
 			return;
 

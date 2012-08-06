@@ -1,13 +1,15 @@
 package fr.opensagres.mongodb.ide.core.model;
 
 import com.mongodb.DBObject;
+import com.mongodb.tools.driver.DBObjectHelper;
 
 public class Document extends TreeSimpleNode<Collection> {
 
 	private DBObject dbObject;
 
-	public Document(DBObject dbObject) {
+	public Document(DBObject dbObject, Collection collection) {
 		this.dbObject = dbObject;
+		super.setParent(collection);
 	}
 
 	@Override
@@ -16,14 +18,15 @@ public class Document extends TreeSimpleNode<Collection> {
 	}
 
 	public String getLabel() {
-		return dbObject.toString();
+		return getId();
 	}
 
 	public String getId() {
-		return null;
+		return "TODO"; //DBObjectHelper.getId(dbObject);
 	}
 
 	public String getName() {
-		return "";
+		return getId();
 	}
+
 }

@@ -2,6 +2,8 @@ package fr.opensagres.mongodb.ide.core.utils;
 
 public class StringUtils {
 
+	public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
 	/**
 	 * <p>
 	 * Checks if a String is empty ("") or null.

@@ -7,7 +7,6 @@ import com.mongodb.DB;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
-import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 
 public class Database extends TreeContainerNode<Server> {
@@ -16,10 +15,12 @@ public class Database extends TreeContainerNode<Server> {
 	private String id;
 	private DB db;
 	private Object launch;
+	private boolean alreadyAuthenticated;
 
 	public Database(String name) {
 		super();
 		this.name = name;
+		this.alreadyAuthenticated = false;
 	}
 
 	@Override
@@ -67,16 +68,23 @@ public class Database extends TreeContainerNode<Server> {
 	}
 
 	public DB getDB() throws UnknownHostException, MongoException {
-		if (db == null) {
-			Server server = getParent();
-			// 1) use databseName
-			db = getShellCommandManager().use(getName(), server.getMongo());
-			String username = server.getUsername();
-			// 2) authenticate if needed
-			if (StringUtils.isNotEmpty(username)) {
-				getShellCommandManager().authenticate(db, username,
-						server.getPassword());
-			}
+		boolean databaseChanged = getParent().selectDatabase(this);
+		if (db == null || databaseChanged) {
+			db = getInternalDB();
+		}
+		return db;
+	}
+
+	private DB getInternalDB() throws UnknownHostException, MongoException {
+		Server server = getParent();
+		// 1) use databseName
+		DB db = getShellCommandManager().use(getName(), server.getMongo());
+		String username = server.getUsername();
+		// 2) authenticate if needed
+		if (StringUtils.isNotEmpty(username) && !alreadyAuthenticated) {
+			getShellCommandManager().authenticate(db, username,
+					server.getPassword());
+			alreadyAuthenticated = true;
 		}
 		return db;
 	}

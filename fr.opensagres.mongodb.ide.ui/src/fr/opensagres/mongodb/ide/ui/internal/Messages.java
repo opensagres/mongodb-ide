@@ -58,29 +58,33 @@ public class Messages extends NLS {
 	public static String server_label;
 	public static String database_label;
 	public static String collection_label;
-	
+
 	// Server editor
 	public static String serverEditorOverviewGeneralSection;
 	public static String serverEditorOverviewGeneralDescription;
 	public static String serverEditorOverviewTimeoutSection;
 	public static String serverEditorOverviewTimeoutDescription;
-	public static String mongoURILabel;	
+	public static String mongoURILabel;
 	public static String serverNameLabel;
 	public static String hostLabel;
 	public static String portLabel;
 	public static String databaseLabel;
-	
+	public static String document_label;
+
 	// Editor Database
 	public static String databaseEditorOverviewGeneralDescription;
 	public static String databaseEditorOverviewGeneralSection;
-	public static String StaticsPage_title;
+	public static String databaseEditorOverviewShellDescription;
+	public static String databaseEditorOverviewShellSection;
+	public static String databaseEditorOverviewStatsSection;
+	public static String databaseEditorOvervieStatsDescription;
 
-	// Collection Editor 
+	// Collection Editor
 	public static String DocumentsPage_title;
-	
+
 	// Document Editor
 	public static String JSONTextPage_title;
-	
+
 	// Editor Users
 	public static String UsersPage_title;
 
@@ -90,7 +94,7 @@ public class Messages extends NLS {
 	public static String columnType;
 	public static String columnUsername;
 	public static String columnReadonly;
-	
+
 	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_title;
 	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_desc;
 	public static String UserEditor_UsersPage_UserDetailsPage_title;

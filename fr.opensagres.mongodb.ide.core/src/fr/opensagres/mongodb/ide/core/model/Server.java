@@ -7,10 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
+import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
@@ -18,8 +17,6 @@ import com.mongodb.tools.shell.ShellCommandManager;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
-import fr.opensagres.mongodb.ide.core.internal.Activator;
-import fr.opensagres.mongodb.ide.core.internal.Messages;
 import fr.opensagres.mongodb.ide.core.internal.ServerNotificationManager;
 import fr.opensagres.mongodb.ide.core.internal.Trace;
 import fr.opensagres.mongodb.ide.core.internal.settings.AbstractSettings;
@@ -39,6 +36,8 @@ public class Server extends TreeContainerNode<Server> implements
 	private Mongo mongo;
 	private ServerNotificationManager notificationManager;
 	private Map dataCache = new HashMap();
+
+	private Database currentDatabase;
 
 	public Server(String name, MongoURI mongoURI) {
 		this(String.valueOf(System.currentTimeMillis()), name, mongoURI);
@@ -180,17 +179,17 @@ public class Server extends TreeContainerNode<Server> implements
 		}
 	}
 
-//	public void start() throws Exception {
-//		if (Platform.hasServerLauncherManager()) {
-//			Platform.getServerLauncherManager().start(this);
-//		}
-//	}
-//
-//	public void stop(boolean force) throws Exception {
-//		if (Platform.hasServerLauncherManager()) {
-//			Platform.getServerLauncherManager().stop(this, force);
-//		}
-//	}
+	// public void start() throws Exception {
+	// if (Platform.hasServerLauncherManager()) {
+	// Platform.getServerLauncherManager().start(this);
+	// }
+	// }
+	//
+	// public void stop(boolean force) throws Exception {
+	// if (Platform.hasServerLauncherManager()) {
+	// Platform.getServerLauncherManager().stop(this, force);
+	// }
+	// }
 
 	public void setRuntime(MongoRuntime runtime) {
 		this.runtime = runtime;
@@ -217,15 +216,15 @@ public class Server extends TreeContainerNode<Server> implements
 	 * 
 	 * @return boolean
 	 */
-//	public IStatus canStop() {
-//		if (getServerState() == ServerState.Stopped
-//				|| getServerState() == ServerState.Stopping
-//				|| getServerState() == ServerState.Disconnected)
-//			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-//					Messages.errorStopAlreadyStopped, null);
-//
-//		return Status.OK_STATUS;
-//	}
+	// public IStatus canStop() {
+	// if (getServerState() == ServerState.Stopped
+	// || getServerState() == ServerState.Stopping
+	// || getServerState() == ServerState.Disconnected)
+	// return new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+	// Messages.errorStopAlreadyStopped, null);
+	//
+	// return Status.OK_STATUS;
+	// }
 
 	/**
 	 * Adds the given server state listener to this server. Once registered, a
@@ -353,18 +352,18 @@ public class Server extends TreeContainerNode<Server> implements
 				|| serverState == ServerState.Connected;
 	}
 
-//	public void connect() throws UnknownHostException, MongoException {
-//		setServerState(ServerState.Connecting);
-//		// Try to connect
-//		// MongoDriverHelper.tryConnection(getMongo());
-//		// Connection is OK, update the server state as connected.
-//		setServerState(ServerState.Connected);
-//	}
+	// public void connect() throws UnknownHostException, MongoException {
+	// setServerState(ServerState.Connecting);
+	// // Try to connect
+	// // MongoDriverHelper.tryConnection(getMongo());
+	// // Connection is OK, update the server state as connected.
+	// setServerState(ServerState.Connected);
+	// }
 
-//	public void disconnect() {
-//		disposeMongo();
-//		setServerState(ServerState.Disconnected);
-//	}
+	// public void disconnect() {
+	// disposeMongo();
+	// setServerState(ServerState.Disconnected);
+	// }
 
 	public Database findDatabase(String databaseName) {
 		List<TreeSimpleNode> children = getChildren();
@@ -420,4 +419,19 @@ public class Server extends TreeContainerNode<Server> implements
 		fireServerSavedChangeEvent();
 	}
 
+	/**
+	 * Select the given database and returns true if current database is not the
+	 * same than the given database.
+	 * 
+	 * @param database
+	 * @return
+	 */
+	protected boolean selectDatabase(Database database) {
+		if (currentDatabase == null) {
+			return true;
+		}
+		boolean result = currentDatabase.getId().equals(database.getId());
+		currentDatabase = database;
+		return result;
+	}
 }

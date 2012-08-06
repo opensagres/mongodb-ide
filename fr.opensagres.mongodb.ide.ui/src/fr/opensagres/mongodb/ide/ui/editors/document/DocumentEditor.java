@@ -3,12 +3,11 @@ package fr.opensagres.mongodb.ide.ui.editors.document;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.PartInitException;
 
-import com.mongodb.DBObject;
-
+import fr.opensagres.mongodb.ide.core.model.Document;
 import fr.opensagres.mongodb.ide.ui.editors.ModelFormEditor;
 
 public class DocumentEditor extends
-		ModelFormEditor<DocumentEditorInput, DBObject> {
+		ModelFormEditor<DocumentEditorInput, Document> {
 
 	public static final String ID = "fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor";
 
@@ -24,13 +23,13 @@ public class DocumentEditor extends
 	}
 
 	@Override
-	protected DBObject onLoad(DocumentEditorInput input) throws Exception {
+	protected Document onLoad(DocumentEditorInput input) throws Exception {
 		return input.getModel();
 	}
 
 	@Override
 	protected void onSave(IProgressMonitor monitor) {
-		
+
 	}
 
 }

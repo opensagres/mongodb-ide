@@ -1,5 +1,7 @@
 package fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.mongo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
@@ -12,6 +14,7 @@ import org.eclipse.debug.core.model.IProcess;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.MongoRuntime;
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 import fr.opensagres.mongodb.ide.launching.internal.LaunchHelper;
 import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.MongoProcessType;
 import fr.opensagres.mongodb.ide.launching.internal.launchConfigurations.ProcessLaunchConfigurationDelegate;
@@ -26,21 +29,39 @@ public class MongoLaunchConfigurationDelegate extends
 	@Override
 	protected String[] getArguments(ILaunchConfiguration configuration,
 			MongoRuntime runtime) throws CoreException {
+		List<String> args = new ArrayList<String>();
+
 		Database database = LaunchHelper.getDatabase(configuration);
 		Server server = database.getParent();
 		Integer port = server.getPort();
-
 		// see
 		// http://www.mongodb.org/display/DOCS/Overview+-+The+MongoDB+Interactive+Shell
-		StringBuilder arg = new StringBuilder();
-		arg.append(server.getHost());
+
+		// Host+Port
+		StringBuilder hostPortAndDatabase = new StringBuilder();
+		hostPortAndDatabase.append(server.getHost());
 		if (port != null) {
-			arg.append(":");
-			arg.append(port.toString());
+			hostPortAndDatabase.append(":");
+			hostPortAndDatabase.append(port.toString());
 		}
-		arg.append("/");
-		arg.append(database.getName());
-		return new String[] { arg.toString() };
+		// Database
+		hostPortAndDatabase.append("/");
+		hostPortAndDatabase.append(database.getName());
+
+		args.add(hostPortAndDatabase.toString());
+
+		// Username+password
+		String username = server.getUsername();
+		if (StringUtils.isNotEmpty(username)) {
+			args.add("-u");
+			args.add(username);
+		}
+		char[] password = server.getPassword();
+		if (password != null && password.length > 0) {
+			args.add("-p");
+			args.add(String.valueOf(password));
+		}
+		return args.toArray(StringUtils.EMPTY_STRING_ARRAY);
 	}
 
 	@Override

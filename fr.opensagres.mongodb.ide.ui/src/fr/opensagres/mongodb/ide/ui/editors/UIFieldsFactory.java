@@ -13,6 +13,8 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
+import fr.opensagres.mongodb.ide.core.model.Collection;
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
@@ -54,4 +56,76 @@ public class UIFieldsFactory {
 		return serverLabel;
 
 	}
+	
+	public static Label createDatabaseField(Composite parent,
+			FormToolkit toolkit, final Database database) {
+		// Database
+		Hyperlink databaseHyperlink = toolkit.createHyperlink(parent,
+				Messages.database_label, SWT.NONE);
+		databaseHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent ev) {
+				ServerUI.editDatabase(database);
+
+			}
+		});
+		final Label databaseLabel = toolkit.createLabel(parent, "", SWT.SINGLE);
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		databaseLabel.setLayoutData(gridData);
+
+//		final IDatabaseListener databaseListener = new IDatabaseListener() {
+//
+//			public void databaseChanged(DatabaseEvent event) {
+//				databaseLabel.setText(database.getName());
+//
+//			}
+//		};
+//		database.addDatabaseListener(databaseListener);
+//
+//		databaseLabel.addDisposeListener(new DisposeListener() {
+//
+//			public void widgetDisposed(DisposeEvent e) {
+//				database.removeDatabaseListener(databaseListener);
+//			}
+//		});
+		return databaseLabel;
+
+	}
+	
+	public static Label createCollectionField(Composite parent,
+			FormToolkit toolkit, final Collection collection) {
+		// Collection
+		Hyperlink collectionHyperlink = toolkit.createHyperlink(parent,
+				Messages.collection_label, SWT.NONE);
+		collectionHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
+			@Override
+			public void linkActivated(HyperlinkEvent ev) {
+				ServerUI.editCollection(collection);
+
+			}
+		});
+		final Label collectionLabel = toolkit.createLabel(parent, "", SWT.SINGLE);
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		collectionLabel.setLayoutData(gridData);
+
+//		final ICollectionListener collectionListener = new ICollectionListener() {
+//
+//			public void collectionChanged(CollectionEvent event) {
+//				collectionLabel.setText(collection.getName());
+//
+//			}
+//		};
+//		collection.addCollectionListener(collectionListener);
+//
+//		collectionLabel.addDisposeListener(new DisposeListener() {
+//
+//			public void widgetDisposed(DisposeEvent e) {
+//				collection.removeCollectionListener(collectionListener);
+//			}
+//		});
+		return collectionLabel;
+
+	}	
 }

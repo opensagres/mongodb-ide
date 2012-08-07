@@ -18,6 +18,13 @@ package fr.opensagres.mongodb.ide.core.extensions;
 public interface IShellRunnerType {
 
 	/**
+	 * Return the identifier of the runtime.
+	 * 
+	 * @return
+	 */
+	String getId();
+
+	/**
 	 * Return the start name of the shell runner.
 	 * 
 	 * @return

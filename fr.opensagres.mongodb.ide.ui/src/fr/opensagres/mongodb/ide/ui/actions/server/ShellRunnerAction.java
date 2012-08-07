@@ -4,6 +4,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 
 import fr.opensagres.mongodb.ide.core.extensions.IShellRunnerType;
 import fr.opensagres.mongodb.ide.core.model.Database;
+import fr.opensagres.mongodb.ide.ui.dialogs.StackTraceErrorDialog;
 
 public class ShellRunnerAction extends TreeNodeActionAdapter {
 
@@ -26,10 +27,19 @@ public class ShellRunnerAction extends TreeNodeActionAdapter {
 	@Override
 	protected void perform(Database database) {
 		if (start) {
-			shellRunnerType.getRunner().startShell(database);
+			try {
+				shellRunnerType.getRunner().startShell(database);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 		else {
-			shellRunnerType.getRunner().stopShell(database);
+			try {
+				shellRunnerType.getRunner().stopShell(database);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

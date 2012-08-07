@@ -21,6 +21,8 @@ import org.eclipse.ui.IPersistableElement;
  */
 public abstract class AbstractEditorInput implements IEditorInput {
 
+	private String activePageIdOnLoad;
+
 	public AbstractEditorInput() {
 
 	}
@@ -39,6 +41,14 @@ public abstract class AbstractEditorInput implements IEditorInput {
 
 	public IPersistableElement getPersistable() {
 		return null;
+	}
+
+	public void setActivePageIdOnLoad(String activePageIdOnLoad) {
+		this.activePageIdOnLoad = activePageIdOnLoad;
+	}
+
+	public String getActivePageIdOnLoad() {
+		return activePageIdOnLoad;
 	}
 
 }

@@ -12,6 +12,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: fr.opensagres.mongodb.ide.core,
  fr.opensagres.mongodb.ide.core.extensions,
  fr.opensagres.mongodb.ide.core.model,
+ fr.opensagres.mongodb.ide.core.model.stats,
  fr.opensagres.mongodb.ide.core.utils
 Import-Package: com.mongodb,
  com.mongodb.tools.driver,

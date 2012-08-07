@@ -149,6 +149,10 @@ public abstract class AbstractFormEditor<EditorInput extends IEditorInput>
 	}
 
 	protected String getActivePageIdOnLoad() {
+		IEditorInput input = getEditorInput();
+		if (input instanceof AbstractEditorInput) {
+			return ((AbstractEditorInput) input).getActivePageIdOnLoad();
+		}
 		return null;
 	}
 

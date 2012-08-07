@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Set;
 
+import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -230,6 +231,11 @@ public class ShellCommandManager {
 
 	public ShellContext createContext() {
 		return new ShellContext(this);
+	}
+
+	public CommandResult getDBCollectionGetStats(DBCollection collection) {
+		CommandResult result = collection.getStats();
+		return result;
 	}
 
 }

@@ -37,6 +37,7 @@ public class ImageResources {
 	public static final String IMG_CATEGORY_16 = "category_16";
 	public static final String IMG_USERS_16 = "users_16";
 	public static final String IMG_INDEX_16 = "index_16";
+	public static final String IMG_STATS_16 = "stats_16";
 	public static final String IMG_TH_HORIZONTAL_16 = "th_horizontal_16";
 	public static final String IMG_TH_VERTICAL_16 = "th_vertical_16";
 
@@ -46,6 +47,13 @@ public class ImageResources {
 	public static final String IMG_ELCL_STOP = "stop_elcl_16";
 	public static final String IMG_CLCL_STOP = "stop_clcl_16";
 	public static final String IMG_DLCL_STOP = "stop_dlcl_16";
+
+	public static final String IMG_ELCL_START_SHELL = "start_shell_elcl_16";
+	public static final String IMG_CLCL_START_SHELL = "start_shell_clcl_16";
+	public static final String IMG_DLCL_START_SHELL = "start_shell_dlcl_16";
+	public static final String IMG_ELCL_STOP_SHELL = "stop_shell_elcl_16";
+	public static final String IMG_CLCL_STOP_SHELL = "stop_shell_clcl_16";
+	public static final String IMG_DLCL_STOP_SHELL = "stop_shell_dlcl_16";
 
 	// checkbox
 	public static final String IMG_DISABLED_CHECKED = "disabled_checked";
@@ -78,6 +86,7 @@ public class ImageResources {
 				+ "category.gif");
 		registerImage(imageRegistry, IMG_USERS_16, PATH_OBJ_16 + "users.png");
 		registerImage(imageRegistry, IMG_INDEX_16, PATH_OBJ_16 + "index.png");
+		registerImage(imageRegistry, IMG_STATS_16, PATH_OBJ_16 + "stats.png");
 		registerImage(imageRegistry, IMG_TH_HORIZONTAL_16, PATH_OBJ_16
 				+ "th_horizontal.gif");
 		registerImage(imageRegistry, IMG_TH_VERTICAL_16, PATH_OBJ_16
@@ -95,6 +104,19 @@ public class ImageResources {
 				+ "launch_stop.gif");
 		registerImage(imageRegistry, IMG_DLCL_STOP, PATH_DLCL_16
 				+ "launch_stop.gif");
+
+		registerImage(imageRegistry, IMG_ELCL_START_SHELL, PATH_ELCL_16
+				+ "start_shell.png");
+		registerImage(imageRegistry, IMG_CLCL_START_SHELL, PATH_CLCL_16
+				+ "start_shell.png");
+		registerImage(imageRegistry, IMG_DLCL_START_SHELL, PATH_DLCL_16
+				+ "start_shell.png");
+		registerImage(imageRegistry, IMG_ELCL_STOP_SHELL, PATH_ELCL_16
+				+ "stop_shell.png");
+		registerImage(imageRegistry, IMG_CLCL_STOP_SHELL, PATH_CLCL_16
+				+ "stop_shell.png");
+		registerImage(imageRegistry, IMG_DLCL_STOP_SHELL, PATH_DLCL_16
+				+ "stop_shell.png");
 
 		registerImage(imageRegistry, IMG_WIZBAN_NEW_SERVER, PATH_WIZBAN
 				+ "new_server_wiz.png");

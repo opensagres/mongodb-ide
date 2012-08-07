@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.editors.users;
+package fr.opensagres.mongodb.ide.ui.editors.database;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

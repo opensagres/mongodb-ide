@@ -14,12 +14,11 @@ import fr.opensagres.mongodb.ide.ui.editors.collection.CollectionEditor;
 import fr.opensagres.mongodb.ide.ui.editors.collection.CollectionEditorInput;
 import fr.opensagres.mongodb.ide.ui.editors.database.DatabaseEditor;
 import fr.opensagres.mongodb.ide.ui.editors.database.DatabaseEditorInput;
+import fr.opensagres.mongodb.ide.ui.editors.database.UsersPage;
 import fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor;
 import fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditorInput;
 import fr.opensagres.mongodb.ide.ui.editors.server.ServerEditor;
 import fr.opensagres.mongodb.ide.ui.editors.server.ServerEditorInput;
-import fr.opensagres.mongodb.ide.ui.editors.users.UsersEditor;
-import fr.opensagres.mongodb.ide.ui.editors.users.UsersEditorInput;
 import fr.opensagres.mongodb.ide.ui.internal.Activator;
 import fr.opensagres.mongodb.ide.ui.internal.Trace;
 
@@ -116,12 +115,26 @@ public class ServerUI {
 		if (users == null)
 			return;
 
+		editUsers(users.getParent());
+	}
+
+	/**
+	 * Open the given users with the users editor.
+	 * 
+	 * @param users
+	 */
+	public static void editUsers(Database database) {
+		if (database == null)
+			return;
+
 		IWorkbenchWindow workbenchWindow = Activator.getDefault()
 				.getWorkbench().getActiveWorkbenchWindow();
 		IWorkbenchPage page = workbenchWindow.getActivePage();
 		try {
-			UsersEditorInput input = new UsersEditorInput(users);
-			page.openEditor(input, UsersEditor.ID);
+			DatabaseEditorInput input = new DatabaseEditorInput(database);
+			// select users tab.
+			input.setActivePageIdOnLoad(UsersPage.ID);
+			page.openEditor(input, DatabaseEditor.ID);
 		} catch (Exception e) {
 			if (Trace.SEVERE) {
 				Trace.trace(Trace.STRING_SEVERE, "Error opening users editor",

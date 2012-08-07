@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.editors.users;
+package fr.opensagres.mongodb.ide.ui.editors.database;
 
 import java.util.List;
 
@@ -178,7 +178,8 @@ public class UsersMasterDetailsBlock extends AbstractMasterDetailsBlock {
 	private void init() {
 
 		try {
-			List<DBObject> users = ((UsersEditor) getEditor()).getDBUsers();
+			List<DBObject> users = ((DatabaseEditor) getEditor())
+					.getModelObject().getUsers();
 			viewer.setInput(users);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

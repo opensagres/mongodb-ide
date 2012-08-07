@@ -15,19 +15,19 @@ public class StopShellAction extends TreeNodeActionGroupAdapter {
 			List<Action> actions) {
 		super(shell, selectionProvider, actions);
 		setImageDescriptor(ImageResources
-				.getImageDescriptor(ImageResources.IMG_ELCL_STOP));
+				.getImageDescriptor(ImageResources.IMG_ELCL_STOP_SHELL));
 		setHoverImageDescriptor(ImageResources
-				.getImageDescriptor(ImageResources.IMG_CLCL_STOP));
+				.getImageDescriptor(ImageResources.IMG_CLCL_STOP_SHELL));
 		setDisabledImageDescriptor(ImageResources
-				.getImageDescriptor(ImageResources.IMG_DLCL_STOP));
+				.getImageDescriptor(ImageResources.IMG_DLCL_STOP_SHELL));
 	}
 
 	/**
-	 * Return true if this server can currently be acted on.
+	 * Return true if this database can currently be acted on.
 	 * 
 	 * @return boolean
-	 * @param server
-	 *            a server
+	 * @param database
+	 *            a database
 	 */
 	@Override
 	protected boolean accept(Database database) {

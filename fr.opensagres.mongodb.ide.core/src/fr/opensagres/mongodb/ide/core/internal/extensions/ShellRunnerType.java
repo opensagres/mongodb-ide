@@ -20,19 +20,25 @@ import fr.opensagres.mongodb.ide.core.extensions.IShellRunnerType;
  */
 public class ShellRunnerType implements IShellRunnerType {
 
+	private final String id;
 	private final String startName;
 	private final String stopName;
 	private final String startDescription;
 	private final String stopDescription;
 	private final IShellRunner runner;
 
-	public ShellRunnerType(String startName, String stopName,
+	public ShellRunnerType(String id, String startName, String stopName,
 			String startDescription, String stopDescription, IShellRunner runner) {
+		this.id = id;
 		this.startName = startName;
 		this.stopName = stopName;
 		this.startDescription = startDescription;
 		this.stopDescription = stopDescription;
 		this.runner = runner;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getStartName() {

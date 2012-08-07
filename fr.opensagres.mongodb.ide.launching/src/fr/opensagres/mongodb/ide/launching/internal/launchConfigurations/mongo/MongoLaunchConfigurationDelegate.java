@@ -37,30 +37,13 @@ public class MongoLaunchConfigurationDelegate extends
 		// see
 		// http://www.mongodb.org/display/DOCS/Overview+-+The+MongoDB+Interactive+Shell
 
-		// Host+Port
-		StringBuilder hostPortAndDatabase = new StringBuilder();
-		hostPortAndDatabase.append(server.getHost());
-		if (port != null) {
-			hostPortAndDatabase.append(":");
-			hostPortAndDatabase.append(port.toString());
-		}
-		// Database
-		hostPortAndDatabase.append("/");
-		hostPortAndDatabase.append(database.getName());
-
+		// Host+Port+Database
+		String hostPortAndDatabase = database.getStartMongoConsoleCommand();
 		args.add(hostPortAndDatabase.toString());
 
-		// Username+password
-		String username = server.getUsername();
-		if (StringUtils.isNotEmpty(username)) {
-			args.add("-u");
-			args.add(username);
-		}
-		char[] password = server.getPassword();
-		if (password != null && password.length > 0) {
-			args.add("-p");
-			args.add(String.valueOf(password));
-		}
+		// Add other args like username, password, etc
+		database.updateMongoConsoleArgs(args);
+
 		return args.toArray(StringUtils.EMPTY_STRING_ARRAY);
 	}
 

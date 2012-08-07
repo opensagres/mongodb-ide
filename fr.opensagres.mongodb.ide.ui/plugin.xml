@@ -131,15 +131,6 @@
   <extension
         point="org.eclipse.ui.editors">
      <editor
-           id="fr.opensagres.mongodb.ide.ui.editors.users.UsersEditor"
-           name="%UsersEditor.name"
-           icon="icons/obj16/users.png"           
-           extensions="users"
-           class="fr.opensagres.mongodb.ide.ui.editors.users.UsersEditor" />
-  </extension>
-  <extension
-        point="org.eclipse.ui.editors">
-     <editor
            id="fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor"
            name="%DocumentEditor.name"
            icon="icons/obj16/document.png"           

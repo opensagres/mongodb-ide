@@ -78,28 +78,32 @@ public class Messages extends NLS {
 	public static String databaseEditorOverviewShellSection;
 	public static String databaseEditorOverviewStatsSection;
 	public static String databaseEditorOvervieStatsDescription;
-
+	public static String DatabaseEditor_OverviewPage_Shell_connection;
+	public static String StatsPage_title;
+	public static String UsersPage_title;
+	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_title;
+	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_desc;
+	public static String UserEditor_UsersPage_UserDetailsPage_title;
+	public static String UserEditor_UsersPage_UserDetailsPage_desc;
+	public static String UserEditor_UsersPage_UserDetailsPage_userLabel_label;
+	public static String DatabaseEditor_OverviewPage_DatabaseContent_title;
+	public static String DatabaseEditor_OverviewPage_DatabaseContent_content;
+	
 	// Collection Editor
 	public static String DocumentsPage_title;
 
 	// Document Editor
 	public static String JSONTextPage_title;
-
-	// Editor Users
-	public static String UsersPage_title;
-
-	// Columns
+	
+	// Columns	
 	public static String columnKey;
 	public static String columnValue;
 	public static String columnType;
 	public static String columnUsername;
 	public static String columnReadonly;
 
-	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_title;
-	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_desc;
-	public static String UserEditor_UsersPage_UserDetailsPage_title;
-	public static String UserEditor_UsersPage_UserDetailsPage_desc;
-	public static String UserEditor_UsersPage_UserDetailsPage_userLabel_label;
+	public static String columnName;
+	public static String columnSize;
 
 	static {
 		// load message values from bundle file

@@ -27,4 +27,8 @@ public class InternalShellRunner extends AbstractShellRunner {
 
 	}
 
+	public boolean canSupportStop() {
+		return true;
+	}
+
 }

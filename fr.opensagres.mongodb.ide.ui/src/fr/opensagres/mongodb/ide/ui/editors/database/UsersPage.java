@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.editors.users;
+package fr.opensagres.mongodb.ide.ui.editors.database;
 
 import org.eclipse.swt.graphics.Image;
 
@@ -7,11 +7,12 @@ import fr.opensagres.mongodb.ide.ui.editors.AbstractMasterDetailsFormPage;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 
+// http://www.mongodb.org/display/DOCS/Security+and+Authentication#SecurityandAuthentication-Configuring
 public class UsersPage extends AbstractMasterDetailsFormPage {
 
 	public static final String ID = "users";
 
-	public UsersPage(UsersEditor editor) {
+	public UsersPage(DatabaseEditor editor) {
 		super(editor, ID, Messages.UsersPage_title);
 	}
 

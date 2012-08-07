@@ -24,14 +24,14 @@ public interface IShellRunner {
 	 * 
 	 * @param database
 	 */
-	void startShell(Database database);
+	void startShell(Database database) throws Exception;
 
 	/**
 	 * Stop the Mongo Shell Console for the given database.
 	 * 
 	 * @param database
 	 */
-	void stopShell(Database database);
+	void stopShell(Database database) throws Exception;
 
 	/**
 	 * Return true if the given database can support this shell runner and false
@@ -41,5 +41,13 @@ public interface IShellRunner {
 	 * @return
 	 */
 	boolean canSupport(Database database);
+
+	/**
+	 * Returns true if the shell runner support stop feature and false
+	 * otherwise.
+	 * 
+	 * @return
+	 */
+	boolean canSupportStop();
 
 }

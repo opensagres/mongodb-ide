@@ -15,11 +15,11 @@ public class StartShellAction extends TreeNodeActionGroupAdapter {
 			List<Action> actions) {
 		super(shell, selectionProvider, actions);
 		setImageDescriptor(ImageResources
-				.getImageDescriptor(ImageResources.IMG_ELCL_START));
+				.getImageDescriptor(ImageResources.IMG_ELCL_START_SHELL));
 		setHoverImageDescriptor(ImageResources
-				.getImageDescriptor(ImageResources.IMG_CLCL_START));
+				.getImageDescriptor(ImageResources.IMG_CLCL_START_SHELL));
 		setDisabledImageDescriptor(ImageResources
-				.getImageDescriptor(ImageResources.IMG_DLCL_START));
+				.getImageDescriptor(ImageResources.IMG_DLCL_START_SHELL));
 	}
 
 	/**

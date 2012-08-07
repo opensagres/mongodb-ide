@@ -20,19 +20,26 @@ import fr.opensagres.mongodb.ide.core.extensions.IServerRunnerType;
  */
 public class ServerRunnerType implements IServerRunnerType {
 
+	private final String id;
 	private final String startName;
 	private final String stopName;
 	private final String startDescription;
 	private final String stopDescription;
 	private final IServerRunner runner;
 
-	public ServerRunnerType(String startName, String stopName,
-			String startDescription, String stopDescription, IServerRunner runner) {
+	public ServerRunnerType(String id, String startName, String stopName,
+			String startDescription, String stopDescription,
+			IServerRunner runner) {
+		this.id = id;
 		this.startName = startName;
 		this.stopName = stopName;
 		this.startDescription = startDescription;
 		this.stopDescription = stopDescription;
 		this.runner = runner;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getStartName() {

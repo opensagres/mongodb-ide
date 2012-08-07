@@ -14,6 +14,8 @@ public class DatabaseEditor extends
 	@Override
 	protected void doAddPages() throws PartInitException {
 		super.addPage(new OverviewPage(this));
+		super.addPage(new StatsPage(this));
+		super.addPage(new UsersPage(this));
 	}
 
 	@Override
@@ -25,12 +27,6 @@ public class DatabaseEditor extends
 		}
 		return null;
 	}
-
-	// @Override
-	// protected String getActivePageIdOnLoad() {
-	// // select statics page on the load of the database editor.
-	// return StaticsPage.ID;
-	// }
 
 	@Override
 	protected void onSave(IProgressMonitor monitor) {

@@ -165,8 +165,10 @@ public class ServerExplorer extends ViewPart {
 		for (IShellRunnerType shellRunner : shellRunners) {
 			shellStartActions.add(new ShellRunnerAction(shellRunner, true,
 					provider));
-			shellStopActions.add(new ShellRunnerAction(shellRunner, false,
-					provider));
+			if (shellRunner.getRunner().canSupportStop()) {
+				shellStopActions.add(new ShellRunnerAction(shellRunner, false,
+						provider));
+			}
 		}
 
 		// create the start shell actions

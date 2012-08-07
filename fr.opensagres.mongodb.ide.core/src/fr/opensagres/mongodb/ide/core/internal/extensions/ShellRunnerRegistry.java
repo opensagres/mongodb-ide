@@ -33,7 +33,8 @@ import fr.opensagres.mongodb.ide.core.internal.Trace;
  * fr.opensagres.mongodb.ide.core.shellRunners" extension point.
  * 
  */
-public class ShellRunnerRegistry extends AbstractRegistry implements IShellRunnerRegistry {
+public class ShellRunnerRegistry extends AbstractRegistry implements
+		IShellRunnerRegistry {
 
 	private static final String RUNNER_ELT = "runner";
 	public static final String START_NAME_ATTR = "startName";
@@ -44,7 +45,6 @@ public class ShellRunnerRegistry extends AbstractRegistry implements IShellRunne
 	private static final String SHELL_RUNNER_MANAGER_EXTENSION_POINT = "shellRunners";
 
 	private Map<String, IShellRunnerType> runnerTypes = new HashMap<String, IShellRunnerType>();
-
 
 	/**
 	 * Return the {@link IShellRunnerType} retrieved by the given id.
@@ -128,7 +128,7 @@ public class ShellRunnerRegistry extends AbstractRegistry implements IShellRunne
 					IShellRunner runner = (IShellRunner) ce
 							.createExecutableExtension(CLASS_ATTR);
 					runnerTypes.put(id,
-							new ShellRunnerType(startName, stopName,
+							new ShellRunnerType(id, startName, stopName,
 									startDescription, stopDescription, runner));
 				} catch (CoreException e) {
 					Trace.trace(Trace.STRING_SEVERE,

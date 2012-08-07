@@ -128,7 +128,7 @@ public class ServerRunnerRegistry extends AbstractRegistry implements
 					IServerRunner runner = (IServerRunner) ce
 							.createExecutableExtension(CLASS_ATTR);
 					runnerTypes.put(id,
-							new ServerRunnerType(startName, stopName,
+							new ServerRunnerType(id, startName, stopName,
 									startDescription, stopDescription, runner));
 				} catch (CoreException e) {
 					Trace.trace(Trace.STRING_SEVERE,

@@ -104,6 +104,7 @@ public class Messages extends NLS {
 
 	public static String columnName;
 	public static String columnSize;
+	public static String columnCount;
 
 	static {
 		// load message values from bundle file

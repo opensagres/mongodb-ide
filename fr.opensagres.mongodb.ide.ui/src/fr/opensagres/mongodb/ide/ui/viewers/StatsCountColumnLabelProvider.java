@@ -5,15 +5,15 @@ import org.eclipse.swt.graphics.Image;
 import fr.opensagres.mongodb.ide.core.model.stats.CollectionStats;
 import fr.opensagres.mongodb.ide.ui.viewers.editor.GradientProgressBarColumnLabelProvider;
 
-public class StatsSizeColumnLabelProvider extends
+public class StatsCountColumnLabelProvider extends
 		GradientProgressBarColumnLabelProvider {
 
-	private static StatsSizeColumnLabelProvider instance;
+	private static StatsCountColumnLabelProvider instance;
 
-	public static StatsSizeColumnLabelProvider getInstance() {
-		synchronized (StatsSizeColumnLabelProvider.class) {
+	public static StatsCountColumnLabelProvider getInstance() {
+		synchronized (StatsCountColumnLabelProvider.class) {
 			if (instance == null) {
-				instance = new StatsSizeColumnLabelProvider();
+				instance = new StatsCountColumnLabelProvider();
 			}
 			return instance;
 		}
@@ -22,8 +22,8 @@ public class StatsSizeColumnLabelProvider extends
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			Double size = ((CollectionStats) element).getSize();
-			return size != null ? String.valueOf(size) : "";
+			double count = ((CollectionStats) element).getCount();
+			return String.valueOf(count);
 		}
 		return super.getText(element);
 	}

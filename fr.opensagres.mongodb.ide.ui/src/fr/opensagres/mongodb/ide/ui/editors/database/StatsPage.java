@@ -4,18 +4,14 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.custom.TreeEditor;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -31,6 +27,7 @@ import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.singlesourcing.SingleSourcingUtils;
 import fr.opensagres.mongodb.ide.ui.viewers.StatsContentProvider;
+import fr.opensagres.mongodb.ide.ui.viewers.StatsCountColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.StatsNameColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.StatsSizeColumnLabelProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.ViewerHelper;
@@ -85,9 +82,9 @@ public class StatsPage extends AbstractToolbarFormPage {
 		final Tree treeStats = toolkit.createTree(sbody, SWT.MULTI
 				| SWT.H_SCROLL | SWT.V_SCROLL);
 		treeStats.setLayoutData(new GridData(GridData.FILL_BOTH));
+
 		viewer = new TreeViewer(treeStats);
 		viewer.setContentProvider(StatsContentProvider.getInstance());
-		// viewer.setLabelProvider(StatsLabelProvider.getInstance());
 
 		treeStats.setHeaderVisible(true);
 		treeStats.setLinesVisible(true);
@@ -95,37 +92,38 @@ public class StatsPage extends AbstractToolbarFormPage {
 		// 3) Create Tree columns with sort of paginated list.
 		createColumns(viewer);
 
-//		treeStats.addListener(SWT.PaintItem, new Listener() {
-//			int[] percents = new int[] { 50, 30, 5, 15 };
-//
-//			public void handleEvent(Event event) {
-//				if (event.index == 1) {
-//					GC gc = event.gc;
-//					TreeItem item = (TreeItem) event.item;
-//					int index = treeStats.indexOf(item);
-//					int percent = percents[index];
-//					Color foreground = gc.getForeground();
-//					Color background = gc.getBackground();
-//					Display display = treeStats.getDisplay();
-//					gc.setForeground(display.getSystemColor(SWT.COLOR_RED));
-//					gc.setBackground(display.getSystemColor(SWT.COLOR_YELLOW));
-//					int width = (100 - 1) * percent / 100;//(column2.getWidth() - 1) * percent / 100;
-//					gc.fillGradientRectangle(event.x, event.y, width,
-//							event.height, true);
-//					Rectangle rect2 = new Rectangle(event.x, event.y,
-//							width - 1, event.height - 1);
-//					gc.drawRectangle(rect2);
-//					gc.setForeground(display
-//							.getSystemColor(SWT.COLOR_LIST_FOREGROUND));
-//					String text = percent + "%";
-//					Point size = event.gc.textExtent(text);
-//					int offset = Math.max(0, (event.height - size.y) / 2);
-//					gc.drawText(text, event.x + 2, event.y + offset, true);
-//					gc.setForeground(background);
-//					gc.setBackground(foreground);
-//				}
-//			}
-//		});
+		// treeStats.addListener(SWT.PaintItem, new Listener() {
+		// int[] percents = new int[] { 50, 30, 5, 15 };
+		//
+		// public void handleEvent(Event event) {
+		// if (event.index == 1) {
+		// GC gc = event.gc;
+		// TreeItem item = (TreeItem) event.item;
+		// int index = treeStats.indexOf(item);
+		// int percent = percents[index];
+		// Color foreground = gc.getForeground();
+		// Color background = gc.getBackground();
+		// Display display = treeStats.getDisplay();
+		// gc.setForeground(display.getSystemColor(SWT.COLOR_RED));
+		// gc.setBackground(display.getSystemColor(SWT.COLOR_YELLOW));
+		// int width = (100 - 1) * percent / 100;//(column2.getWidth() - 1) *
+		// percent / 100;
+		// gc.fillGradientRectangle(event.x, event.y, width,
+		// event.height, true);
+		// Rectangle rect2 = new Rectangle(event.x, event.y,
+		// width - 1, event.height - 1);
+		// gc.drawRectangle(rect2);
+		// gc.setForeground(display
+		// .getSystemColor(SWT.COLOR_LIST_FOREGROUND));
+		// String text = percent + "%";
+		// Point size = event.gc.textExtent(text);
+		// int offset = Math.max(0, (event.height - size.y) / 2);
+		// gc.drawText(text, event.x + 2, event.y + offset, true);
+		// gc.setForeground(background);
+		// gc.setBackground(foreground);
+		// }
+		// }
+		// });
 
 		SingleSourcingUtils.FormToolkit_paintBordersFor(toolkit, sbody);
 
@@ -145,11 +143,15 @@ public class StatsPage extends AbstractToolbarFormPage {
 	private static void createColumns(final TreeViewer viewer) {
 
 		// Name collection column
-		ViewerHelper.createColumn(viewer, Messages.columnName, 200,
+		ViewerHelper.createColumn(viewer, Messages.columnName, 150,
 				StatsNameColumnLabelProvider.getInstance());
 
-		// Name collection column
-		ViewerHelper.createColumn(viewer, Messages.columnSize, 200,
+		// Count column
+		ViewerHelper.createColumn(viewer, Messages.columnCount, 50,
+				StatsCountColumnLabelProvider.getInstance());
+
+		// Size column
+		ViewerHelper.createColumn(viewer, Messages.columnSize, 50,
 				StatsSizeColumnLabelProvider.getInstance());
 	}
 }

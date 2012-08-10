@@ -1,6 +1,7 @@
 package fr.opensagres.mongodb.ide.ui.viewers.stats;
 
 import fr.opensagres.mongodb.ide.core.model.stats.CollectionStats;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 import fr.opensagres.mongodb.ide.ui.viewers.editor.GradientProgressBarColumnLabelProvider;
 
 public class StatsCountColumnLabelProvider extends
@@ -20,8 +21,8 @@ public class StatsCountColumnLabelProvider extends
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			double count = ((CollectionStats) element).getCount();
-			return String.valueOf(count);
+			Integer count = ((CollectionStats) element).getCount();
+			return StringUtils.getValue(count);
 		}
 		return "";
 	}
@@ -33,11 +34,12 @@ public class StatsCountColumnLabelProvider extends
 	 * fr.opensagres.mongodb.ide.ui.viewers.editor.IProgressBarValueProvider
 	 * #getProgressBarValue(java.lang.Object)
 	 */
-	public double getProgressBarValue(Object element) {
+	public int getProgressBarValue(Object element) {
+		Integer value = null;
 		if (element instanceof CollectionStats) {
 			CollectionStats stats = (CollectionStats) element;
-			return Math.round(stats.getPercentCount());
+			value = stats.getPercentCount();
 		}
-		return 0;
+		return value != null ? value : 0;
 	}
 }

@@ -9,12 +9,12 @@ import fr.opensagres.mongodb.ide.core.model.Collection;
 
 public class CollectionListStats extends ArrayList<CollectionStats> {
 
-	private double totalSize;
-	private double totalCount;
-	private double totalStorage;
-	private double totalAvgObj;
-	private double totalPadding;
-	private double totalIndexSize;
+	private Integer totalSize;
+	private Integer totalCount;
+	private Integer totalStorage;
+	private Integer totalAvgObj;
+	private Integer totalPadding;
+	private Integer totalIndexSize;
 
 	public CollectionListStats(int size) {
 		super(size);
@@ -24,36 +24,37 @@ public class CollectionListStats extends ArrayList<CollectionStats> {
 
 	@Override
 	public boolean add(CollectionStats stats) {
-		totalSize += stats.getSize();
-		totalCount += stats.getCount();
-		totalStorage += stats.getStorage();
-		totalAvgObj += stats.getAvgObj();
-		totalPadding += stats.getPadding();
-		totalIndexSize += stats.getTotalIndexSize();
+		totalSize = CollectionStats.add(totalSize, stats.getSize());
+		totalCount = CollectionStats.add(totalCount, stats.getCount());
+		totalStorage = CollectionStats.add(totalStorage, stats.getStorage());
+		totalAvgObj = CollectionStats.add(totalAvgObj, stats.getAvgObj());
+		totalPadding = CollectionStats.add(totalPadding, stats.getPadding());
+		totalIndexSize = CollectionStats.add(totalIndexSize,
+				stats.getTotalIndexSize());
 		return super.add(stats);
 	}
 
-	public double getTotalSize() {
+	public Integer getTotalSize() {
 		return totalSize;
 	}
 
-	public double getTotalCount() {
+	public Integer getTotalCount() {
 		return totalCount;
 	}
 
-	public double getTotalStorage() {
+	public Integer getTotalStorage() {
 		return totalStorage;
 	}
 
-	public double getTotalAvgObj() {
+	public Integer getTotalAvgObj() {
 		return totalAvgObj;
 	}
 
-	public double getTotalPadding() {
+	public Integer getTotalPadding() {
 		return totalPadding;
 	}
 
-	public double getTotalIndexSize() {
+	public Integer getTotalIndexSize() {
 		return totalIndexSize;
 	}
 

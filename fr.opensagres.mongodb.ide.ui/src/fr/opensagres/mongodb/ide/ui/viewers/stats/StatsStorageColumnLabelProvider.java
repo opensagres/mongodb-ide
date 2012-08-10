@@ -22,7 +22,7 @@ public class StatsStorageColumnLabelProvider extends
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			double storage = ((CollectionStats) element).getStorage();
+			Integer storage = ((CollectionStats) element).getStorage();
 			return StatsHelper.formatAsBytes(storage);
 		}
 		return "";
@@ -35,11 +35,12 @@ public class StatsStorageColumnLabelProvider extends
 	 * fr.opensagres.mongodb.ide.ui.viewers.editor.IProgressBarValueProvider
 	 * #getProgressBarValue(java.lang.Object)
 	 */
-	public double getProgressBarValue(Object element) {
+	public int getProgressBarValue(Object element) {
+		Integer value = null;
 		if (element instanceof CollectionStats) {
 			CollectionStats stats = (CollectionStats) element;
-			return Math.round(stats.getPercentStorage());
+			value = stats.getPercentStorage();
 		}
-		return 0;
+		return value != null ? value : 0;
 	}
 }

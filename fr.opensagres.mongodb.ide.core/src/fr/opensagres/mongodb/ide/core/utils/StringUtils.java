@@ -43,4 +43,8 @@ public class StringUtils {
 	public static boolean isNotEmpty(String str) {
 		return str != null && str.length() > 0;
 	}
+
+	public static String getValue(Integer value) {
+		return value != null ? String.valueOf(value) : "";
+	}
 }

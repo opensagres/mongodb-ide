@@ -4,9 +4,10 @@ public class IndexStats {
 
 	private final CollectionStats collectionStats;
 	private final String id;
-	private final double indexSize;
+	private final Integer indexSize;
 
-	public IndexStats(CollectionStats collectionStats, String id, double indexSize) {
+	public IndexStats(CollectionStats collectionStats, String id,
+			Integer indexSize) {
 		this.collectionStats = collectionStats;
 		this.id = id;
 		this.indexSize = indexSize;
@@ -16,15 +17,12 @@ public class IndexStats {
 		return id;
 	}
 
-	public double getIndexSize() {
+	public Integer getIndexSize() {
 		return indexSize;
 	}
 
-	public double getPercentIndexSize() {
-		double totalSize = collectionStats.getListStats().getTotalIndexSize();
-		if (indexSize == 0) {
-			return 0;
-		}
-		return (indexSize / totalSize) * 100;
+	public Integer getPercentIndexSize() {
+		Integer totalSize = collectionStats.getListStats().getTotalIndexSize();
+		return CollectionStats.getPercent(indexSize, totalSize);
 	}
 }

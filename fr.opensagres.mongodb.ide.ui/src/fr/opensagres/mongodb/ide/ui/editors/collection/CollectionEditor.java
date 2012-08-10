@@ -29,12 +29,6 @@ public class CollectionEditor extends
 	}
 
 	@Override
-	protected String getActivePageIdOnLoad() {
-		// select "Documents" tab.
-		return DocumentsPage.ID;
-	}
-
-	@Override
 	protected void onSave(IProgressMonitor monitor) {
 
 	}

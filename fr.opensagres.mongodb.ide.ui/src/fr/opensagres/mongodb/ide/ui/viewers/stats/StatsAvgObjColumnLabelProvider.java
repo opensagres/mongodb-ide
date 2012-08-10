@@ -1,6 +1,7 @@
 package fr.opensagres.mongodb.ide.ui.viewers.stats;
 
 import fr.opensagres.mongodb.ide.core.model.stats.CollectionStats;
+import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 import fr.opensagres.mongodb.ide.ui.viewers.editor.GradientProgressBarColumnLabelProvider;
 
 public class StatsAvgObjColumnLabelProvider extends
@@ -20,8 +21,8 @@ public class StatsAvgObjColumnLabelProvider extends
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			double avgObj = ((CollectionStats) element).getAvgObj();
-			return String.valueOf(avgObj);
+			Integer avgObj = ((CollectionStats) element).getAvgObj();
+			return StringUtils.getValue(avgObj);
 		}
 		return "";
 	}
@@ -33,11 +34,12 @@ public class StatsAvgObjColumnLabelProvider extends
 	 * fr.opensagres.mongodb.ide.ui.viewers.editor.IProgressBarValueProvider
 	 * #getProgressBarValue(java.lang.Object)
 	 */
-	public double getProgressBarValue(Object element) {
+	public int getProgressBarValue(Object element) {
+		Integer value = null;
 		if (element instanceof CollectionStats) {
 			CollectionStats stats = (CollectionStats) element;
-			return Math.round(stats.getPercentAvgObj());
+			value = stats.getPercentAvgObj();
 		}
-		return 0;
+		return value != null ? value : 0;
 	}
 }

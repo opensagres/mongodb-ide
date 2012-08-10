@@ -1,26 +1,34 @@
 package fr.opensagres.mongodb.ide.ui.editors.collection;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.events.IHyperlinkListener;
+import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 
+import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.ui.FormLayoutFactory;
+import fr.opensagres.mongodb.ide.ui.dialogs.StackTraceErrorDialog;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
 import fr.opensagres.mongodb.ide.ui.editors.UIFieldsFactory;
+import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.singlesourcing.SingleSourcingUtils;
 
-public class OverviewPage extends AbstractToolbarFormPage {
+public class OverviewPage extends AbstractToolbarFormPage implements
+		IHyperlinkListener {
 
 	public static final String ID = "overview";
 	private Label serverLabel;
@@ -29,6 +37,11 @@ public class OverviewPage extends AbstractToolbarFormPage {
 
 	public OverviewPage(CollectionEditor editor) {
 		super(editor, ID, Messages.OverviewPage_title);
+	}
+
+	@Override
+	protected Image getFormTitleImage() {
+		return ImageResources.getImage(ImageResources.IMG_COLLECTION_16);
 	}
 
 	@Override
@@ -49,6 +62,8 @@ public class OverviewPage extends AbstractToolbarFormPage {
 		right.setLayout(FormLayoutFactory.createFormPaneTableWrapLayout(false,
 				1));
 		right.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
+		// Content section
+		createContentSection(toolkit, right);
 
 		// createTimeoutSection(right, toolkit);
 
@@ -95,6 +110,30 @@ public class OverviewPage extends AbstractToolbarFormPage {
 
 	}
 
+	private void createContentSection(FormToolkit toolkit, Composite parent) {
+		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
+		section.setText(Messages.CollectionEditor_OverviewPage_CollectionContent_title);
+		TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB);
+		section.setLayoutData(data);
+
+		Composite sbody = toolkit.createComposite(section);
+		section.setClient(sbody);
+
+		Composite container = createStaticSectionClient(toolkit, section);
+
+		FormText text = createClient(
+				container,
+				Messages.CollectionEditor_OverviewPage_CollectionContent_content,
+				toolkit, this);
+		text.setImage("documents_page",
+				ImageResources.getImage(ImageResources.IMG_DOCUMENT_16));
+		text.setImage("indexes_page",
+				ImageResources.getImage(ImageResources.IMG_INDEX_16));
+		section.setClient(container);
+
+		SingleSourcingUtils.FormToolkit_paintBordersFor(toolkit, sbody);
+	}
+
 	private void initialize() {
 
 		Collection collection = ((CollectionEditor) getEditor())
@@ -106,4 +145,16 @@ public class OverviewPage extends AbstractToolbarFormPage {
 		nameText.setText(collection.getName());
 	}
 
+	public void linkActivated(HyperlinkEvent e) {
+		String href = (String) e.getHref();
+		getEditor().setActivePage(href);
+	}
+
+	public void linkEntered(HyperlinkEvent e) {
+		// Do nothing
+	}
+
+	public void linkExited(HyperlinkEvent e) {
+		// Do nothing
+	}
 }

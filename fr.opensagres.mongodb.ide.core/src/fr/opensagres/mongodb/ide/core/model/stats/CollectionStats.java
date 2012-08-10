@@ -23,12 +23,12 @@ public class CollectionStats extends ArrayList<IndexStats> {
 
 	private final CollectionListStats listStats;
 	private final Collection collection;
-	private double count;
-	private double size;
-	private double storage;
-	private double totalIndexSize;
-	private double avgObj;
-	private double padding;
+	private Integer count;
+	private Integer size;
+	private Integer storage;
+	private Integer totalIndexSize;
+	private Integer avgObj;
+	private Integer padding;
 
 	public CollectionStats(CollectionListStats listStats, Collection collection)
 			throws UnknownHostException, MongoException {
@@ -59,78 +59,63 @@ public class CollectionStats extends ArrayList<IndexStats> {
 		return collection.getName();
 	}
 
-	public double getCount() {
+	public Integer getCount() {
 		return count;
 	}
 
-	public double getPercentCount() {
-		double totalCount = listStats.getTotalCount();
-		if (count == 0) {
-			return 0;
-		}
-		return (count / totalCount) * 100;
+	public Integer getPercentCount() {
+		Integer totalCount = listStats.getTotalCount();
+		return getPercent(count, totalCount);
 	}
 
-	public double getSize() {
+	public Integer getSize() {
 		return size;
 	}
 
-	public double getPercentSize() {
-		double totalSize = listStats.getTotalSize();
-		if (size == 0) {
-			return 0;
-		}
-		return (size / totalSize) * 100;
+	public Integer getPercentSize() {
+		Integer totalSize = listStats.getTotalSize();
+		return getPercent(size, totalSize);
 	}
 
-	public double getStorage() {
+	public Integer getStorage() {
 		return storage;
 	}
 
-	public double getPercentStorage() {
-		double totalStorage = listStats.getTotalStorage();
-		if (storage == 0) {
-			return 0;
-		}
-		return (storage / totalStorage) * 100;
+	public Integer getPercentStorage() {
+		Integer totalStorage = listStats.getTotalStorage();
+		return getPercent(storage, totalStorage);
 	}
 
-	public double getAvgObj() {
+	public Integer getAvgObj() {
 		return avgObj;
 	}
 
-	public double getPercentAvgObj() {
-		double totalAvgObj = listStats.getTotalAvgObj();
-		if (avgObj == 0) {
-			return 0;
-		}
-		return (avgObj / totalAvgObj) * 100;
+	public Integer getPercentAvgObj() {
+		Integer totalAvgObj = listStats.getTotalAvgObj();
+		return getPercent(avgObj, totalAvgObj);
 	}
 
-	public double getPadding() {
+	public Integer getPadding() {
 		return padding;
 	}
 
-	public double getPercentPadding() {
-		double totalPadding = listStats.getTotalPadding();
-		if (padding == 0) {
-			return 0;
-		}
-		return (padding / totalPadding) * 100;
+	public Integer getPercentPadding() {
+		Integer totalPadding = listStats.getTotalPadding();
+		return getPercent(padding, totalPadding);
 	}
 
 	@Override
 	public boolean add(IndexStats stats) {
-		double size = stats.getIndexSize();
-		totalIndexSize += size;
+		Integer size = stats.getIndexSize();
+		totalIndexSize = add(totalIndexSize, size);
 		return super.add(stats);
 	}
 
-	public double getTotalIndexSize() {
+	public Integer getTotalIndexSize() {
 		return totalIndexSize;
 	}
 
-	public void addIndex(String id, double indexSize)
+	public void addIndex(String id, Integer indexSize)
 			throws UnknownHostException, MongoException {
 		add(new IndexStats(this, id, indexSize));
 	}
@@ -139,8 +124,26 @@ public class CollectionStats extends ArrayList<IndexStats> {
 		return listStats;
 	}
 
-	public double getPercentIndexSize() {
-		double totalSize = listStats.getTotalIndexSize();
-		return (totalIndexSize / totalSize) * 100;
+	public Integer getPercentIndexSize() {
+		Integer totalSize = listStats.getTotalIndexSize();
+		return getPercent(totalIndexSize, totalSize);
+	}
+
+	public static Integer getPercent(Integer value, Integer totalValue) {
+		if (value == null || totalValue == null) {
+			return null;
+		}
+		double d = ((double) value / (double) totalValue) * 100;
+		return (int) Math.floor(d);
+	}
+
+	public static Integer add(Integer total, Integer value) {
+		if (value == null) {
+			return total;
+		}
+		if (total == null) {
+			return value;
+		}
+		return total + value;
 	}
 }

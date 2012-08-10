@@ -120,7 +120,7 @@ public class StatsPage extends AbstractToolbarFormPage {
 				CollectionStats.SIZE_PROPERTY);
 
 		// Storage column
-		ViewerHelper.createColumn(viewer, Messages.columnStorage, 50,
+		ViewerHelper.createColumn(viewer, Messages.columnStorage, 60,
 				StatsStorageColumnLabelProvider.getInstance(),
 				CollectionStats.STORAGE_PROPERTY);
 
@@ -135,7 +135,7 @@ public class StatsPage extends AbstractToolbarFormPage {
 				CollectionStats.AVGOBJ_PROPERTY);
 
 		// Padding column
-		ViewerHelper.createColumn(viewer, Messages.columnPadding, 50,
+		ViewerHelper.createColumn(viewer, Messages.columnPadding, 60,
 				StatsPaddingColumnLabelProvider.getInstance(),
 				CollectionStats.PADDING_PROPERTY);
 

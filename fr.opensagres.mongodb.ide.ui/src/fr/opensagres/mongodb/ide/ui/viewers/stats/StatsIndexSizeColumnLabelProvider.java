@@ -23,11 +23,11 @@ public class StatsIndexSizeColumnLabelProvider extends
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			double size = ((CollectionStats) element).getTotalIndexSize();
+			Integer size = ((CollectionStats) element).getTotalIndexSize();
 			return StatsHelper.formatAsBytes(size);
 		}
 		if (element instanceof IndexStats) {
-			double size = ((IndexStats) element).getIndexSize();
+			Integer size = ((IndexStats) element).getIndexSize();
 			return StatsHelper.formatAsBytes(size);
 		}
 		return "";
@@ -40,15 +40,15 @@ public class StatsIndexSizeColumnLabelProvider extends
 	 * fr.opensagres.mongodb.ide.ui.viewers.editor.IProgressBarValueProvider
 	 * #getProgressBarValue(java.lang.Object)
 	 */
-	public double getProgressBarValue(Object element) {
+	public int getProgressBarValue(Object element) {
+		Integer value = null;
 		if (element instanceof CollectionStats) {
 			CollectionStats stats = (CollectionStats) element;
-			return Math.round(stats.getPercentIndexSize());
-		}
-		if (element instanceof IndexStats) {
+			value = stats.getPercentIndexSize();
+		} else if (element instanceof IndexStats) {
 			IndexStats stats = (IndexStats) element;
-			return Math.round(stats.getPercentIndexSize());
+			value = stats.getPercentIndexSize();
 		}
-		return 0;
+		return value != null ? value : 0;
 	}
 }

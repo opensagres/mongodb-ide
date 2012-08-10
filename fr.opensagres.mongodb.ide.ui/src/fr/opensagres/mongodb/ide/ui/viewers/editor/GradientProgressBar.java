@@ -14,13 +14,13 @@ import org.eclipse.swt.widgets.Display;
 public class GradientProgressBar extends Canvas {
 
 	private final IWidthProvider widthProvider;
-	private double value;
+	private int value;
 	private String text;
 	private Color cf;
 	private Color cg;
 
 	public GradientProgressBar(Composite parent, int style, Color background,
-			IWidthProvider widthProvider, double value, String text) {
+			IWidthProvider widthProvider, int value, String text) {
 		super(parent, style);
 		this.widthProvider = widthProvider;
 		this.value = value;
@@ -51,7 +51,7 @@ public class GradientProgressBar extends Canvas {
 		gc.setForeground(cg);
 		gc.setBackground(cf);
 		int totalWidth = widthProvider.getWidth();
-		int width = totalWidth * (int) value / 100;
+		int width = totalWidth * value / 100;
 		gc.fillGradientRectangle(x, y, width, height, true);
 		Rectangle rect2 = new Rectangle(x, y, width - 1, height - 1);
 		gc.drawRectangle(rect2);
@@ -67,7 +67,7 @@ public class GradientProgressBar extends Canvas {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 

@@ -12,32 +12,41 @@ public class StatsHelper {
 	private static final String PADDING = "paddingFactor";
 	private static final String INDEX_SIZES = "indexSizes";
 
-	public static double getSize(CommandResult stats) {
-		return stats.getDouble(SIZE);
+	public static Integer getSize(CommandResult stats) {
+		return getInteger(stats, SIZE);
 	}
 
-	public static double getCount(CommandResult stats) {
-		return stats.getDouble(COUNT);
+	public static Integer getCount(CommandResult stats) {
+		return getInteger(stats, COUNT);
 	}
 
-	public static double getStorage(CommandResult stats) {
-		return stats.getDouble(STORAGE);
+	public static Integer getStorage(CommandResult stats) {
+		return getInteger(stats, STORAGE);
 	}
 
-	public static double getAvgObj(CommandResult stats) {
-		return stats.getDouble(AVG_OBJ);
+	public static Integer getAvgObj(CommandResult stats) {
+		return getInteger(stats, AVG_OBJ);
 	}
 
-	public static double getPadding(CommandResult stats) {
-		return stats.getDouble(PADDING);
+	public static Integer getPadding(CommandResult stats) {
+		return getInteger(stats, PADDING);
 	}
 
 	public static BasicDBObject getIndexSizes(CommandResult stats) {
 		return (BasicDBObject) stats.get(INDEX_SIZES);
 	}
 
-	public static String formatAsBytes(double value) {
+	public static String formatAsBytes(Integer value) {
+		if (value == null) {
+			return "";
+		}
 		return String.valueOf(value);
 	}
 
+	public static Integer getInteger(CommandResult stats, String key) {
+		if (stats.containsField(key)) {
+			return stats.getInt(key);
+		}
+		return null;
+	}
 }

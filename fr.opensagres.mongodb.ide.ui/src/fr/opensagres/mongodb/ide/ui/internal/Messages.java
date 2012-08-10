@@ -92,7 +92,9 @@ public class Messages extends NLS {
 
 	// Collection Editor
 	public static String DocumentsPage_title;
-
+	public static String CollectionEditor_OverviewPage_CollectionContent_title;
+	public static String CollectionEditor_OverviewPage_CollectionContent_content;
+	
 	// Document Editor
 	public static String JSONTextPage_title;
 

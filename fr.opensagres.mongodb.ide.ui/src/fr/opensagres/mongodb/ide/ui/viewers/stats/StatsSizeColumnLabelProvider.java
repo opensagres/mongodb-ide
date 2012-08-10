@@ -22,7 +22,7 @@ public class StatsSizeColumnLabelProvider extends
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			double size = ((CollectionStats) element).getSize();
+			Integer size = ((CollectionStats) element).getSize();
 			return StatsHelper.formatAsBytes(size);
 		}
 		return "";
@@ -35,11 +35,12 @@ public class StatsSizeColumnLabelProvider extends
 	 * fr.opensagres.mongodb.ide.ui.viewers.editor.IProgressBarValueProvider
 	 * #getProgressBarValue(java.lang.Object)
 	 */
-	public double getProgressBarValue(Object element) {
+	public int getProgressBarValue(Object element) {
+		Integer value = null;
 		if (element instanceof CollectionStats) {
 			CollectionStats stats = (CollectionStats) element;
-			return Math.round(stats.getPercentSize());
+			value = stats.getPercentSize();
 		}
-		return 0;
+		return value != null ? value : 0;
 	}
 }

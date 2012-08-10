@@ -22,7 +22,6 @@ import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.extensions.IShellRunnerType;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
-import fr.opensagres.mongodb.ide.core.utils.StringUtils;
 import fr.opensagres.mongodb.ide.ui.FormLayoutFactory;
 import fr.opensagres.mongodb.ide.ui.dialogs.StackTraceErrorDialog;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
@@ -188,6 +187,8 @@ public class OverviewPage extends AbstractToolbarFormPage implements
 				ImageResources.getImage(ImageResources.IMG_STATS_16));
 		text.setImage("users_page",
 				ImageResources.getImage(ImageResources.IMG_USERS_16));
+		text.setImage("indexes_page",
+				ImageResources.getImage(ImageResources.IMG_INDEX_16));
 		section.setClient(container);
 
 		SingleSourcingUtils.FormToolkit_paintBordersFor(toolkit, sbody);

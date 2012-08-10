@@ -1,10 +1,11 @@
-package fr.opensagres.mongodb.ide.ui.viewers;
+package fr.opensagres.mongodb.ide.ui.viewers.stats;
 
 import java.util.Collection;
 
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+
+import fr.opensagres.mongodb.ide.core.model.stats.CollectionStats;
 
 public class StatsContentProvider implements ITreeContentProvider {
 
@@ -33,11 +34,13 @@ public class StatsContentProvider implements ITreeContentProvider {
 		if (inputElement instanceof Collection) {
 			return ((Collection) inputElement).toArray();
 		}
-		return ((Collection) inputElement).toArray();
+		return new Object[0];
 	}
 
 	public Object[] getChildren(Object parentElement) {
-		// TODO Auto-generated method stub
+		if (parentElement instanceof CollectionStats) {
+			return ((CollectionStats)parentElement).toArray();
+		}
 		return null;
 	}
 
@@ -47,7 +50,6 @@ public class StatsContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
-		// TODO Auto-generated method stub
-		return false;
+		return element instanceof CollectionStats;
 	}
 }

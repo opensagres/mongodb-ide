@@ -1,6 +1,6 @@
-package fr.opensagres.mongodb.ide.ui.viewers;
+package fr.opensagres.mongodb.ide.ui.viewers.stats;
 
-import org.eclipse.swt.graphics.Image;
+import com.mongodb.tools.driver.StatsHelper;
 
 import fr.opensagres.mongodb.ide.core.model.stats.CollectionStats;
 import fr.opensagres.mongodb.ide.ui.viewers.editor.GradientProgressBarColumnLabelProvider;
@@ -22,23 +22,23 @@ public class StatsSizeColumnLabelProvider extends
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			Double size = ((CollectionStats) element).getSize();
-			return size != null ? String.valueOf(size) : "";
+			double size = ((CollectionStats) element).getSize();
+			return StatsHelper.formatAsBytes(size);
 		}
-		return super.getText(element);
+		return "";
 	}
 
-	@Override
-	public Image getImage(Object element) {
-		return super.getImage(element);
-	}
-
-	@Override
-	protected long getPercent(Object element) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.opensagres.mongodb.ide.ui.viewers.editor.IProgressBarValueProvider
+	 * #getProgressBarValue(java.lang.Object)
+	 */
+	public double getProgressBarValue(Object element) {
 		if (element instanceof CollectionStats) {
 			CollectionStats stats = (CollectionStats) element;
 			return Math.round(stats.getPercentSize());
-
 		}
 		return 0;
 	}

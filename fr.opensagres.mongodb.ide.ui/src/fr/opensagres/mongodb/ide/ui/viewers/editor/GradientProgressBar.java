@@ -13,17 +13,17 @@ import org.eclipse.swt.widgets.Display;
 
 public class GradientProgressBar extends Canvas {
 
-	private long percent;
 	private final IWidthProvider widthProvider;
+	private double value;
 	private String text;
 	private Color cf;
 	private Color cg;
 
-	public GradientProgressBar(Composite parent, int style,
-			IWidthProvider widthProvider, long percent, String text) {
+	public GradientProgressBar(Composite parent, int style, Color background,
+			IWidthProvider widthProvider, double value, String text) {
 		super(parent, style);
 		this.widthProvider = widthProvider;
-		this.percent = percent;
+		this.value = value;
 		this.text = text;
 		// Add paint listener to draw the navigation page
 		this.addPaintListener(new PaintListener() {
@@ -31,9 +31,10 @@ public class GradientProgressBar extends Canvas {
 				onPaint(e);
 			}
 		});
-		
-		cf= new Color(getDisplay(), 196, 232, 251);
-		cg= new Color(getDisplay(), 76, 70, 255);
+		// cf= new Color(getDisplay(), 196, 232, 251);
+		cg = new Color(getDisplay(), 196, 232, 251);
+		cf = new Color(getDisplay(), 76, 170, 255);
+		super.setBackground(background);
 	}
 
 	private void onPaint(PaintEvent e) {
@@ -50,7 +51,7 @@ public class GradientProgressBar extends Canvas {
 		gc.setForeground(cg);
 		gc.setBackground(cf);
 		int totalWidth = widthProvider.getWidth();
-		int width = (int) (totalWidth) * (int) percent / 100;
+		int width = totalWidth * (int) value / 100;
 		gc.fillGradientRectangle(x, y, width, height, true);
 		Rectangle rect2 = new Rectangle(x, y, width - 1, height - 1);
 		gc.drawRectangle(rect2);
@@ -62,4 +63,19 @@ public class GradientProgressBar extends Canvas {
 		gc.setBackground(foreground);
 	}
 
+	public double getValue() {
+		return value;
+	}
+
+	public void setValue(double value) {
+		this.value = value;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 }

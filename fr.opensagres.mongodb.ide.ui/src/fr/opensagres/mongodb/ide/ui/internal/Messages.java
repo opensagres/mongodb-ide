@@ -81,6 +81,7 @@ public class Messages extends NLS {
 	public static String DatabaseEditor_OverviewPage_Shell_connection;
 	public static String StatsPage_title;
 	public static String UsersPage_title;
+	public static String IndexesPage_title;
 	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_title;
 	public static String UsersEditor_UsersPage_UsersMasterDetailsBlock_desc;
 	public static String UserEditor_UsersPage_UserDetailsPage_title;
@@ -88,14 +89,14 @@ public class Messages extends NLS {
 	public static String UserEditor_UsersPage_UserDetailsPage_userLabel_label;
 	public static String DatabaseEditor_OverviewPage_DatabaseContent_title;
 	public static String DatabaseEditor_OverviewPage_DatabaseContent_content;
-	
+
 	// Collection Editor
 	public static String DocumentsPage_title;
 
 	// Document Editor
 	public static String JSONTextPage_title;
-	
-	// Columns	
+
+	// Columns
 	public static String columnKey;
 	public static String columnValue;
 	public static String columnType;
@@ -105,6 +106,10 @@ public class Messages extends NLS {
 	public static String columnName;
 	public static String columnSize;
 	public static String columnCount;
+	public static String columnStorage;
+	public static String columnAvgObj;
+	public static String columnPadding;
+	public static String columnIndexSize;
 
 	static {
 		// load message values from bundle file

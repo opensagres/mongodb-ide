@@ -5,6 +5,7 @@ import org.eclipse.ui.PartInitException;
 
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.ui.editors.BasicModelFormEditor;
+import fr.opensagres.mongodb.ide.ui.editors.collection.IndexesPage;
 
 public class DatabaseEditor extends
 		BasicModelFormEditor<DatabaseEditorInput, Database> {

@@ -1,10 +1,10 @@
-package fr.opensagres.mongodb.ide.ui.viewers;
+package fr.opensagres.mongodb.ide.ui.viewers.stats;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.stats.CollectionStats;
+import fr.opensagres.mongodb.ide.core.model.stats.IndexStats;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 
 public class StatsNameColumnLabelProvider extends ColumnLabelProvider {
@@ -23,7 +23,10 @@ public class StatsNameColumnLabelProvider extends ColumnLabelProvider {
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CollectionStats) {
-			return ((CollectionStats) element).getCollection().getName();
+			return ((CollectionStats) element).getName();
+		}
+		if (element instanceof IndexStats) {
+			return ((IndexStats) element).getId();
 		}
 		return super.getText(element);
 	}
@@ -32,6 +35,9 @@ public class StatsNameColumnLabelProvider extends ColumnLabelProvider {
 	public Image getImage(Object element) {
 		if (element instanceof CollectionStats) {
 			return ImageResources.getImage(ImageResources.IMG_COLLECTION_16);
+		}
+		if (element instanceof IndexStats) {
+			return ImageResources.getImage(ImageResources.IMG_INDEX_16);
 		}
 		return super.getImage(element);
 	}

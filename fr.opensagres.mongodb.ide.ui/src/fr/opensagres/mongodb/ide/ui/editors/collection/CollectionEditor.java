@@ -15,6 +15,7 @@ public class CollectionEditor extends
 	protected void doAddPages() throws PartInitException {
 		super.addPage(new OverviewPage(this));
 		super.addPage(new DocumentsPage(this));
+		super.addPage(new IndexesPage(this));
 	}
 
 	@Override

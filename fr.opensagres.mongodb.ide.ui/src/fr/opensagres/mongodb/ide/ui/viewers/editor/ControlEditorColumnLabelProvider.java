@@ -33,10 +33,10 @@ public abstract class ControlEditorColumnLabelProvider<Parent extends Composite,
 			if (controlEditor == null) {
 				controlEditor = createControlEditor(parent, cell.getElement());
 				if (controlEditor != null) {
-					item.setData(KEY, controlEditor);
+					item.setData(key, controlEditor);
 					// Create editor
 					Editor editor = createEditor(parent, item,
-							cell.getColumnIndex(), cell.getElement());
+							cell.getColumnIndex(), cell.getElement(), cell);
 					if (editor != null) {
 						updateControlEditor(controlEditor, editor, item,
 								cell.getColumnIndex());
@@ -69,5 +69,5 @@ public abstract class ControlEditorColumnLabelProvider<Parent extends Composite,
 	protected abstract CE doCreateControlEditor(Parent parent, Object element);
 
 	protected abstract Editor createEditor(Parent parent, I item,
-			int columnIndex, Object element);
+			int columnIndex, Object element, ViewerCell cell);
 }

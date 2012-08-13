@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.wizards;
+package fr.opensagres.mongodb.ide.ui.wizards.server;
 
 import java.util.List;
 

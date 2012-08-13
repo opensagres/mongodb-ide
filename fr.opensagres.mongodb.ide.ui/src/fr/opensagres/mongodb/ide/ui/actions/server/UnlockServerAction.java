@@ -29,12 +29,12 @@ public class UnlockServerAction extends TreeNodeActionAdapter {
 	}
 
 	@Override
-	protected void perform(Server server) {
+	public void perform(Server server) {
 		server.unlock();
 	}
 
 	@Override
-	protected boolean accept(Server server) {
+	public boolean accept(Server server) {
 		return server.isLocked();
 	}
 

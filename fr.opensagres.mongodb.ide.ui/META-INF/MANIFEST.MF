@@ -16,9 +16,12 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: fr.opensagres.mongodb.ide.ui.viewers
 Import-Package: com.mongodb,
+ com.mongodb.gridfs,
  com.mongodb.tools.driver,
  com.mongodb.tools.driver.pagination,
  com.mongodb.tools.shell,
  org.eclipse.nebula.widgets.pagination,
+ org.eclipse.nebula.widgets.pagination.table,
+ org.eclipse.nebula.widgets.pagination.table.forms,
  org.eclipse.nebula.widgets.pagination.tree,
  org.eclipse.nebula.widgets.pagination.tree.forms

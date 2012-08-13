@@ -59,6 +59,8 @@ public class MongoLabelProvider extends LabelProvider {
 			return ImageResources.getImage(ImageResources.IMG_USERS_16);
 		case Index:
 			return ImageResources.getImage(ImageResources.IMG_INDEX_16);
+		case GridFSBucket:
+			return ImageResources.getImage(ImageResources.IMG_GRIDFS_16);
 		default:
 			return null;
 		}

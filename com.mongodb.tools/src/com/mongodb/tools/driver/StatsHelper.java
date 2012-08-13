@@ -49,4 +49,8 @@ public class StatsHelper {
 		}
 		return null;
 	}
+
+	public static String formatAsBytes(long value) {
+		return String.valueOf(value);
+	}
 }

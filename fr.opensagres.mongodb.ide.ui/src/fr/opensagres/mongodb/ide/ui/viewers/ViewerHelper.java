@@ -9,6 +9,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TreeColumn;
 
+import fr.opensagres.mongodb.ide.ui.viewers.sort.BeanSortTableColumnSelectionListener;
 import fr.opensagres.mongodb.ide.ui.viewers.sort.BeanSortTreeColumnSelectionListener;
 
 public class ViewerHelper {
@@ -39,6 +40,12 @@ public class ViewerHelper {
 
 	public static TableViewerColumn createColumn(TableViewer viewer,
 			String title, int bound, CellLabelProvider labelProvider) {
+		return createColumn(viewer, title, bound, labelProvider, null);
+	}
+
+	public static TableViewerColumn createColumn(TableViewer viewer,
+			String title, int bound, CellLabelProvider labelProvider,
+			String sortName) {
 		final TableViewerColumn viewerColumn = new TableViewerColumn(viewer,
 				SWT.NONE);
 		final TableColumn column = viewerColumn.getColumn();
@@ -47,6 +54,10 @@ public class ViewerHelper {
 		column.setResizable(true);
 		column.setMoveable(true);
 		viewerColumn.setLabelProvider(labelProvider);
+		if (sortName != null) {
+			viewerColumn.getColumn().addSelectionListener(
+					new BeanSortTableColumnSelectionListener(sortName, viewer));
+		}
 		return viewerColumn;
 	}
 }

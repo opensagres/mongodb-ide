@@ -21,7 +21,7 @@ import fr.opensagres.mongodb.ide.ui.editors.UIFieldsFactory;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.singlesourcing.SingleSourcingUtils;
 
-public class OverviewPage extends AbstractToolbarFormPage {
+public class OverviewPage extends AbstractToolbarFormPage<DocumentEditor> {
 
 	public static final String ID = "overview";
 	private Label serverLabel;
@@ -52,18 +52,14 @@ public class OverviewPage extends AbstractToolbarFormPage {
 				1));
 		right.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
-		// createTimeoutSection(right, toolkit);
-
-		// "org.eclipse.wst.server.editor.overview.right");
-
 		initialize();
 	}
 
 	protected void createGeneralInfoSection(Composite left, FormToolkit toolkit) {
 		Section section = toolkit.createSection(left, Section.DESCRIPTION
 				| Section.TITLE_BAR);
-		section.setDescription(Messages.databaseEditorOverviewGeneralDescription);
-		section.setText(Messages.databaseEditorOverviewGeneralSection);
+		section.setDescription(Messages.DocumentEditor_OverviewPage_GeneralInfo_desc);
+		section.setText(Messages.DocumentEditor_OverviewPage_GeneralInfo_title);
 		TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB);
 		section.setLayoutData(data);
 
@@ -76,7 +72,7 @@ public class OverviewPage extends AbstractToolbarFormPage {
 		sbody.setLayout(glayout);
 
 		// Server name
-		Document document = ((DocumentEditor) getEditor()).getModelObject();
+		Document document = getEditor().getModelObject();
 		Collection collection = document.getParent();
 		Database database = collection.getDatabase();
 		Server server = database.getParent();
@@ -104,7 +100,7 @@ public class OverviewPage extends AbstractToolbarFormPage {
 
 	private void initialize() {
 
-		Document document = ((DocumentEditor) getEditor()).getModelObject();
+		Document document = getEditor().getModelObject();
 		Collection collection = document.getParent();
 		Database database = collection.getDatabase();
 		Server server = database.getParent();

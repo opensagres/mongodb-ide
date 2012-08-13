@@ -10,6 +10,7 @@ import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.Users;
+import fr.opensagres.mongodb.ide.ui.actions.AbstractTreeNodeActionGroup;
 
 public class TreeNodeActionGroupAdapter extends
 		AbstractTreeNodeActionGroup {
@@ -20,38 +21,38 @@ public class TreeNodeActionGroupAdapter extends
 	}
 
 	@Override
-	protected boolean accept(Server server) {
+	public boolean accept(Server server) {
 		return false;
 	}
 
 	@Override
-	protected void perform(Server server) {
+	public void perform(Server server) {
 	}
 
 	@Override
-	protected boolean accept(Database database) {
+	public boolean accept(Database database) {
 		return false;
 	}
 
 	@Override
-	protected void perform(Database database) {
+	public void perform(Database database) {
 	}
 
 	@Override
-	protected boolean accept(Collection collection) {
+	public boolean accept(Collection collection) {
 		return false;
 	}
 
 	@Override
-	protected void perform(Collection collection) {
+	public void perform(Collection collection) {
 	}
 
 	@Override
-	protected boolean accept(Users users) {
+	public boolean accept(Users users) {
 		return false;
 	}
 
 	@Override
-	protected void perform(Users users) {
+	public void perform(Users users) {
 	}
 }

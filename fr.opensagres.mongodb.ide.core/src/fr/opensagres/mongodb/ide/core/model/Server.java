@@ -434,4 +434,12 @@ public class Server extends TreeContainerNode<Server> implements
 		currentDatabase = database;
 		return result;
 	}
+
+	public void createDatabase(String databaseName)
+			throws UnknownHostException, MongoException {
+		Database database = new Database(databaseName);
+		database.setParent(this);
+		database.getDB();
+		addNode(database);
+	}
 }

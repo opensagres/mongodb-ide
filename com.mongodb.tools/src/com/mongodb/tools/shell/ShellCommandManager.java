@@ -11,6 +11,7 @@ import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
+import com.mongodb.gridfs.GridFS;
 import com.mongodb.tools.driver.DBObjectHelper;
 import com.mongodb.tools.driver.MongoInstanceManager;
 import com.mongodb.tools.driver.pagination.Page;
@@ -143,6 +144,23 @@ public class ShellCommandManager {
 		return page;
 	}
 
+	public Page paginate(GridFS gridFS, int pageNumber,
+			int itemsPerPage) {
+		return paginate(gridFS, pageNumber, itemsPerPage, null, null);
+	}
+
+	public Page paginate(GridFS gridFS, int pageNumber,
+			int itemsPerPage, String sortName, SortOrder order) {
+		Page page = PaginationHelper.paginate(gridFS, pageNumber,
+				itemsPerPage, sortName, order);
+		if (hasListeners()) {
+			//getShellNotificationManager().broadcastChange(
+//					new CollectionFindShellCommand(collection, pageNumber,
+//							itemsPerPage, sortName, order));
+		}
+		return page;
+	}
+	
 	public List<DBObject> getSystemUsers(DB db) {
 		List<DBObject> users = DBObjectHelper.getSystemUsers(db);
 		if (hasListeners()) {

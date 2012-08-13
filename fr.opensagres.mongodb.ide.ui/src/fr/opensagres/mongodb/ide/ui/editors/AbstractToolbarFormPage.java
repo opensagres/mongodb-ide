@@ -7,9 +7,10 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
-public abstract class AbstractToolbarFormPage extends AbstractFormPage {
+public abstract class AbstractToolbarFormPage<T extends AbstractFormEditor>
+		extends AbstractFormPage<T> {
 
-	public AbstractToolbarFormPage(AbstractFormEditor editor, String id,
+	public AbstractToolbarFormPage(T editor, String id,
 			String title) {
 		super(editor, id, title);
 	}

@@ -27,19 +27,21 @@ import fr.opensagres.mongodb.ide.core.extensions.IServerRunnerType;
 import fr.opensagres.mongodb.ide.core.extensions.IShellRunnerType;
 import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
+import fr.opensagres.mongodb.ide.core.model.GridFSBucket;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.Users;
 import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.actions.DeleteAction;
-import fr.opensagres.mongodb.ide.ui.actions.NewServerAction;
+import fr.opensagres.mongodb.ide.ui.actions.OpenAction;
 import fr.opensagres.mongodb.ide.ui.actions.RefreshAction;
-import fr.opensagres.mongodb.ide.ui.actions.server.OpenAction;
+import fr.opensagres.mongodb.ide.ui.actions.database.NewDatabaseAction;
+import fr.opensagres.mongodb.ide.ui.actions.database.ShellRunnerAction;
+import fr.opensagres.mongodb.ide.ui.actions.database.StartShellAction;
+import fr.opensagres.mongodb.ide.ui.actions.database.StopShellAction;
+import fr.opensagres.mongodb.ide.ui.actions.server.NewServerAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.ServerRunnerAction;
-import fr.opensagres.mongodb.ide.ui.actions.server.ShellRunnerAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.StartServerAction;
-import fr.opensagres.mongodb.ide.ui.actions.server.StartShellAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.StopServerAction;
-import fr.opensagres.mongodb.ide.ui.actions.server.StopShellAction;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.internal.Trace;
 import fr.opensagres.mongodb.ide.ui.viewers.MongoContentProvider;
@@ -61,8 +63,12 @@ public class ServerExplorer extends ViewPart {
 	private DeleteAction deleteAction;
 	private OpenAction openAction;
 
+	// Server actions
 	private List<Action> serverStartActions;
 	private List<Action> serverStopActions;
+
+	// Database actions
+	private Action newDatabaseAction;
 	private List<Action> shellStartActions;
 	private List<Action> shellStopActions;
 
@@ -94,6 +100,8 @@ public class ServerExplorer extends ViewPart {
 						ServerUI.editServer((Server) data);
 					} else if (data instanceof Database) {
 						ServerUI.editDatabase((Database) data);
+					} else if (data instanceof GridFSBucket) {
+						ServerUI.editGridFS((GridFSBucket) data);
 					} else if (data instanceof Collection) {
 						ServerUI.editCollection((Collection) data);
 					} else if (data instanceof Users) {
@@ -198,6 +206,7 @@ public class ServerExplorer extends ViewPart {
 
 		deleteAction = new DeleteAction(viewer);
 		newServerAction = new NewServerAction();
+		newDatabaseAction = new NewDatabaseAction(viewer);
 
 		// add toolbar buttons
 		IContributionManager toolbarOfActionBars = actionBars
@@ -221,6 +230,7 @@ public class ServerExplorer extends ViewPart {
 		Database database = null;
 		Collection collection = null;
 		Users users = null;
+		GridFSBucket gridFSBucket = null;
 		IStructuredSelection selection = (IStructuredSelection) viewer
 				.getSelection();
 		if (selection.size() == 1) {
@@ -233,6 +243,8 @@ public class ServerExplorer extends ViewPart {
 				collection = (Collection) obj;
 			} else if (obj instanceof Users) {
 				users = (Users) obj;
+			} else if (obj instanceof GridFSBucket) {
+				gridFSBucket = (GridFSBucket) obj;
 			}
 		}
 
@@ -243,7 +255,7 @@ public class ServerExplorer extends ViewPart {
 
 		// open action
 		if (server != null || database != null || collection != null
-				|| users != null) {
+				|| users != null || gridFSBucket != null) {
 			menu.add(openAction);
 		}
 
@@ -286,6 +298,7 @@ public class ServerExplorer extends ViewPart {
 	private void fillNewContextMenu(Shell shell, ISelection selection,
 			IMenuManager menu) {
 		menu.add(newServerAction);
+		menu.add(newDatabaseAction);
 	}
 
 	// private void initializeActions(ISelectionProvider provider) {

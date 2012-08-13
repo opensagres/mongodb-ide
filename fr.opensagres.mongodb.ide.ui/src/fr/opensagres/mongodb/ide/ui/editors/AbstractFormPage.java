@@ -26,9 +26,9 @@ import fr.opensagres.mongodb.ide.ui.FormLayoutFactory;
  * Abstract Form Page.
  * 
  */
-public class AbstractFormPage extends FormPage {
+public class AbstractFormPage<T extends AbstractFormEditor> extends FormPage {
 
-	public AbstractFormPage(AbstractFormEditor editor, String id, String title) {
+	public AbstractFormPage(T editor, String id, String title) {
 		super(editor, id, title);
 	}
 
@@ -37,8 +37,8 @@ public class AbstractFormPage extends FormPage {
 	}
 
 	@Override
-	public AbstractFormEditor getEditor() {
-		return (AbstractFormEditor) super.getEditor();
+	public T getEditor() {
+		return (T) super.getEditor();
 	}
 
 	protected Composite createStaticSectionClient(FormToolkit toolkit,

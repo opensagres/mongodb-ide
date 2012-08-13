@@ -90,9 +90,9 @@ public class DocumentsPage extends AbstractToolbarFormPage {
 
 		// 2) Initialize the tree viewer + SWT Tree
 		TreeViewer viewer = pageableTree.getViewer();
-		viewer.setContentProvider(DBObjectContentProvider.getInstance());
-		viewer.setLabelProvider(new LabelProvider());
-
+		viewer.setContentProvider(DBObjectContentProvider.getInstance());		
+		//viewer.setLabelProvider(new LabelProvider());
+		
 		Tree tree = viewer.getTree();
 		tree.setHeaderVisible(true);
 		tree.setLinesVisible(true);

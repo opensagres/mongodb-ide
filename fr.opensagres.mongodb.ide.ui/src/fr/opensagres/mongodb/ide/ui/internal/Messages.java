@@ -11,7 +11,7 @@ public class Messages extends NLS {
 	public static String removeButton_label;
 	public static String searchButton_label;
 
-	// ****************** NewServerWizardPage ******************
+	// ****************** New Server Wizard ******************
 	public static String NewServerWizard_title;
 	public static String NewServerWizardPage_title;
 	public static String NewServerWizardPage_desc;
@@ -30,10 +30,20 @@ public class Messages extends NLS {
 	public static String NewServerWizardPage_port_validation_int;
 	public static String NewServerWizardPage_runtime_label;
 
-	// ****************** NewServerAction ******************
+	// ****************** New Database Wizard ******************
+	public static String NewDatabaseWizard_title;
+
+	// ****************** New Collection Wizard ******************
+	public static String NewCollectionWizard_title;
+
+	// ****************** New Action ******************
 	public static String NewServerAction_text;
 	public static String NewServerAction_toolTipText;
-
+	public static String NewDatabaseAction_text;
+	public static String NewDatabaseAction_toolTipText;
+	public static String NewCollectionAction_text;
+	public static String NewCollectionAction_toolTipText;
+	
 	// ****************** RefreshAction ******************
 	public static String RefreshAction_text;
 	public static String RefreshAction_toolTipText;
@@ -58,6 +68,7 @@ public class Messages extends NLS {
 	public static String server_label;
 	public static String database_label;
 	public static String collection_label;
+	public static String bucket_label;
 
 	// Server editor
 	public static String serverEditorOverviewGeneralSection;
@@ -72,12 +83,12 @@ public class Messages extends NLS {
 	public static String document_label;
 
 	// Editor Database
-	public static String databaseEditorOverviewGeneralDescription;
-	public static String databaseEditorOverviewGeneralSection;
-	public static String databaseEditorOverviewShellDescription;
-	public static String databaseEditorOverviewShellSection;
-	public static String databaseEditorOverviewStatsSection;
-	public static String databaseEditorOvervieStatsDescription;
+	public static String DatabaseEditor_OverviewPage_GeneralInfo_desc;
+	public static String DatabaseEditor_OverviewPage_GeneralInfo_title;
+	public static String DatabaseEditor_OverviewPage_Shell_desc;
+	public static String DatabaseEditor_OverviewPage_Shell_title;
+	public static String DatabaseEditor_OverviewPage_Stats_title;
+	public static String DatabaseEditor_OverviewPage_Stats_desc;
 	public static String DatabaseEditor_OverviewPage_Shell_connection;
 	public static String StatsPage_title;
 	public static String UsersPage_title;
@@ -91,12 +102,23 @@ public class Messages extends NLS {
 	public static String DatabaseEditor_OverviewPage_DatabaseContent_content;
 
 	// Collection Editor
+	public static String CollectionEditor_OverviewPage_GeneralInfo_desc;
+	public static String CollectionEditor_OverviewPage_GeneralInfo_title;
 	public static String DocumentsPage_title;
 	public static String CollectionEditor_OverviewPage_CollectionContent_title;
 	public static String CollectionEditor_OverviewPage_CollectionContent_content;
-	
+
 	// Document Editor
+	public static String DocumentEditor_OverviewPage_GeneralInfo_desc;
+	public static String DocumentEditor_OverviewPage_GeneralInfo_title;
 	public static String JSONTextPage_title;
+
+	// GridFS Editor
+	public static String GridFSEditor_OverviewPage_GeneralInfo_desc;
+	public static String GridFSEditor_OverviewPage_GeneralInfo_title;
+	public static String FilesPage_title;
+	public static String GridFSEditor_FilesPage_Files_desc;
+	public static String GridFSEditor_FilesPage_Files_title;
 
 	// Columns
 	public static String columnKey;
@@ -112,6 +134,11 @@ public class Messages extends NLS {
 	public static String columnAvgObj;
 	public static String columnPadding;
 	public static String columnIndexSize;
+	public static String columnFilename;
+	public static String columnChunkSize;
+	public static String columnUploaded;
+	public static String columnContentType;
+	public static String columnMD5;
 
 	static {
 		// load message values from bundle file

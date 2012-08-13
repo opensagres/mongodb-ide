@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.actions.server;
+package fr.opensagres.mongodb.ide.ui.actions;
 
 import java.util.Iterator;
 
@@ -34,7 +34,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param server
 	 *            a server
 	 */
-	protected abstract boolean accept(Server server);
+	public abstract boolean accept(Server server);
 
 	/**
 	 * Perform action on this server.
@@ -42,7 +42,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param database
 	 *            a database
 	 */
-	protected abstract void perform(Server server);
+	public abstract void perform(Server server);
 
 	/**
 	 * Return true if this database can currently be acted on.
@@ -51,7 +51,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param database
 	 *            a database
 	 */
-	protected abstract boolean accept(Database database);
+	public abstract boolean accept(Database database);
 
 	/**
 	 * Perform action on this database.
@@ -59,7 +59,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param database
 	 *            a database
 	 */
-	protected abstract void perform(Database database);
+	public abstract void perform(Database database);
 
 	/**
 	 * Return true if this collection can currently be acted on.
@@ -68,7 +68,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param collection
 	 *            a collection
 	 */
-	protected abstract boolean accept(Collection collection);
+	public abstract boolean accept(Collection collection);
 
 	/**
 	 * Perform action on this collection.
@@ -76,7 +76,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param database
 	 *            a database
 	 */
-	protected abstract void perform(Collection collection);
+	public abstract void perform(Collection collection);
 
 	/**
 	 * Return true if this users can currently be acted on.
@@ -85,7 +85,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param users
 	 *            a users
 	 */
-	protected abstract boolean accept(Users users);
+	public abstract boolean accept(Users users);
 
 	/**
 	 * Perform action on this users.
@@ -93,7 +93,7 @@ public abstract class AbstractTreeNodeAction extends SelectionProviderAction {
 	 * @param database
 	 *            a database
 	 */
-	protected abstract void perform(Users users);
+	public abstract void perform(Users users);
 
 	public void run() {
 		Iterator iterator = getStructuredSelection().iterator();

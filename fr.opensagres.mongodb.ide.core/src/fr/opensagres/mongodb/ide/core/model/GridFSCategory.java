@@ -1,5 +1,9 @@
 package fr.opensagres.mongodb.ide.core.model;
 
+import java.util.Set;
+
+import com.mongodb.tools.driver.GridFSHelper;
+
 import fr.opensagres.mongodb.ide.core.internal.Messages;
 
 public class GridFSCategory extends TreeContainerNode<Database> {
@@ -12,8 +16,11 @@ public class GridFSCategory extends TreeContainerNode<Database> {
 
 	@Override
 	protected void doGetChildren() throws Exception {
-		// TODO Auto-generated method stub
-
+		Set<String> names = GridFSHelper.getGridFSBucketNames(getParent()
+				.getDB(), true);
+		for (String bucketName : names) {
+			super.addNode(new GridFSBucket(bucketName));
+		}
 	}
 
 	public String getId() {

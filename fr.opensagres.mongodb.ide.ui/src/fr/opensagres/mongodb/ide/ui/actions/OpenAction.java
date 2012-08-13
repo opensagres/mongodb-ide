@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.actions.server;
+package fr.opensagres.mongodb.ide.ui.actions;
 
 import org.eclipse.jface.viewers.ISelectionProvider;
 
@@ -16,7 +16,7 @@ public class OpenAction extends AbstractTreeNodeAction {
 	}
 
 	@Override
-	protected boolean accept(Server server) {
+	public boolean accept(Server server) {
 		return true;
 	}
 
@@ -26,7 +26,7 @@ public class OpenAction extends AbstractTreeNodeAction {
 	}
 
 	@Override
-	protected boolean accept(Database database) {
+	public boolean accept(Database database) {
 		return true;
 	}
 
@@ -41,17 +41,17 @@ public class OpenAction extends AbstractTreeNodeAction {
 	}
 
 	@Override
-	protected boolean accept(Collection collection) {
+	public boolean accept(Collection collection) {
 		return true;
 	}
 
 	@Override
-	protected boolean accept(Users users) {
+	public boolean accept(Users users) {
 		return true;
 	}
 
 	@Override
-	protected void perform(Users users) {
+	public void perform(Users users) {
 		ServerUI.editUsers(users);
 	}
 

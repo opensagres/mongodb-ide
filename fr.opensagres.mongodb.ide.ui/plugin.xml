@@ -86,11 +86,39 @@
             id="fr.opensagres.mongodb.ide.ui">
       </category>                     
       <wizard
-            class="fr.opensagres.mongodb.ide.ui.wizards.NewServerWizard"
+            class="fr.opensagres.mongodb.ide.ui.wizards.server.NewServerWizard"
             icon="icons/ctool16/wiz_new_server.gif"
-            id="fr.opensagres.mongodb.ide.ui.wizards.NewServerWizard"
+            id="fr.opensagres.mongodb.ide.ui.wizards.server.NewServerWizard"
             category="fr.opensagres.mongodb.ide.ui"
             name="%NewServerWizard.name">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%Mongo.category"
+            id="fr.opensagres.mongodb.ide.ui">
+      </category>                     
+      <wizard
+            class="fr.opensagres.mongodb.ide.ui.wizards.database.NewDatabaseWizard"
+            icon="icons/ctool16/wiz_new_database.gif"
+            id="fr.opensagres.mongodb.ide.ui.wizards.database.NewDatabaseWizard"
+            category="fr.opensagres.mongodb.ide.ui"
+            name="%NewDatabaseWizard.name">
+      </wizard>
+   </extension> 
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%Mongo.category"
+            id="fr.opensagres.mongodb.ide.ui">
+      </category>                     
+      <wizard
+            class="fr.opensagres.mongodb.ide.ui.wizards.collection.NewCollectionWizard"
+            icon="icons/ctool16/wiz_new_collection.gif"
+            id="fr.opensagres.mongodb.ide.ui.wizards.collection.NewCollectionWizard"
+            category="fr.opensagres.mongodb.ide.ui"
+            name="%NewCollectionWizard.name">
       </wizard>
    </extension>
   <extension point="org.eclipse.ui.preferencePages">
@@ -133,8 +161,17 @@
      <editor
            id="fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor"
            name="%DocumentEditor.name"
-           icon="icons/obj16/document.png"           
+           icon="icons/obj16/document.gif"           
            extensions="document"
            class="fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor" />
-  </extension>      
+  </extension>
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.mongodb.ide.ui.editors.gridfs.GridFSEditor"
+           name="%GridFSEditor.name"
+           icon="icons/obj16/gridfs.png"           
+           extensions="gridfs"
+           class="fr.opensagres.mongodb.ide.ui.editors.gridfs.GridFSEditor" />
+  </extension>  
 </plugin>

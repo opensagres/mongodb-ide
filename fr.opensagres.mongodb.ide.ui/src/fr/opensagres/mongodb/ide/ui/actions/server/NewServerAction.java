@@ -1,12 +1,12 @@
-package fr.opensagres.mongodb.ide.ui.actions;
+package fr.opensagres.mongodb.ide.ui.actions.server;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.Action;
 
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
-import fr.opensagres.mongodb.ide.ui.wizards.NewServerWizard;
 import fr.opensagres.mongodb.ide.ui.wizards.WizardHelper;
+import fr.opensagres.mongodb.ide.ui.wizards.server.NewServerWizard;
 
 public class NewServerAction extends Action {
 

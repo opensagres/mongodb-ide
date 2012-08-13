@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.actions.server;
+package fr.opensagres.mongodb.ide.ui.actions;
 
 import java.util.List;
 

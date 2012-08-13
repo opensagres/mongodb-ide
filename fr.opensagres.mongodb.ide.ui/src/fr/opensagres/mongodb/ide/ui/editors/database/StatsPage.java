@@ -61,8 +61,8 @@ public class StatsPage extends AbstractToolbarFormPage {
 	private void createStatsSection(Composite parent, FormToolkit toolkit) {
 		Section section = toolkit.createSection(parent, Section.DESCRIPTION
 				| Section.TITLE_BAR);
-		section.setDescription(Messages.databaseEditorOvervieStatsDescription);
-		section.setText(Messages.databaseEditorOverviewStatsSection);
+		section.setDescription(Messages.DatabaseEditor_OverviewPage_Stats_desc);
+		section.setText(Messages.DatabaseEditor_OverviewPage_Stats_title);
 		section.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		Composite sbody = toolkit.createComposite(section);

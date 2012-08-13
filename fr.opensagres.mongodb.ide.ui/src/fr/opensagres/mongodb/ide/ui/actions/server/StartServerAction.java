@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.widgets.Shell;
 
 import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.mongodb.ide.ui.actions.AbstractTreeNodeAction;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 
 public class StartServerAction extends TreeNodeActionGroupAdapter {
@@ -30,7 +31,7 @@ public class StartServerAction extends TreeNodeActionGroupAdapter {
 	 *            a server
 	 */
 	@Override
-	protected boolean accept(Server server) {
+	public boolean accept(Server server) {
 		for (Action action : actions) {
 			if (((AbstractTreeNodeAction) action).accept(server)) {
 				return true;

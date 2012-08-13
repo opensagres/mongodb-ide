@@ -31,6 +31,7 @@ public class ImageResources {
 	public static final String IMG_REFRESH_16 = "refresh_16";
 	public static final String IMG_DELETE_16 = "delete_16";
 	public static final String IMG_DATABASE_16 = "database_16";
+	public static final String IMG_GRIDFS_16 = "gridfs_16";
 	public static final String IMG_COLLECTION_16 = "collection_16";
 	public static final String IMG_DOCUMENT_16 = "document_16";
 	public static final String IMG_ERROR_16 = "error_16";
@@ -63,6 +64,10 @@ public class ImageResources {
 
 	public static final String IMG_WIZBAN_NEW_SERVER = "newServerWiz";
 
+	public static final String IMG_COLLECTION_NEW_16 = null;
+
+	public static String IMG_DATABASE_NEW_16;
+
 	public static void initialize(ImageRegistry imageRegistry) {
 		// registerImage(imageRegistry, Activator.PLUGIN_ID, MISSING);
 		registerImage(imageRegistry, IMG_SERVER_16, PATH_OBJ_16 + "server.gif");
@@ -77,6 +82,7 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_DELETE_16, PATH_OBJ_16 + "delete.gif");
 		registerImage(imageRegistry, IMG_DATABASE_16, PATH_OBJ_16
 				+ "database.png");
+		registerImage(imageRegistry, IMG_GRIDFS_16, PATH_OBJ_16 + "gridfs.png");
 		registerImage(imageRegistry, IMG_COLLECTION_16, PATH_OBJ_16
 				+ "collection.png");
 		registerImage(imageRegistry, IMG_DOCUMENT_16, PATH_OBJ_16
@@ -87,6 +93,7 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_USERS_16, PATH_OBJ_16 + "users.png");
 		registerImage(imageRegistry, IMG_INDEX_16, PATH_OBJ_16 + "index.png");
 		registerImage(imageRegistry, IMG_STATS_16, PATH_OBJ_16 + "stats.png");
+
 		registerImage(imageRegistry, IMG_TH_HORIZONTAL_16, PATH_OBJ_16
 				+ "th_horizontal.gif");
 		registerImage(imageRegistry, IMG_TH_VERTICAL_16, PATH_OBJ_16

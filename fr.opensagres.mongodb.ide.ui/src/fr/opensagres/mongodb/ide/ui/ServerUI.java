@@ -11,6 +11,7 @@ import com.mongodb.DBObject;
 import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Document;
+import fr.opensagres.mongodb.ide.core.model.GridFSBucket;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.Users;
 import fr.opensagres.mongodb.ide.core.utils.StringUtils;
@@ -22,6 +23,8 @@ import fr.opensagres.mongodb.ide.ui.editors.database.DatabaseEditorInput;
 import fr.opensagres.mongodb.ide.ui.editors.database.UsersPage;
 import fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditor;
 import fr.opensagres.mongodb.ide.ui.editors.document.DocumentEditorInput;
+import fr.opensagres.mongodb.ide.ui.editors.gridfs.GridFSEditor;
+import fr.opensagres.mongodb.ide.ui.editors.gridfs.GridFSEditorInput;
 import fr.opensagres.mongodb.ide.ui.editors.server.ServerEditor;
 import fr.opensagres.mongodb.ide.ui.editors.server.ServerEditorInput;
 import fr.opensagres.mongodb.ide.ui.internal.Activator;
@@ -160,6 +163,26 @@ public class ServerUI {
 			if (Trace.SEVERE) {
 				Trace.trace(Trace.STRING_SEVERE,
 						"Error opening document editor", e);
+			}
+		}
+	}
+
+	/**
+	 * Open the given gridfs with the gridfs editor.
+	 * 
+	 * @param gridfs
+	 */
+	public static void editGridFS(GridFSBucket gridfs) {
+		if (gridfs == null)
+			return;
+
+		try {
+			GridFSEditorInput input = new GridFSEditorInput(gridfs);
+			openEditor(input, GridFSEditor.ID);
+		} catch (Exception e) {
+			if (Trace.SEVERE) {
+				Trace.trace(Trace.STRING_SEVERE, "Error opening gridfs editor",
+						e);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package fr.opensagres.mongodb.ide.ui.wizards;
+package fr.opensagres.mongodb.ide.ui.wizards.server;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -13,7 +13,7 @@ import fr.opensagres.mongodb.ide.ui.internal.Messages;
 
 public class NewServerWizard extends Wizard implements INewWizard {
 
-	public static final String ID = "fr.opensagres.mongodb.ide.ui.wizards.NewServerWizard";
+	public static final String ID = "fr.opensagres.mongodb.ide.ui.wizards.server.NewServerWizard";
 
 	private final NewServerWizardPage page;
 

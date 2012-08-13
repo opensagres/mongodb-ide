@@ -15,12 +15,10 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 
-import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.ui.FormLayoutFactory;
-import fr.opensagres.mongodb.ide.ui.dialogs.StackTraceErrorDialog;
 import fr.opensagres.mongodb.ide.ui.editors.AbstractToolbarFormPage;
 import fr.opensagres.mongodb.ide.ui.editors.UIFieldsFactory;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
@@ -75,8 +73,8 @@ public class OverviewPage extends AbstractToolbarFormPage implements
 	protected void createGeneralInfoSection(Composite left, FormToolkit toolkit) {
 		Section section = toolkit.createSection(left, Section.DESCRIPTION
 				| Section.TITLE_BAR);
-		section.setDescription(Messages.databaseEditorOverviewGeneralDescription);
-		section.setText(Messages.databaseEditorOverviewGeneralSection);
+		section.setDescription(Messages.CollectionEditor_OverviewPage_GeneralInfo_desc);
+		section.setText(Messages.CollectionEditor_OverviewPage_GeneralInfo_title);
 		TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB);
 		section.setLayoutData(data);
 

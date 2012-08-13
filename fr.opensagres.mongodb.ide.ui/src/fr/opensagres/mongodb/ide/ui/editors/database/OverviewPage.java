@@ -76,8 +76,8 @@ public class OverviewPage extends AbstractToolbarFormPage implements
 	protected void createGeneralInfoSection(Composite left, FormToolkit toolkit) {
 		Section section = toolkit.createSection(left, Section.DESCRIPTION
 				| Section.TITLE_BAR);
-		section.setDescription(Messages.databaseEditorOverviewGeneralDescription);
-		section.setText(Messages.databaseEditorOverviewGeneralSection);
+		section.setDescription(Messages.DatabaseEditor_OverviewPage_GeneralInfo_desc);
+		section.setText(Messages.DatabaseEditor_OverviewPage_GeneralInfo_title);
 		TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB);
 		section.setLayoutData(data);
 
@@ -116,9 +116,9 @@ public class OverviewPage extends AbstractToolbarFormPage implements
 				| Section.TITLE_BAR);
 		Database database = getDatabase();
 		section.setDescription(NLS.bind(
-				Messages.databaseEditorOverviewShellDescription,
+				Messages.DatabaseEditor_OverviewPage_Shell_desc,
 				database.getMongoConsoleCommand(false)));
-		section.setText(Messages.databaseEditorOverviewShellSection);
+		section.setText(Messages.DatabaseEditor_OverviewPage_Shell_title);
 		TableWrapData data = new TableWrapData(TableWrapData.FILL_GRAB);
 		section.setLayoutData(data);
 

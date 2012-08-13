@@ -11,6 +11,7 @@ Export-Package: com.mongodb.tools.driver,
  com.mongodb.tools.process.mongod,
  com.mongodb.tools.shell
 Import-Package: com.mongodb,
+ com.mongodb.gridfs,
  org.bson
 Bundle-ClassPath: lib/com.mongodb.rhino.jar,
  .,

@@ -1,17 +1,30 @@
+/*******************************************************************************
+ * Copyright (C) 2012 Angelo Zerr <angelo.zerr@gmail.com>, Pascal Leclercq <pascal.leclercq@gmail.com>
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Angelo ZERR - initial API and implementation
+ *     Pascal Leclercq - initial API and implementation
+ *******************************************************************************/
 package fr.opensagres.mongodb.ide.ui.wizards.server;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
 
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.model.Server;
-import fr.opensagres.mongodb.ide.ui.dialogs.StackTraceErrorDialog;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
+import fr.opensagres.mongodb.ide.ui.wizards.AbstractNewWizard;
 
-public class NewServerWizard extends Wizard implements INewWizard {
+/**
+ * New Server wizard.
+ * 
+ */
+public class NewServerWizard extends AbstractNewWizard {
 
 	public static final String ID = "fr.opensagres.mongodb.ide.ui.wizards.server.NewServerWizard";
 
@@ -20,7 +33,6 @@ public class NewServerWizard extends Wizard implements INewWizard {
 	public NewServerWizard() {
 		super();
 		super.setWindowTitle(Messages.NewServerWizard_title);
-		super.setNeedsProgressMonitor(true);
 		page = new NewServerWizardPage();
 	}
 
@@ -30,17 +42,10 @@ public class NewServerWizard extends Wizard implements INewWizard {
 	}
 
 	@Override
-	public boolean performFinish() {
+	protected boolean doPerformFinish() throws Exception {
 		Server server = new Server(page.getName(), page.getMongoURI());
 		server.setRuntime(page.getRuntime());
-		try {
-			Platform.getServerManager().addServer(server);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			StackTraceErrorDialog.openError(getShell(), "dialogTitle",
-					"title", e);
-			return false;
-		}
+		Platform.getServerManager().addServer(server);
 		return true;
 	}
 

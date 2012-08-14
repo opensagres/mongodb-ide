@@ -95,4 +95,8 @@ public class ShellScriptBuilder {
 		return "db.system.users.find()";
 	}
 
+	public static String dropDatabase() {
+		return "db.dropDatabase()";
+	}
+
 }

@@ -9,7 +9,8 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
-import com.mongodb.DB;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
@@ -318,8 +319,62 @@ public class Server extends TreeContainerNode<Server> implements
 			return;
 
 		getServerNotificationManager().broadcastChange(
-				new ServerEvent(ServerEvent.SERVER_SAVED, this,
-						getServerState()));
+				new ServerEvent(ServerEvent.SERVER_CHANGE
+						| ServerEvent.SERVER_SAVED, this, getServerState()));
+	}
+
+	/**
+	 * Fire a server listener saved change event.
+	 */
+	protected void fireDatabaseCreatedChangeEvent(Database database) {
+		if (Trace.LISTENERS) {
+			Trace.trace(
+					Trace.STRING_LISTENERS,
+					"->- Firing database created change event: "
+							+ database.getName() + ", " + getServerState()
+							+ " ->-");
+		}
+
+		if (notificationManager == null || notificationManager.hasNoListeners())
+			return;
+
+		getServerNotificationManager().broadcastChange(
+				new ServerEvent(ServerEvent.DATABASE_CHANGE
+						| ServerEvent.DATABASE_CREATED, database));
+	}
+
+	protected void fireDatabaseDroppedChangeEvent(Database database) {
+		if (Trace.LISTENERS) {
+			Trace.trace(
+					Trace.STRING_LISTENERS,
+					"->- Firing database dropped change event: "
+							+ database.getName() + ", " + getServerState()
+							+ " ->-");
+		}
+
+		if (notificationManager == null || notificationManager.hasNoListeners())
+			return;
+
+		getServerNotificationManager().broadcastChange(
+				new ServerEvent(ServerEvent.DATABASE_CHANGE
+						| ServerEvent.DATABASE_DROPPED, database));
+	}
+	
+	protected void fireCollectionCreatedChangeEvent(Collection collection) {
+		if (Trace.LISTENERS) {
+			Trace.trace(
+					Trace.STRING_LISTENERS,
+					"->- Firing collection created change event: "
+							+ collection.getName() + ", " + getServerState()
+							+ " ->-");
+		}
+
+		if (notificationManager == null || notificationManager.hasNoListeners())
+			return;
+
+		getServerNotificationManager().broadcastChange(
+				new ServerEvent(ServerEvent.COLLECTION_CHANGE
+						| ServerEvent.COLLECTION_CREATED, collection));
 	}
 
 	/**
@@ -428,18 +483,67 @@ public class Server extends TreeContainerNode<Server> implements
 	 */
 	protected boolean selectDatabase(Database database) {
 		if (currentDatabase == null) {
+			currentDatabase = database;
 			return true;
 		}
 		boolean result = currentDatabase.getId().equals(database.getId());
 		currentDatabase = database;
-		return result;
+		return !result;
 	}
 
-	public void createDatabase(String databaseName)
+	/**
+	 * Create database.
+	 * 
+	 * @param databaseName
+	 * @return
+	 * @throws UnknownHostException
+	 * @throws MongoException
+	 */
+	public Database createDatabase(String databaseName)
 			throws UnknownHostException, MongoException {
 		Database database = new Database(databaseName);
 		database.setParent(this);
-		database.getDB();
+		// call get collection names to register the database.
+		database.getDB().getCollectionNames();
 		addNode(database);
+		// Database is created fire events
+		fireDatabaseCreatedChangeEvent(database);
+		return database;
 	}
+
+	public void dropDatabase(Database database) throws UnknownHostException,
+			MongoException {
+		getShellCommandManager().dropDatabase(database.getDB());
+		// Database is created fire events
+		fireDatabaseDroppedChangeEvent(database);
+	}
+
+	public void deleteCollection(Collection collection) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Collection createCollection(Database database, String databaseName,
+			String collectionName) throws UnknownHostException, MongoException {
+		boolean newDatabase = database == null;
+		if (database == null) {
+			database = new Database(databaseName);
+			database.setParent(this);
+		}
+		DBObject options = new BasicDBObject();
+		getShellCommandManager().createCollection(database.getDB(),
+				collectionName, options);
+		// Database is created fire events
+		if (newDatabase) {
+			addNode(database);
+			fireDatabaseCreatedChangeEvent(database);
+		}
+		// Create collection
+		Collection collection = new Collection(collectionName);
+		database.getCollectionsCategory().addNode(collection);
+		// Database is created fire events
+		fireCollectionCreatedChangeEvent(collection);
+		return collection;
+	}
+
 }

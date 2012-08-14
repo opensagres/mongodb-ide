@@ -101,7 +101,7 @@
       </category>                     
       <wizard
             class="fr.opensagres.mongodb.ide.ui.wizards.database.NewDatabaseWizard"
-            icon="icons/ctool16/wiz_new_database.gif"
+            icon="icons/ctool16/wiz_new_database.png"
             id="fr.opensagres.mongodb.ide.ui.wizards.database.NewDatabaseWizard"
             category="fr.opensagres.mongodb.ide.ui"
             name="%NewDatabaseWizard.name">

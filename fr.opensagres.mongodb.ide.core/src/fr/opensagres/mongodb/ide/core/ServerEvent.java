@@ -1,5 +1,7 @@
 package fr.opensagres.mongodb.ide.core;
 
+import fr.opensagres.mongodb.ide.core.model.Collection;
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.ServerState;
 
@@ -8,6 +10,8 @@ public class ServerEvent {
 	private Server server;
 	private ServerState state;
 	private int kind;
+	private Database database;
+	private Collection collection;
 
 	/**
 	 * For notification when the state has changed.
@@ -27,9 +31,15 @@ public class ServerEvent {
 	 * @see #getKind()
 	 */
 	public static final int SERVER_CHANGE = 0x0010;
-
 	public static final int SERVER_SAVED = 0x0011;
-	
+
+	public static final int DATABASE_CHANGE = 0x0020;
+	public static final int DATABASE_CREATED = 0x0012;
+	public static final int DATABASE_DROPPED = 0x0014;
+
+	public static final int COLLECTION_CHANGE = 0x0030;
+	public static final int COLLECTION_CREATED = 0x0032;
+
 	/**
 	 * Returns the server involved in the change event.
 	 * 
@@ -72,6 +82,25 @@ public class ServerEvent {
 					"Server parameter must not be null");
 	}
 
+	public ServerEvent(int kind, Database database) {
+		this.kind = kind |= DATABASE_CHANGE;
+		this.database = database;
+		if (database == null)
+			throw new IllegalArgumentException(
+					"Database parameter must not be null");
+		this.server = database.getParent();
+	}
+
+	public ServerEvent(int kind, Collection collection) {
+		this.kind = kind |= COLLECTION_CHANGE;
+		this.collection = collection;
+		this.database = collection.getDatabase();
+		if (database == null)
+			throw new IllegalArgumentException(
+					"Database parameter must not be null");
+		this.server = database.getParent();
+	}
+
 	/**
 	 * Returns the kind of the server event.
 	 * <p>
@@ -97,6 +126,14 @@ public class ServerEvent {
 	 */
 	public ServerState getState() {
 		return state;
+	}
+
+	public Database getDatabase() {
+		return database;
+	}
+
+	public Collection getCollection() {
+		return collection;
 	}
 
 	/*

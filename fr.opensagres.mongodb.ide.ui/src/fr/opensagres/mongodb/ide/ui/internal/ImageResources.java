@@ -31,6 +31,7 @@ public class ImageResources {
 	public static final String IMG_REFRESH_16 = "refresh_16";
 	public static final String IMG_DELETE_16 = "delete_16";
 	public static final String IMG_DATABASE_16 = "database_16";
+	public static String IMG_DATABASE_NEW_16 = "database_new_16";
 	public static final String IMG_GRIDFS_16 = "gridfs_16";
 	public static final String IMG_COLLECTION_16 = "collection_16";
 	public static final String IMG_DOCUMENT_16 = "document_16";
@@ -63,10 +64,9 @@ public class ImageResources {
 	public static final String IMG_ENABLED_UNCHECKED = "enabled_unchecked";
 
 	public static final String IMG_WIZBAN_NEW_SERVER = "newServerWiz";
-
+	public static final String IMG_WIZBAN_NEW_DATABASE = "newDatabaseWiz";
+	
 	public static final String IMG_COLLECTION_NEW_16 = null;
-
-	public static String IMG_DATABASE_NEW_16;
 
 	public static void initialize(ImageRegistry imageRegistry) {
 		// registerImage(imageRegistry, Activator.PLUGIN_ID, MISSING);
@@ -82,6 +82,8 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_DELETE_16, PATH_OBJ_16 + "delete.gif");
 		registerImage(imageRegistry, IMG_DATABASE_16, PATH_OBJ_16
 				+ "database.png");
+		registerImage(imageRegistry, IMG_DATABASE_NEW_16, PATH_OBJ_16
+				+ "database-new.png");		
 		registerImage(imageRegistry, IMG_GRIDFS_16, PATH_OBJ_16 + "gridfs.png");
 		registerImage(imageRegistry, IMG_COLLECTION_16, PATH_OBJ_16
 				+ "collection.png");
@@ -127,6 +129,8 @@ public class ImageResources {
 
 		registerImage(imageRegistry, IMG_WIZBAN_NEW_SERVER, PATH_WIZBAN
 				+ "new_server_wiz.png");
+		registerImage(imageRegistry, IMG_WIZBAN_NEW_DATABASE, PATH_WIZBAN
+				+ "new_database_wiz.png");
 
 		registerImage(imageRegistry, IMG_DISABLED_CHECKED, PATH_CHECKBOXES
 				+ "disabled_checked.gif");

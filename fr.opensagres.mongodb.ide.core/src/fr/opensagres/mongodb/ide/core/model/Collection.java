@@ -10,11 +10,9 @@ public class Collection extends TreeContainerNode<CollectionsCategory> {
 
 	private String id;
 	private String name;
-	private DBCollection dbCollection;
 
 	public Collection(String name) {
 		this.name = name;
-		this.dbCollection = null;
 	}
 
 	@Override
@@ -55,11 +53,8 @@ public class Collection extends TreeContainerNode<CollectionsCategory> {
 
 	public DBCollection getDBCollection() throws UnknownHostException,
 			MongoException {
-		if (dbCollection == null) {
-			DB db = getParent().getParent().getDB();
-			dbCollection = db.getCollection(getName());
-		}
-		return dbCollection;
+		DB db = getParent().getParent().getDB();
+		return db.getCollection(getName());
 	}
 
 	public Database getDatabase() {

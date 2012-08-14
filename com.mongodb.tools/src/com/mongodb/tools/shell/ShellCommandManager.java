@@ -21,6 +21,7 @@ import com.mongodb.tools.shell.commands.CollectionFindShellCommand;
 import com.mongodb.tools.shell.commands.ConnectShellCommand;
 import com.mongodb.tools.shell.commands.DBAuthenticateShellCommand;
 import com.mongodb.tools.shell.commands.DisconnectShellCommand;
+import com.mongodb.tools.shell.commands.DropDatabaseShellCommand;
 import com.mongodb.tools.shell.commands.GetSystemUsersShellCommand;
 import com.mongodb.tools.shell.commands.ShowCollectionsShellCommand;
 import com.mongodb.tools.shell.commands.ShowDbsShellCommand;
@@ -144,23 +145,22 @@ public class ShellCommandManager {
 		return page;
 	}
 
-	public Page paginate(GridFS gridFS, int pageNumber,
-			int itemsPerPage) {
+	public Page paginate(GridFS gridFS, int pageNumber, int itemsPerPage) {
 		return paginate(gridFS, pageNumber, itemsPerPage, null, null);
 	}
 
-	public Page paginate(GridFS gridFS, int pageNumber,
-			int itemsPerPage, String sortName, SortOrder order) {
-		Page page = PaginationHelper.paginate(gridFS, pageNumber,
-				itemsPerPage, sortName, order);
+	public Page paginate(GridFS gridFS, int pageNumber, int itemsPerPage,
+			String sortName, SortOrder order) {
+		Page page = PaginationHelper.paginate(gridFS, pageNumber, itemsPerPage,
+				sortName, order);
 		if (hasListeners()) {
-			//getShellNotificationManager().broadcastChange(
-//					new CollectionFindShellCommand(collection, pageNumber,
-//							itemsPerPage, sortName, order));
+			// getShellNotificationManager().broadcastChange(
+			// new CollectionFindShellCommand(collection, pageNumber,
+			// itemsPerPage, sortName, order));
 		}
 		return page;
 	}
-	
+
 	public List<DBObject> getSystemUsers(DB db) {
 		List<DBObject> users = DBObjectHelper.getSystemUsers(db);
 		if (hasListeners()) {
@@ -254,6 +254,19 @@ public class ShellCommandManager {
 	public CommandResult getDBCollectionGetStats(DBCollection collection) {
 		CommandResult result = collection.getStats();
 		return result;
+	}
+
+	public void dropDatabase(DB db) {
+		db.dropDatabase();
+		if (hasListeners()) {
+			getShellNotificationManager().broadcastChange(
+					new DropDatabaseShellCommand(db));
+		}
+	}
+
+	public void createCollection(DB db, String collectionName, DBObject options) {
+		db.createCollection(collectionName, options);
+
 	}
 
 }

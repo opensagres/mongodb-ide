@@ -9,8 +9,9 @@
  *     Angelo ZERR - initial API and implementation
  *     Pascal Leclercq - initial API and implementation
  *******************************************************************************/
-package fr.opensagres.mongodb.ide.ui.wizards.database;
+package fr.opensagres.mongodb.ide.ui.wizards.collection;
 
+import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.ui.ServerUI;
 import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
@@ -21,17 +22,17 @@ import fr.opensagres.mongodb.ide.ui.wizards.AbstractSelectNodeWizard;
  * New Database wizard.
  * 
  */
-public class NewDatabaseWizard extends AbstractSelectNodeWizard {
+public class NewCollectionWizard extends AbstractSelectNodeWizard {
 
-	public static final String ID = "fr.opensagres.mongodb.ide.ui.wizards.database.NewDatabaseWizard";
+	public static final String ID = "fr.opensagres.mongodb.ide.ui.wizards.collection.NewCollectionWizard";
 
-	private final NewDatabaseWizardPage page;
+	private final NewCollectionWizardPage page;
 
-	public NewDatabaseWizard() {
-		super.setWindowTitle(Messages.NewDatabaseWizard_title);
+	public NewCollectionWizard() {
+		super.setWindowTitle(Messages.NewCollectionWizard_title);
 		super.setDefaultPageImageDescriptor(ImageResources
 				.getImageDescriptor(ImageResources.IMG_WIZBAN_NEW_DATABASE));
-		page = new NewDatabaseWizardPage();
+		page = new NewCollectionWizardPage();
 	}
 
 	@Override
@@ -42,13 +43,17 @@ public class NewDatabaseWizard extends AbstractSelectNodeWizard {
 
 	@Override
 	protected boolean doPerformFinish() throws Exception {
-		String databaseName = page.getDatabaseName();
-		// Create Database
-		Database database = page.getSelectedServer().createDatabase(
-				databaseName);
-		if (page.isOpenDatabaseEditor()) {
-			// Open database in an editor.
-			ServerUI.editDatabase(database);
+		String collectionName = page.getCollectionName();
+		String databaseName = null;
+		Database selectedDatabase = page.getSelectedDatabase();
+		// if (selectedDatabase == null) {
+		databaseName = page.getDatabaseName();
+		// }
+		Collection collection = page.getSelectedServer().createCollection(
+				selectedDatabase, databaseName, collectionName);
+		if (page.isOpenCollectionEditor()) {
+			// Open collection in an editor.
+			ServerUI.editCollection(collection);
 		}
 		return true;
 	}

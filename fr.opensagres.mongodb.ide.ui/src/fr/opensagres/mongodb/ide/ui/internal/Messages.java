@@ -11,6 +11,10 @@ public class Messages extends NLS {
 	public static String removeButton_label;
 	public static String searchButton_label;
 
+	// Select wizard
+	public static String SelectServerWizardPage_title;
+	public static String SelectServerWizardPage_desc;
+	
 	// ****************** New Server Wizard ******************
 	public static String NewServerWizard_title;
 	public static String NewServerWizardPage_title;
@@ -32,10 +36,17 @@ public class Messages extends NLS {
 
 	// ****************** New Database Wizard ******************
 	public static String NewDatabaseWizard_title;
+	public static String NewDatabaseWizardPage_title;
+	public static String NewDatabaseWizardPage_desc;
+	public static String NewDatabaseWizardPage_openDatabaseEditorCheckbox_label;
+	public static String NewDatabaseWizardPage_name_validation_exists;
 
 	// ****************** New Collection Wizard ******************
 	public static String NewCollectionWizard_title;
-
+	public static String NewCollectionWizardPage_title;
+	public static String NewCollectionWizardPage_desc;
+	public static String NewCollectionWizardPage_openCollectionEditorCheckbox_label;
+	
 	// ****************** New Action ******************
 	public static String NewServerAction_text;
 	public static String NewServerAction_toolTipText;
@@ -43,7 +54,7 @@ public class Messages extends NLS {
 	public static String NewDatabaseAction_toolTipText;
 	public static String NewCollectionAction_text;
 	public static String NewCollectionAction_toolTipText;
-	
+
 	// ****************** RefreshAction ******************
 	public static String RefreshAction_text;
 	public static String RefreshAction_toolTipText;
@@ -51,6 +62,12 @@ public class Messages extends NLS {
 	// ****************** DeleteAction ******************
 	public static String DeleteAction_text;
 	public static String DeleteAction_toolTipText;
+	public static String DeleteAction_serverTitle;
+	public static String DeleteAction_serverMessage;
+	public static String DeleteAction_databaseTitle;
+	public static String DeleteAction_databaseMessage;
+	public static String DeleteAction_collectionTitle;
+	public static String DeleteAction_collectionMessage;
 
 	public static String actionNew;
 	public static String actionStart;
@@ -140,6 +157,12 @@ public class Messages extends NLS {
 	public static String columnContentType;
 	public static String columnMD5;
 
+	// Validation
+	public static String server_validation_required;
+	public static String server_validation_notConnected;
+	public static String database_validation_required;
+	public static String collection_validation_required;
+	
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

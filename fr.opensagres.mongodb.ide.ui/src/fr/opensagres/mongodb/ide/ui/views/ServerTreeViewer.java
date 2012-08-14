@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -14,6 +15,7 @@ import fr.opensagres.mongodb.ide.core.IServerLifecycleListener;
 import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.Platform;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
+import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 
 /**
@@ -61,9 +63,16 @@ public class ServerTreeViewer extends TreeViewer {
 
 				int eventKind = event.getKind();
 				Server server = event.getServer();
-				if ((eventKind & ServerEvent.SERVER_CHANGE) != 0) {
-					// server change event
-					refreshServer(server);					
+
+				if ((eventKind & ServerEvent.DATABASE_DROPPED) == ServerEvent.DATABASE_DROPPED) {
+					// remove database
+					removeDatabase(event.getDatabase());
+				} else if ((eventKind & ServerEvent.DATABASE_CREATED) == ServerEvent.DATABASE_CREATED) {
+					// add database
+					addDatabase(event.getDatabase());
+				} else if ((eventKind & ServerEvent.SERVER_CHANGE) != 0) {
+					// refresh server state
+					refreshServer(server);
 				}
 			}
 		};
@@ -110,6 +119,42 @@ public class ServerTreeViewer extends TreeViewer {
 				}
 			}
 		});
+	}
+
+	private void addDatabase(final Database database) {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					// Add the created database in the treeviewer
+					ServerTreeViewer.this.add(database.getParent(), database);
+					// Select the database
+					ISelection sel = new StructuredSelection(database);
+					ServerTreeViewer.this.setSelection(sel);
+					// Expand the database tree item
+					ServerTreeViewer.this.expandToLevel(database, 1);
+				} catch (Exception e) {
+					// ignore
+				}
+			}
+		});
+	}
+
+	private void removeDatabase(final Database database) {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					// Add the created database in the treeviewer
+					ServerTreeViewer.this.remove(database);
+					// Select the server
+					ISelection sel = new StructuredSelection(database
+							.getParent());
+					ServerTreeViewer.this.setSelection(sel);
+				} catch (Exception e) {
+					// ignore
+				}
+			}
+		});
+
 	}
 
 	@Override

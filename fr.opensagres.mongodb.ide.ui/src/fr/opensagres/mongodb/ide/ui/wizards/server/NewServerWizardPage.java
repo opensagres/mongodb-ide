@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -29,8 +28,9 @@ import fr.opensagres.mongodb.ide.ui.internal.ImageResources;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.viewers.RuntimeContentProvider;
 import fr.opensagres.mongodb.ide.ui.viewers.RuntimeLabelProvider;
+import fr.opensagres.mongodb.ide.ui.wizards.AbstractWizardPage;
 
-public class NewServerWizardPage extends WizardPage {
+public class NewServerWizardPage extends AbstractWizardPage {
 
 	private static final String PAGE_NAME = "NewServerWizardPage";
 
@@ -52,7 +52,8 @@ public class NewServerWizardPage extends WizardPage {
 				.getImageDescriptor(ImageResources.IMG_WIZBAN_NEW_SERVER));
 	}
 
-	public void createControl(Composite parent) {
+	@Override
+	protected Composite createUI(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
@@ -87,8 +88,7 @@ public class NewServerWizardPage extends WizardPage {
 		runtimeViewer.getControl().setLayoutData(
 				new GridData(GridData.FILL_HORIZONTAL));
 
-		setControl(container);
-		validate();
+		return container;
 	}
 
 	private void createLocationGroup(Composite parent) {
@@ -189,12 +189,8 @@ public class NewServerWizardPage extends WizardPage {
 		databaseNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
-	private void validate() {
-		super.setPageComplete(validateFields());
-		super.getContainer().updateButtons();
-	}
-
-	private boolean validateFields() {
+	@Override
+	protected boolean validateFields() {
 		// Name validation
 		if (StringUtils.isEmpty(nameText.getText())) {
 			setErrorMessage(Messages.NewServerWizardPage_name_validation_required);
@@ -223,7 +219,6 @@ public class NewServerWizardPage extends WizardPage {
 					e.getMessage()));
 			return false;
 		}
-		setErrorMessage(null);
 		return true;
 	}
 
@@ -324,5 +319,10 @@ public class NewServerWizardPage extends WizardPage {
 		if (!widget.equals(currentWidgetWhichModifyMongoURI)) {
 			widget.setText(text != null ? text : "");
 		}
+	}
+
+	@Override
+	protected void onLoad() {
+		// Do nothing.
 	}
 }

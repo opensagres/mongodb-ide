@@ -16,6 +16,7 @@ import java.util.List;
 
 import fr.opensagres.mongodb.ide.core.IServerListener;
 import fr.opensagres.mongodb.ide.core.ServerEvent;
+
 /**
  * Notification manager for server.
  */
@@ -60,7 +61,7 @@ public class ServerNotificationManager {
 	public void addListener(IServerListener curListener) {
 		addListener(curListener, ALL_EVENTS);
 	}
-	
+
 	/**
 	 * Add listener for the events specified by the mask.
 	 * 
@@ -69,13 +70,14 @@ public class ServerNotificationManager {
 	 */
 	public void addListener(IServerListener curListener, int eventMask) {
 		if (Trace.FINEST) {
-			Trace.trace(Trace.STRING_FINEST, "->- Adding server listener to notification manager: " + curListener + " "
-					+ eventMask + " ->-");
+			Trace.trace(Trace.STRING_FINEST,
+					"->- Adding server listener to notification manager: "
+							+ curListener + " " + eventMask + " ->-");
 		}
 		if (curListener == null) {
 			return;
 		}
-		
+
 		synchronized (listenerList) {
 			listenerList.add(new ListenerEntry(curListener, eventMask));
 		}
@@ -83,16 +85,18 @@ public class ServerNotificationManager {
 
 	public void broadcastChange(ServerEvent event) {
 		if (Trace.FINEST) {
-			Trace.trace(Trace.STRING_FINEST, "->- Broadcasting server event: " + event + " ->-");
+			Trace.trace(Trace.STRING_FINEST, "->- Broadcasting server event: "
+					+ event + " ->-");
 		}
 		if (event == null) {
 			return;
 		}
 		int eventKind = event.getKind();
 		if (Trace.FINEST) {
-			Trace.trace(Trace.STRING_FINEST, "  Server event kind: " + eventKind + " ->-");
+			Trace.trace(Trace.STRING_FINEST, "  Server event kind: "
+					+ eventKind + " ->-");
 		}
-		
+
 		// only notify listeners that listen to module event
 		int size;
 		ListenerEntry[] listeners;
@@ -103,37 +107,48 @@ public class ServerNotificationManager {
 		for (int i = 0; i < size; i++) {
 			ListenerEntry curEntry = listeners[i];
 			int mask = curEntry.getEventMask();
-			
-			// check if the type of the event matches the mask, e.g. server or module change
-			boolean isTypeMatch = ((mask & eventKind & ServerEvent.SERVER_CHANGE) != 0);
+
+			// check if the type of the event matches the mask, e.g. server or
+			// module change
+			boolean isTypeMatch = ((mask & eventKind & ServerEvent.SERVER_CHANGE) != 0)
+					|| ((mask & eventKind & ServerEvent.DATABASE_CHANGE) != 0);
 			// check the kind of change
-			// take out the ServerEvent.SERVER_CHANGE bit and ServerEvent.MODULE_CHANGE bit
-			int kindOnly = ServerEvent.SERVER_CHANGE;//(eventKind | ServerEvent.SERVER_CHANGE) ^ ServerEvent.SERVER_CHANGE ^ ServerEvent.MODULE_CHANGE;
+			// take out the ServerEvent.SERVER_CHANGE bit and
+			// ServerEvent.MODULE_CHANGE bit
+			int kindOnly = (eventKind | ServerEvent.SERVER_CHANGE | ServerEvent.DATABASE_CHANGE)
+					^ ServerEvent.SERVER_CHANGE ^ ServerEvent.DATABASE_CHANGE;
 			boolean isKindMatch = (mask & kindOnly) != 0;
-			
 			if (isTypeMatch && isKindMatch) {
 				if (Trace.FINEST) {
-					Trace.trace(Trace.STRING_FINEST, "->- Firing server event to listener: " + curEntry.getListener()
-							+ " ->-");
+					Trace.trace(
+							Trace.STRING_FINEST,
+							"->- Firing server event to listener: "
+									+ curEntry.getListener() + " ->-");
 				}
 				try {
 					if (Trace.LISTENERS) {
 						Trace.trace(Trace.STRING_LISTENERS,
-								"  Firing server event to listener: " + curEntry.getListener());
+								"  Firing server event to listener: "
+										+ curEntry.getListener());
 					}
 					curEntry.getListener().serverChanged(event);
 				} catch (Exception e) {
 					if (Trace.SEVERE) {
-						Trace.trace(Trace.STRING_SEVERE, "  Error firing server event: " + curEntry.getListener(), e);
+						Trace.trace(
+								Trace.STRING_SEVERE,
+								"  Error firing server event: "
+										+ curEntry.getListener(), e);
 					}
 				}
 				if (Trace.LISTENERS) {
-					Trace.trace(Trace.STRING_LISTENERS, "-<- Done firing server event -<-");
+					Trace.trace(Trace.STRING_LISTENERS,
+							"-<- Done firing server event -<-");
 				}
 			}
 		}
 		if (Trace.FINEST) {
-			Trace.trace(Trace.STRING_FINEST, "-<- Done broadcasting server event -<-");
+			Trace.trace(Trace.STRING_FINEST,
+					"-<- Done broadcasting server event -<-");
 		}
 	}
 
@@ -153,17 +168,18 @@ public class ServerNotificationManager {
 	 */
 	public void removeListener(IServerListener curListener) {
 		if (Trace.FINEST) {
-			Trace.trace(Trace.STRING_FINEST, "->- Removing server listener from notification manager: " + curListener
-					+ " ->-");
+			Trace.trace(Trace.STRING_FINEST,
+					"->- Removing server listener from notification manager: "
+							+ curListener + " ->-");
 		}
 		if (curListener == null)
 			return;
-		
+
 		synchronized (listenerList) {
 			ListenerEntry matchedListenerEntry = null;
 			Iterator listenerIter = listenerList.iterator();
 			while (matchedListenerEntry == null && listenerIter.hasNext()) {
-				ListenerEntry curEntry = (ListenerEntry)listenerIter.next();
+				ListenerEntry curEntry = (ListenerEntry) listenerIter.next();
 				if (curListener.equals(curEntry.getListener())) {
 					matchedListenerEntry = curEntry;
 				}

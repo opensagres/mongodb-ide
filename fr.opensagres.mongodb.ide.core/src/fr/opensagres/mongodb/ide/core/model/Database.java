@@ -185,14 +185,17 @@ public class Database extends TreeContainerNode<Server> {
 		return collectionsCategory.getCollections();
 	}
 
+	public CollectionsCategory getCollectionsCategory() {
+		return collectionsCategory;
+	}
+
 	public List<CollectionStats> createStats() throws UnknownHostException,
 			MongoException {
 		List<Collection> collections = getCollections();
 		CollectionListStats collectionStats = new CollectionListStats(
 				collections.size());
 		for (Collection collection : collections) {
-			collectionStats
-					.addCollection(collection);
+			collectionStats.addCollection(collection);
 		}
 		return collectionStats;
 	}

@@ -1,43 +1,25 @@
 package fr.opensagres.mongodb.ide.ui.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
 
+import fr.opensagres.mongodb.ide.core.model.Collection;
 import fr.opensagres.mongodb.ide.core.model.Database;
 import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.core.model.TreeSimpleNode;
 
-public abstract class AbstractSelectNodeWizard extends Wizard implements
-		INewWizard {
+public abstract class AbstractSelectNodeWizard extends AbstractNewWizard {
 
 	public enum SelectType {
 		Server, Database, Collection
 	}
 
-	private final SelectType type;
 	private Server server;
 	private Database database;
+	private Collection collection;
 
-	private SelectServerWizardPage selectServerWizardPage;
-	private SelectDatabaseWizardPage selectDatabaseWizardPage;
-
-	public AbstractSelectNodeWizard(SelectType type) {
-		this.type = type;
-	}
-
-	@Override
-	public void addPages() {
-		if (server == null) {
-			selectServerWizardPage = new SelectServerWizardPage();
-			addPage(selectServerWizardPage);
-		}
-		if (type != SelectType.Server && database == null) {
-			selectDatabaseWizardPage = new SelectDatabaseWizardPage();
-			addPage(selectDatabaseWizardPage);
-		}
+	public AbstractSelectNodeWizard() {
 	}
 
 	/**
@@ -58,21 +40,20 @@ public abstract class AbstractSelectNodeWizard extends Wizard implements
 				} else if (node instanceof Database) {
 					database = (Database) node;
 					server = database.getParent();
-				} else {
-
+				} else if (node instanceof Collection) {
+					collection = (Collection) node;
+					database = collection.getDatabase();
+					server = database.getParent();
 				}
 			}
 		}
 	}
 
-	public Server getServer() {
-		if (selectServerWizardPage != null) {
-			return selectServerWizardPage.getServer();
-		}
+	public Server getInitialServer() {
 		return server;
 	}
 
-	public Database getDatabase() {
+	public Database getInitialDatabase() {
 		return database;
 	}
 }

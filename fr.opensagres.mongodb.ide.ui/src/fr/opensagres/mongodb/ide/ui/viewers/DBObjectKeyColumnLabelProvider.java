@@ -1,5 +1,6 @@
 package fr.opensagres.mongodb.ide.ui.viewers;
 
+import java.util.Collection;
 import java.util.Map.Entry;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -26,6 +27,15 @@ public class DBObjectKeyColumnLabelProvider extends ColumnLabelProvider {
 		if (element instanceof Entry) {
 			Entry entry = (Entry) element;
 			Object key = entry.getKey();
+			Object value = entry.getValue();
+			if (value instanceof Collection) {
+				StringBuilder keyText = new StringBuilder(
+						key != null ? key.toString() : "");
+				keyText.append(" [");
+				keyText.append(((Collection) value).size());
+				keyText.append("]");
+				return keyText.toString();
+			}
 			return (key != null) ? key.toString() : "";
 		}
 		return "";

@@ -2,8 +2,10 @@ package fr.opensagres.mongodb.ide.ui.viewers;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bson.BSONObject;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
@@ -34,13 +36,19 @@ public class DBObjectContentProvider implements ITreeContentProvider {
 	}
 
 	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof HashMap) {
-			HashMap map = (HashMap) parentElement;
+		if (parentElement instanceof Map) {
+			Map map = (Map) parentElement;
 			return map.entrySet().toArray();
 		}
+		if (parentElement instanceof BSONObject) {
+			return getChildren(((BSONObject) parentElement).toMap());
+		}
 		if (parentElement instanceof Entry) {
-			Entry entry = (Entry)parentElement;
+			Entry entry = (Entry) parentElement;
 			return getChildren(entry.getValue());
+		}
+		if (parentElement instanceof Collection) {
+			return ((Collection) parentElement).toArray();
 		}
 		return EMPTY_OBJECTS;
 	}
@@ -65,10 +73,6 @@ public class DBObjectContentProvider implements ITreeContentProvider {
 	}
 
 	public void dispose() {
-
-	}
-
-	private static class TreeItem {
 
 	}
 

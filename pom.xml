@@ -10,6 +10,7 @@
 		<tycho-version>0.14.1</tycho-version>
 	</properties>
 	<modules>
+		<module>com.mongodb.tools</module>
 		<module>fr.opensagres.mongodb.ide.core</module>
 		<module>fr.opensagres.mongodb.ide.ui</module>
 		<module>fr.opensagres.mongodb.ide.ui-rap</module>
@@ -70,7 +71,19 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/rt/rap/1.5/runtime</url>
 		</repository>
+		<repository>
+			<id>nebula</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/technology/nebula/incubation/snapshot</url>
+		</repository>
 
 	</repositories>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+	</dependencies>
 </project>

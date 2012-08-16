@@ -39,6 +39,7 @@ import fr.opensagres.mongodb.ide.ui.actions.database.NewDatabaseAction;
 import fr.opensagres.mongodb.ide.ui.actions.database.ShellRunnerAction;
 import fr.opensagres.mongodb.ide.ui.actions.database.StartShellAction;
 import fr.opensagres.mongodb.ide.ui.actions.database.StopShellAction;
+import fr.opensagres.mongodb.ide.ui.actions.document.NewDocumentAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.NewServerAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.ServerRunnerAction;
 import fr.opensagres.mongodb.ide.ui.actions.server.StartServerAction;
@@ -75,6 +76,9 @@ public class ServerExplorer extends ViewPart {
 
 	// Collection actions
 	private Action newCollectionAction;
+
+	// Document actions
+	private Action newDocumentAction;
 
 	public void createPartControl(Composite parent) {
 		viewer = new ServerTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
@@ -212,6 +216,7 @@ public class ServerExplorer extends ViewPart {
 		newServerAction = new NewServerAction();
 		newDatabaseAction = new NewDatabaseAction(viewer);
 		newCollectionAction = new NewCollectionAction(viewer);
+		newDocumentAction = new NewDocumentAction(viewer);
 
 		// add toolbar buttons
 		IContributionManager toolbarOfActionBars = actionBars
@@ -305,6 +310,7 @@ public class ServerExplorer extends ViewPart {
 		menu.add(newServerAction);
 		menu.add(newDatabaseAction);
 		menu.add(newCollectionAction);
+		menu.add(newDocumentAction);
 	}
 
 	// private void initializeActions(ISelectionProvider provider) {

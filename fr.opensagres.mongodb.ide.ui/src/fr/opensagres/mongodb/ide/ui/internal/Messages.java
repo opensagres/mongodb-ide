@@ -14,7 +14,7 @@ public class Messages extends NLS {
 	// Select wizard
 	public static String SelectServerWizardPage_title;
 	public static String SelectServerWizardPage_desc;
-	
+
 	// ****************** New Server Wizard ******************
 	public static String NewServerWizard_title;
 	public static String NewServerWizardPage_title;
@@ -46,7 +46,13 @@ public class Messages extends NLS {
 	public static String NewCollectionWizardPage_title;
 	public static String NewCollectionWizardPage_desc;
 	public static String NewCollectionWizardPage_openCollectionEditorCheckbox_label;
-	
+
+	// ****************** New Document Wizard ******************
+	public static String NewDocumentWizard_title;
+	public static String NewDocumentWizardPage_title;
+	public static String NewDocumentWizardPage_desc;
+	public static String NewDocumentWizardPage_openDocumentEditorCheckbox_label;
+
 	// ****************** New Action ******************
 	public static String NewServerAction_text;
 	public static String NewServerAction_toolTipText;
@@ -54,7 +60,9 @@ public class Messages extends NLS {
 	public static String NewDatabaseAction_toolTipText;
 	public static String NewCollectionAction_text;
 	public static String NewCollectionAction_toolTipText;
-
+	public static String NewDocumentAction_text;
+	public static String NewDocumentAction_toolTipText;
+	
 	// ****************** RefreshAction ******************
 	public static String RefreshAction_text;
 	public static String RefreshAction_toolTipText;
@@ -162,7 +170,7 @@ public class Messages extends NLS {
 	public static String server_validation_notConnected;
 	public static String database_validation_required;
 	public static String collection_validation_required;
-	
+
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

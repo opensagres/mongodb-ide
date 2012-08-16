@@ -121,6 +121,20 @@
             name="%NewCollectionWizard.name">
       </wizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%Mongo.category"
+            id="fr.opensagres.mongodb.ide.ui">
+      </category>                     
+      <wizard
+            class="fr.opensagres.mongodb.ide.ui.wizards.document.NewDocumentWizard"
+            icon="icons/ctool16/wiz_new_document.gif"
+            id="fr.opensagres.mongodb.ide.ui.wizards.document.NewDocumentWizard"
+            category="fr.opensagres.mongodb.ide.ui"
+            name="%NewDocumentWizard.name">
+      </wizard>
+   </extension>   
   <extension point="org.eclipse.ui.preferencePages">
     <page
       id="fr.opensagres.mongodb.ide.ui.preferencePage"

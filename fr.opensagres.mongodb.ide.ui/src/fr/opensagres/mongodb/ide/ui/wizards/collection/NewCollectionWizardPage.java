@@ -15,19 +15,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import fr.opensagres.mongodb.ide.core.model.Database;
-import fr.opensagres.mongodb.ide.core.model.Server;
 import fr.opensagres.mongodb.ide.ui.internal.Messages;
 import fr.opensagres.mongodb.ide.ui.internal.Validator;
 import fr.opensagres.mongodb.ide.ui.wizards.AbstractSelectDatabaseWizardPage;
-import fr.opensagres.mongodb.ide.ui.wizards.AbstractSelectNodeWizard;
-import fr.opensagres.mongodb.ide.ui.wizards.AbstractWizardPage;
 
 /**
  * New Database wizard page.
@@ -37,8 +32,6 @@ public class NewCollectionWizardPage extends AbstractSelectDatabaseWizardPage {
 
 	private static final String PAGE_NAME = "NewCollectionWizardPage";
 
-	private Label serverNameLabel;
-	private Label databaseNameLabel;
 	private Text collectionNameText;
 
 	private Button openCollectionEditorCheckbox;

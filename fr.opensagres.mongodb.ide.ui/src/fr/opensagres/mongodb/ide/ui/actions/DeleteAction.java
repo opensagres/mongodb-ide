@@ -40,18 +40,18 @@ public class DeleteAction extends Action {
 				if (element instanceof Server) {
 					if (serversToRemove == null) {
 						serversToRemove = new ArrayList<Server>();
-						serversToRemove.add((Server) element);
 					}
+					serversToRemove.add((Server) element);
 				} else if (element instanceof Database) {
 					if (databasesToRemove == null) {
 						databasesToRemove = new ArrayList<Database>();
-						databasesToRemove.add((Database) element);
 					}
+					databasesToRemove.add((Database) element);
 				} else if (element instanceof Collection) {
 					if (collectionsToRemove == null) {
 						collectionsToRemove = new ArrayList<Collection>();
-						collectionsToRemove.add((Collection) element);
 					}
+					collectionsToRemove.add((Collection) element);
 				}
 			}
 

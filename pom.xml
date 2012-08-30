@@ -33,7 +33,6 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
-					<allowConflictingDependencies>true</allowConflictingDependencies>
 					<environments>
 			        	<environment>
           			   		<os>win32</os>

@@ -15,6 +15,7 @@
 		<module>fr.opensagres.mongodb.ide.ui</module>
 		<module>fr.opensagres.mongodb.ide.ui-rap</module>
 		<module>fr.opensagres.mongodb.ide.launching</module>
+		<module>mongodb-ide-product</module>
 	</modules>
 	<build>
 		<defaultGoal>install</defaultGoal>

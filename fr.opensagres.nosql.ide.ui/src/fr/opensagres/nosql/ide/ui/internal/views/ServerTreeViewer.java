@@ -1,8 +1,6 @@
-package fr.opensagres.mongodb.ide.ui.views;
+package fr.opensagres.nosql.ide.ui.internal.views;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -11,26 +9,21 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import fr.opensagres.mongodb.ide.core.IServerLifecycleListener;
-import fr.opensagres.mongodb.ide.core.IServerListener;
-import fr.opensagres.mongodb.ide.core.Platform;
-import fr.opensagres.mongodb.ide.core.ServerEvent;
-import fr.opensagres.mongodb.ide.core.model.Database;
-import fr.opensagres.mongodb.ide.core.model.Server;
+import fr.opensagres.nosql.ide.core.IServerLifecycleListener;
+import fr.opensagres.nosql.ide.core.IServerListener;
+import fr.opensagres.nosql.ide.core.Platform;
+import fr.opensagres.nosql.ide.core.ServerEvent;
+import fr.opensagres.nosql.ide.core.extensions.IServerType;
+import fr.opensagres.nosql.ide.core.model.IDatabase;
+import fr.opensagres.nosql.ide.core.model.IServer;
 
-/**
- * Tree view showing servers and their associations.
- */
 public class ServerTreeViewer extends TreeViewer {
-
-	protected static final String ROOT = "root";
-	protected static Set<String> starting = new HashSet<String>(4);
 
 	protected IServerLifecycleListener serverResourceListener;
 	protected IServerListener serverListener;
 
 	public ServerTreeViewer(Composite parent, int style) {
-		super(parent, style);		
+		super(parent, style);
 	}
 
 	protected void initialize() {
@@ -39,16 +32,16 @@ public class ServerTreeViewer extends TreeViewer {
 
 	protected void addListeners() {
 		serverResourceListener = new IServerLifecycleListener() {
-			public void serverAdded(Server server) {
+			public void serverAdded(IServer server) {
 				addServer(server);
 				server.addServerListener(serverListener);
 			}
 
-			public void serverChanged(Server server) {
+			public void serverChanged(IServer server) {
 				refreshServer(server);
 			}
 
-			public void serverRemoved(Server server) {
+			public void serverRemoved(IServer server) {
 				removeServer(server);
 				server.removeServerListener(serverListener);
 			}
@@ -62,7 +55,7 @@ public class ServerTreeViewer extends TreeViewer {
 					return;
 
 				int eventKind = event.getKind();
-				Server server = event.getServer();
+				IServer server = event.getServer();
 
 				if ((eventKind & ServerEvent.DATABASE_DROPPED) == ServerEvent.DATABASE_DROPPED) {
 					// remove database
@@ -78,21 +71,23 @@ public class ServerTreeViewer extends TreeViewer {
 		};
 
 		// add listeners to servers
-		List<Server> servers = Platform.getServerManager().getServers();
-		for (Server server : servers) {
+		List<IServer> servers = Platform.getServerManager().getServers();
+		for (IServer server : servers) {
 			server.addServerListener(serverListener);
 		}
 	}
 
-	protected void addServer(final Server server) {
+	protected void addServer(final IServer server) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				add(Platform.getServerManager(), server);
+				IServerType serverType = server.getServerType();
+				add(serverType, server);
+				ServerTreeViewer.this.expandToLevel(serverType, 1);
 			}
 		});
 	}
 
-	protected void removeServer(final Server server) {
+	protected void removeServer(final IServer server) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				remove(server);
@@ -100,7 +95,7 @@ public class ServerTreeViewer extends TreeViewer {
 		});
 	}
 
-	protected void refreshServer(final Server server) {
+	protected void refreshServer(final IServer server) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				try {
@@ -112,7 +107,7 @@ public class ServerTreeViewer extends TreeViewer {
 				}
 			}
 
-			private void refresh(Server server) {
+			private void refresh(IServer server) {
 				ServerTreeViewer.this.refresh(server);
 				if (server.isConnected()) {
 					ServerTreeViewer.this.expandToLevel(server, 1);
@@ -121,12 +116,12 @@ public class ServerTreeViewer extends TreeViewer {
 		});
 	}
 
-	private void addDatabase(final Database database) {
+	private void addDatabase(final IDatabase database) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				try {
 					// Add the created database in the treeviewer
-					ServerTreeViewer.this.add(database.getParent(), database);
+					ServerTreeViewer.this.add(database.getServer(), database);
 					// Select the database
 					ISelection sel = new StructuredSelection(database);
 					ServerTreeViewer.this.setSelection(sel);
@@ -139,7 +134,7 @@ public class ServerTreeViewer extends TreeViewer {
 		});
 	}
 
-	private void removeDatabase(final Database database) {
+	private void removeDatabase(final IDatabase database) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				try {
@@ -147,7 +142,7 @@ public class ServerTreeViewer extends TreeViewer {
 					ServerTreeViewer.this.remove(database);
 					// Select the server
 					ISelection sel = new StructuredSelection(database
-							.getParent());
+							.getServer());
 					ServerTreeViewer.this.setSelection(sel);
 				} catch (Exception e) {
 					// ignore
@@ -160,8 +155,8 @@ public class ServerTreeViewer extends TreeViewer {
 	@Override
 	protected void handleDispose(DisposeEvent event) {
 		// remove listeners from server
-		List<Server> servers = Platform.getServerManager().getServers();
-		for (Server server : servers) {
+		List<IServer> servers = Platform.getServerManager().getServers();
+		for (IServer server : servers) {
 			if (serverListener != null)
 				server.removeServerListener(serverListener);
 		}
@@ -169,4 +164,5 @@ public class ServerTreeViewer extends TreeViewer {
 				serverResourceListener);
 		super.handleDispose(event);
 	}
+
 }

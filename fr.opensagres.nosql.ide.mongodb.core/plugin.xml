@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+	      point="fr.opensagres.nosql.ide.core.serverTypes">
+	   <serverType
+	         id="fr.opensagres.nosql.ide.mongodb.core"
+	         name="%serverType.name">
+	   </serverType>
+	</extension>
+
+	<extension
+	      point="fr.opensagres.nosql.ide.core.serverFactories">
+	   <serverFactory
+	         serverType="fr.opensagres.nosql.ide.mongodb.core"
+	         class="fr.opensagres.nosql.ide.mongodb.core.internal.MongoServerFactory">
+	   </serverFactory>
+	</extension>
+
+</plugin>

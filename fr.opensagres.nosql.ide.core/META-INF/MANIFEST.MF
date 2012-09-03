@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: fr.opensagres.nosql.ide.core;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: fr.opensagres.nosql.ide.core,
+ fr.opensagres.nosql.ide.core.extensions,
+ fr.opensagres.nosql.ide.core.model,
+ fr.opensagres.nosql.ide.core.utils
+Require-Bundle: org.eclipse.core.runtime
+Bundle-Activator: fr.opensagres.nosql.ide.core.internal.Activator

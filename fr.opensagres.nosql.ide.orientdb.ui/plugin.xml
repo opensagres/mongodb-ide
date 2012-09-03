@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+<!--<extension
+      point="fr.opensagres.nosql.ide.ui.serverImages">
+   <serverImage
+         serverType="fr.opensagres.nosql.ide.orientdb.core"
+         icon="">
+   </serverImage>
+</extension>-->
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%OrientDB.category"
+            id="fr.opensagres.nosql.ide.orientdb.ui">
+      </category>                     
+      <wizard
+            class="fr.opensagres.nosql.ide.orientdb.ui.wizards.server.NewServerWizard"
+            icon="icons/ctool16/wiz_new_server.gif"
+            id="fr.opensagres.nosql.ide.orientdb.ui.wizards.server.NewServerWizard"
+            category="fr.opensagres.nosql.ide.orientdb.ui"
+            name="%NewServerWizard.name">
+      </wizard>
+   </extension>
+   
+</plugin>

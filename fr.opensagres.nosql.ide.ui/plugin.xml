@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+  <extension-point id="serverImages" name="%serverImagesContributionName"
+		schema="schema/serverImages.exsd" />
+		
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="fr.opensagres.nosql.ide.ui.internal.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="%perspectiveName"
+            icon="icons/eview16/nosqlperspective.png"
+            class="fr.opensagres.nosql.ide.ui.internal.Perspective"
+            id="fr.opensagres.nosql.ide.ui.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%NoSQL.category"
+            id="fr.opensagres.nosql.ide.ui">
+      </category>         
+      <view
+            name="%ServersExplorer.name"
+            class="fr.opensagres.nosql.ide.ui.internal.views.ServersExplorer"
+            id="fr.opensagres.nosql.ide.ui.views.ServersExplorer"
+            category="fr.opensagres.nosql.ide.ui"
+            icon="icons/obj16/servers.png"
+            allowMultiple="false" >
+      </view>
+   </extension>
+   
+</plugin>

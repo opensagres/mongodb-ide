@@ -27,6 +27,7 @@ import com.mongodb.tools.shell.commands.ShowCollectionsShellCommand;
 import com.mongodb.tools.shell.commands.ShowDbsShellCommand;
 import com.mongodb.tools.shell.commands.UseShellCommand;
 
+@Deprecated
 public class ShellCommandManager {
 
 	private static final ShellCommandManager INSTANCE = new ShellCommandManager();

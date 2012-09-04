@@ -6,5 +6,7 @@
 		schema="schema/serverTypes.exsd" />
   <extension-point id="serverFactories" name="%serverFactoriesContributionName"
 		schema="schema/serverFactories.exsd" />
-		
+  <extension-point id="serverRunners" name="%serverRunnersContributionName"
+		schema="schema/serverRunners.exsd" />
+				
 </plugin>

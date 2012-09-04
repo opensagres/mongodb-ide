@@ -22,17 +22,27 @@ public class OrientServer extends AbstractServer {
 	}
 
 	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void doGetChildren() throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 
 	public String getLabel() {
 		return getName() + " [" + url + "] - " + getServerState();
+	}
+
+	@Override
+	protected String getDatabaseName() {
+		return null;
+	}
+
+	@Override
+	protected void loadDatabases() throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void loadDatabase(String databaseName) throws Exception {
+		// TODO Auto-generated method stub
+
 	}
 }

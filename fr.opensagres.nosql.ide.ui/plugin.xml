@@ -39,4 +39,18 @@
       </view>
    </extension>
    
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%NoSQL.category"
+            id="fr.opensagres.nosql.ide.ui">
+      </category>
+      <view
+            name="%ShellCommandsView.name"
+            icon="icons/obj16/shellcommand.png"
+            category="fr.opensagres.nosql.ide.ui"
+            class="fr.opensagres.nosql.ide.ui.internal.views.ShellCommandsView"
+            id="fr.opensagres.nosql.ide.ui.views.ShellCommandsView">
+      </view>
+   </extension>      
 </plugin>

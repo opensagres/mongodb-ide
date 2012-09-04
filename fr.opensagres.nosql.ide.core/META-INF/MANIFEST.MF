@@ -10,6 +10,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: fr.opensagres.nosql.ide.core,
  fr.opensagres.nosql.ide.core.extensions,
  fr.opensagres.nosql.ide.core.model,
+ fr.opensagres.nosql.ide.core.shell,
  fr.opensagres.nosql.ide.core.utils
 Require-Bundle: org.eclipse.core.runtime
 Bundle-Activator: fr.opensagres.nosql.ide.core.internal.Activator

@@ -19,8 +19,6 @@ public interface IServerManager extends ISettingsManager {
 
 	void removeServerLifecycleListener(IServerLifecycleListener listener);
 
-	void dispose();
-
 	IServer findServer(String serverId);
 
 }

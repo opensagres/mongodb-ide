@@ -13,8 +13,21 @@
 	      point="fr.opensagres.nosql.ide.core.serverFactories">
 	   <serverFactory
 	         serverType="fr.opensagres.nosql.ide.mongodb.core"
-	         class="fr.opensagres.nosql.ide.mongodb.core.internal.MongoServerFactory">
+	         class="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.MongoServerFactory">
 	   </serverFactory>
 	</extension>
 
+	<extension
+	      point="fr.opensagres.nosql.ide.core.serverRunners">
+	   <serverRunner
+	   		 serverType="fr.opensagres.nosql.ide.mongodb.core"
+	         class="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.ConnectServerRunner"
+	         id="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.ConnectServerRunner"
+	         startName="%ConnectServerRunner.startName"
+	         startDescription="%ConnectServerRunner.startDesc"
+	         stopName="%ConnectServerRunner.stopName"
+	         stopDescription="%ConnectServerRunner.stopDesc">
+	   </serverRunner>
+	</extension>
+	
 </plugin>

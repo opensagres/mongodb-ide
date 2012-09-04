@@ -17,3 +17,4 @@ Import-Package: com.mongodb,
  com.mongodb.tools.process,
  com.mongodb.tools.shell,
  org.bson
+Bundle-Activator: fr.opensagres.nosql.ide.mongodb.core.internal.Activator

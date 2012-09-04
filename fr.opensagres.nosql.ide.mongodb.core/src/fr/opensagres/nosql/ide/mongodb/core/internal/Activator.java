@@ -3,6 +3,9 @@ package fr.opensagres.nosql.ide.mongodb.core.internal;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import fr.opensagres.nosql.ide.core.Platform;
+import fr.opensagres.nosql.ide.mongodb.core.shell.MongoShellCommandManager;
+
 public class Activator extends Plugin {
 
 	// The plug-in ID
@@ -21,9 +24,13 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		Platform.getShellCommandManagerRegistry().add(
+				MongoShellCommandManager.getInstance());
 	}
 
 	public void stop(BundleContext context) throws Exception {
+		Platform.getShellCommandManagerRegistry().remove(
+				MongoShellCommandManager.getInstance());
 		plugin = null;
 		super.stop(context);
 	}

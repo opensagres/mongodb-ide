@@ -1,9 +1,16 @@
 package fr.opensagres.nosql.ide.mongodb.core.model;
 
+import java.net.UnknownHostException;
+import java.util.List;
+
+import com.mongodb.Mongo;
+import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
 
 import fr.opensagres.nosql.ide.core.model.AbstractServer;
+import fr.opensagres.nosql.ide.core.model.ServerState;
 import fr.opensagres.nosql.ide.mongodb.core.internal.Trace;
+import fr.opensagres.nosql.ide.mongodb.core.shell.MongoShellCommandManager;
 
 public class MongoServer extends AbstractServer {
 
@@ -12,6 +19,7 @@ public class MongoServer extends AbstractServer {
 	private MongoURI mongoURI;
 	private String host;
 	private Integer port;
+	private Mongo mongo;
 
 	public MongoServer(String id, String name, MongoURI mongoURI) {
 		super(TYPE_ID, id, name);
@@ -37,6 +45,7 @@ public class MongoServer extends AbstractServer {
 		return port;
 	}
 
+	@Override
 	public String getDatabaseName() {
 		return mongoURI.getDatabase();
 	}
@@ -85,15 +94,51 @@ public class MongoServer extends AbstractServer {
 		return getMongoURI().toString();
 	}
 
-	public void dispose() {
-		// TODO Auto-generated method stub
-
+	@Override
+	public void setServerState(ServerState serverState) {
+		super.setServerState(serverState);
+		if (serverState == ServerState.Stopped
+				|| serverState == ServerState.Disconnected) {
+			// close mongo.
+			disposeMongo();
+		}
 	}
 
 	@Override
-	protected void doGetChildren() throws Exception {
-		// TODO Auto-generated method stub
+	protected void loadDatabases() throws Exception {
+		// Server connection doesn't contains database in the MongoURI
+		// Display list of DB (works only if there is admin privilege
+		// for this DB).
+		Mongo mongo = getMongo();
+		List<String> names = MongoShellCommandManager.getInstance().showDbs(this,
+				mongo);
+		for (String name : names) {
+			Database database = new Database(name);
+			super.addNode(database);
+		}
+	}
 
+	@Override
+	protected void loadDatabase(String databaseName) throws Exception {
+		// Display just the database.
+		Database database = new Database(databaseName);
+		super.addNode(database);
+	}
+
+	public Mongo getMongo() throws UnknownHostException, MongoException {
+		if (mongo == null) {
+			mongo = MongoShellCommandManager.getInstance().connect(this, mongoURI);
+		}
+		return mongo;
+	}
+
+	public void dispose() {
+		disposeMongo();
+	}
+
+	public void disposeMongo() {
+		MongoShellCommandManager.getInstance().disconnect(this, mongo);
+		mongo = null;
 	}
 
 }

@@ -26,5 +26,7 @@ public interface IServer extends ITreeContainerNode<IServer> {
 
 	ServerState getServerState();
 
+	void setServerState(ServerState serverState);
+
 	String getURL();
 }

@@ -101,4 +101,8 @@ public class ServerRuntimeManager extends AbstractManager<IServerRuntime>
 		return null;
 	}
 
+	public void dispose() {
+
+	}
+
 }

@@ -23,11 +23,17 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		Platform.getServerFactoryRegistry().initialize();
+		Platform.getServerRunnerRegistry().initialize();
+		Platform.getServerRuntimeManager().initialize();
 		Platform.getServerTypeRegistry().initialize();
 		Platform.getServerManager().initialize();
 	}
 
 	public void stop(BundleContext context) throws Exception {
+		Platform.getServerFactoryRegistry().destroy();
+		Platform.getServerRunnerRegistry().destroy();
+		Platform.getServerRuntimeManager().dispose();
 		Platform.getServerTypeRegistry().destroy();
 		Platform.getServerManager().dispose();
 		plugin = null;

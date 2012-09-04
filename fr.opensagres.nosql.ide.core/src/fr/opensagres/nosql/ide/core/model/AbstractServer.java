@@ -10,6 +10,7 @@ import fr.opensagres.nosql.ide.core.extensions.IServerType;
 import fr.opensagres.nosql.ide.core.internal.ServerNotificationManager;
 import fr.opensagres.nosql.ide.core.internal.Trace;
 import fr.opensagres.nosql.ide.core.settings.ServersConstants;
+import fr.opensagres.nosql.ide.core.utils.StringUtils;
 import fr.opensagres.nosql.ide.core.utils.XMLUtils;
 
 public abstract class AbstractServer extends TreeContainerNode<IServer>
@@ -52,6 +53,14 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 
 	public ServerState getServerState() {
 		return serverState;
+	}
+
+	public void setServerState(ServerState serverState) {
+		this.serverState = serverState;
+		// remove tree item of the server node
+		clearNodes(true);
+		// fire events
+		fireServerStateChangeEvent();
 	}
 
 	/**
@@ -237,8 +246,27 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 		fireServerSavedChangeEvent();
 	}
 
+	@Override
+	protected final void doGetChildren() throws Exception {
+		if (isConnected()) {
+			String databaseName = getDatabaseName();
+			if (StringUtils.isEmpty(databaseName)) {
+				// Load the list of databases
+				loadDatabases();
+			} else {
+				// Display just the given database.
+				loadDatabase(databaseName);
+			}
+		}
+	}
+
 	protected void doSave(Writer writer) throws IOException {
 
 	}
 
+	protected abstract String getDatabaseName();
+
+	protected abstract void loadDatabases() throws Exception;
+
+	protected abstract void loadDatabase(String databaseName) throws Exception;
 }

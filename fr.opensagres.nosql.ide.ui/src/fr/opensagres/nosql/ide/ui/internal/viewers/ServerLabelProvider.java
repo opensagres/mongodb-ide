@@ -51,16 +51,24 @@ public class ServerLabelProvider extends LabelProvider {
 					return ImageResources
 							.getImage(ImageResources.IMG_SERVER_STOPPED_16);
 				default:
-					return ImageResources.getImage(ImageResources.IMG_SERVER_16);
+					return ImageResources
+							.getImage(ImageResources.IMG_SERVER_16);
 				}
 			case NodeTypeConstants.Database:
 				return ImageResources.getImage(ImageResources.IMG_DATABASE_16);
 			case NodeTypeConstants.Collection:
-				return ImageResources.getImage(ImageResources.IMG_COLLECTION_16);
+				return ImageResources
+						.getImage(ImageResources.IMG_COLLECTION_16);
 			case NodeTypeConstants.Document:
 				return ImageResources.getImage(ImageResources.IMG_DOCUMENT_16);
 			case NodeTypeConstants.Error:
 				return ImageResources.getImage(ImageResources.IMG_ERROR_16);
+			case NodeTypeConstants.CollectionsCategory:
+			case NodeTypeConstants.GridFSCategory:
+			case NodeTypeConstants.StoredJavascriptCategory:
+			case NodeTypeConstants.IndexesCategory:
+				return ImageResources.getImage(ImageResources.IMG_CATEGORY_16);
+
 			}
 		}
 		return super.getImage(element);

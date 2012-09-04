@@ -45,7 +45,6 @@ public class MongoServer extends AbstractServer {
 		return port;
 	}
 
-	@Override
 	public String getDatabaseName() {
 		return mongoURI.getDatabase();
 	}
@@ -110,8 +109,8 @@ public class MongoServer extends AbstractServer {
 		// Display list of DB (works only if there is admin privilege
 		// for this DB).
 		Mongo mongo = getMongo();
-		List<String> names = MongoShellCommandManager.getInstance().showDbs(this,
-				mongo);
+		List<String> names = MongoShellCommandManager.getInstance().showDbs(
+				this, mongo);
 		for (String name : names) {
 			Database database = new Database(name);
 			super.addNode(database);
@@ -122,12 +121,15 @@ public class MongoServer extends AbstractServer {
 	protected void loadDatabase(String databaseName) throws Exception {
 		// Display just the database.
 		Database database = new Database(databaseName);
+		database.setParent(this);
+		database.getDB().getCollectionNames();
 		super.addNode(database);
 	}
 
 	public Mongo getMongo() throws UnknownHostException, MongoException {
 		if (mongo == null) {
-			mongo = MongoShellCommandManager.getInstance().connect(this, mongoURI);
+			mongo = MongoShellCommandManager.getInstance().connect(this,
+					mongoURI);
 		}
 		return mongo;
 	}

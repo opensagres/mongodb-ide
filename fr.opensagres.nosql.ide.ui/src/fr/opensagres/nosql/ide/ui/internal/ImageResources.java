@@ -40,6 +40,7 @@ public class ImageResources {
 	public static final String IMG_USERS_16 = "users_16";
 	public static final String IMG_INDEX_16 = "index_16";
 	public static final String IMG_STATS_16 = "stats_16";
+	public static final String IMG_COMMAND_16 = "command_16";
 	public static final String IMG_TH_HORIZONTAL_16 = "th_horizontal_16";
 	public static final String IMG_TH_VERTICAL_16 = "th_vertical_16";
 
@@ -65,7 +66,7 @@ public class ImageResources {
 
 	public static final String IMG_WIZBAN_NEW_SERVER = "newServerWiz";
 	public static final String IMG_WIZBAN_NEW_DATABASE = "newDatabaseWiz";
-	
+
 	public static final String IMG_COLLECTION_NEW_16 = null;
 
 	public static void initialize(ImageRegistry imageRegistry) {
@@ -83,7 +84,7 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_DATABASE_16, PATH_OBJ_16
 				+ "database.png");
 		registerImage(imageRegistry, IMG_DATABASE_NEW_16, PATH_OBJ_16
-				+ "database-new.png");		
+				+ "database-new.png");
 		registerImage(imageRegistry, IMG_GRIDFS_16, PATH_OBJ_16 + "gridfs.png");
 		registerImage(imageRegistry, IMG_COLLECTION_16, PATH_OBJ_16
 				+ "collection.png");
@@ -95,6 +96,8 @@ public class ImageResources {
 		registerImage(imageRegistry, IMG_USERS_16, PATH_OBJ_16 + "users.png");
 		registerImage(imageRegistry, IMG_INDEX_16, PATH_OBJ_16 + "index.png");
 		registerImage(imageRegistry, IMG_STATS_16, PATH_OBJ_16 + "stats.png");
+		registerImage(imageRegistry, IMG_COMMAND_16, PATH_OBJ_16
+				+ "command.gif");
 
 		registerImage(imageRegistry, IMG_TH_HORIZONTAL_16, PATH_OBJ_16
 				+ "th_horizontal.gif");

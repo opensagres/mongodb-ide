@@ -61,8 +61,13 @@ public class MongoDriverHelper {
 		shutdownResult.throwOnError();
 	}
 
-	public static void tryConnection(Mongo mongo) throws MongoException {
-		mongo.getDatabaseNames();
+	public static void tryConnection(Mongo mongo, String dbname)
+			throws MongoException {
+		if (dbname == null || dbname.length() < 1) {
+			mongo.getDatabaseNames();
+		} else {
+			mongo.getDB(dbname).getCollectionNames();
+		}
 	}
 
 	/**

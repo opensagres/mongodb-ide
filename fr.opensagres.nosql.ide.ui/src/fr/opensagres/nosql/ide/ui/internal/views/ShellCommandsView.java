@@ -1,33 +1,22 @@
 package fr.opensagres.nosql.ide.ui.internal.views;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import fr.opensagres.nosql.ide.core.Platform;
+import fr.opensagres.nosql.ide.core.model.IServer;
 import fr.opensagres.nosql.ide.core.shell.IShellCommand;
 import fr.opensagres.nosql.ide.core.shell.IShellCommandListener;
 
@@ -39,10 +28,16 @@ public class ShellCommandsView extends ViewPart implements
 	 */
 	public static final String ID = "fr.opensagres.nosql.ide.ui.views.ShellCommandsView";
 
-	private TableViewer viewer;
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
+
+	private final Map<IServer, ShellServerItem> serverTabItems;
+	private CTabFolder tabFolder;
+
+	public ShellCommandsView() {
+		serverTabItems = new HashMap<IServer, ShellServerItem>();
+	}
 
 	/*
 	 * The content provider class is responsible for providing objects to the
@@ -52,60 +47,19 @@ public class ShellCommandsView extends ViewPart implements
 	 * example).
 	 */
 
-	class ViewContentProvider implements IStructuredContentProvider {
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
-
-		public void dispose() {
-		}
-
-		public Object[] getElements(Object parent) {
-			return new Object[0];
-		}
-	}
-
-	class ViewLabelProvider extends LabelProvider implements
-			ITableLabelProvider {
-		public String getColumnText(Object obj, int index) {
-			return ((IShellCommand) obj).getCommand();
-			// return getText(obj);
-		}
-
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-
-		public Image getImage(Object obj) {
-			return PlatformUI.getWorkbench().getSharedImages()
-					.getImage(ISharedImages.IMG_OBJ_ELEMENT);
-		}
-	}
-
-	class NameSorter extends ViewerSorter {
-	}
-
-	/**
-	 * The constructor.
-	 */
-	public ShellCommandsView() {
-	}
-
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
 	 */
 	public void createPartControl(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
-				| SWT.V_SCROLL);
-		viewer.setContentProvider(new ViewContentProvider());
-		viewer.setLabelProvider(new ViewLabelProvider());
-		// viewer.setSorter(new NameSorter());
-		viewer.setInput(getViewSite());
 
-		// Create the help context id for the viewer's control
-		// PlatformUI.getWorkbench().getHelpSystem()
-		// .setHelp(viewer.getControl(), "_ShellCommandView.viewer");
-		//
+		// Create the tabs
+		tabFolder = new CTabFolder(parent, SWT.TOP);
+		tabFolder.setBorderVisible(false);
+		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
+		tabFolder.setSimple(false);
+		tabFolder.setUnselectedImageVisible(false);
+		tabFolder.setUnselectedCloseVisible(false);
 
 		Platform.getShellCommandManagerRegistry().addShellListener(this);
 
@@ -116,22 +70,22 @@ public class ShellCommandsView extends ViewPart implements
 	}
 
 	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				ShellCommandsView.this.fillContextMenu(manager);
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
+		// MenuManager menuMgr = new MenuManager("#PopupMenu");
+		// menuMgr.setRemoveAllWhenShown(true);
+		// menuMgr.addMenuListener(new IMenuListener() {
+		// public void menuAboutToShow(IMenuManager manager) {
+		// ShellCommandsView.this.fillContextMenu(manager);
+		// }
+		// });
+		// Menu menu = menuMgr.createContextMenu(viewer.getControl());
+		// viewer.getControl().setMenu(menu);
+		// getSite().registerContextMenu(menuMgr, viewer);
 	}
 
 	private void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
-		fillLocalToolBar(bars.getToolBarManager());
+		// IActionBars bars = getViewSite().getActionBars();
+		// fillLocalPullDown(bars.getMenuManager());
+		// fillLocalToolBar(bars.getToolBarManager());
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
@@ -153,57 +107,68 @@ public class ShellCommandsView extends ViewPart implements
 	}
 
 	private void makeActions() {
-		action1 = new Action() {
-			public void run() {
-				showMessage("Action 1 executed");
-			}
-		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-
-		action2 = new Action() {
-			public void run() {
-				showMessage("Action 2 executed");
-			}
-		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		doubleClickAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection) selection)
-						.getFirstElement();
-				showMessage("Double-click detected on " + obj.toString());
-			}
-		};
+		// action1 = new Action() {
+		// public void run() {
+		// showMessage("Action 1 executed");
+		// }
+		// };
+		// action1.setText("Action 1");
+		// action1.setToolTipText("Action 1 tooltip");
+		// action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+		// .getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		//
+		// action2 = new Action() {
+		// public void run() {
+		// showMessage("Action 2 executed");
+		// }
+		// };
+		// action2.setText("Action 2");
+		// action2.setToolTipText("Action 2 tooltip");
+		// action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+		// .getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		// doubleClickAction = new Action() {
+		// public void run() {
+		// ISelection selection = viewer.getSelection();
+		// Object obj = ((IStructuredSelection) selection)
+		// .getFirstElement();
+		// showMessage("Double-click detected on " + obj.toString());
+		// }
+		// };
 	}
 
 	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
+		// viewer.addDoubleClickListener(new IDoubleClickListener() {
+		// public void doubleClick(DoubleClickEvent event) {
+		// doubleClickAction.run();
+		// }
+		// });
 	}
 
 	private void showMessage(String message) {
-		MessageDialog.openInformation(viewer.getControl().getShell(),
-				"ShellCommandView", message);
+		// MessageDialog.openInformation(viewer.getControl().getShell(),
+		// "ShellCommandView", message);
 	}
 
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		viewer.getControl().setFocus();
+		tabFolder.setFocus();
 	}
 
 	public void commandAdded(IShellCommand command) {
+		IServer server = command.getServer();
+		// 1) Get or create new tab if needed for the server
+		ShellServerItem item = serverTabItems.get(server);
+		if (item == null || item.getTabItem().isDisposed()) {
+			item = new ShellServerItem(server, tabFolder);
+			serverTabItems.put(server, item);
+		}
+		// 2) Add the command to the viewer
+		TableViewer viewer = item.getViewer();
 		viewer.add(command);
+		// 3) select the tab item linked to the command server
+		tabFolder.setSelection(item.getTabItem());
 	}
 
 	@Override

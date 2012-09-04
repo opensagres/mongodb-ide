@@ -23,6 +23,8 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 	private IServerRuntime runtime;
 	private IServerType serverType;
 
+	private IDatabase currentDatabase;
+
 	public AbstractServer(String serverTypeId, String name) {
 		this(serverTypeId, String.valueOf(System.currentTimeMillis()), name);
 	}
@@ -224,6 +226,11 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 		return serverType;
 	}
 
+	@Override
+	public IServer getServer() {
+		return this;
+	}
+
 	public final void save(Writer writer) throws IOException {
 		writer.append("<");
 		writer.append(ServersConstants.SERVER_ELT);
@@ -264,7 +271,22 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 
 	}
 
-	protected abstract String getDatabaseName();
+	/**
+	 * Select the given database and returns true if current database is not the
+	 * same than the given database.
+	 * 
+	 * @param database
+	 * @return
+	 */
+	public boolean selectDatabase(IDatabase database) {
+		if (currentDatabase == null) {
+			currentDatabase = database;
+			return true;
+		}
+		boolean result = currentDatabase.getId().equals(database.getId());
+		currentDatabase = database;
+		return !result;
+	}
 
 	protected abstract void loadDatabases() throws Exception;
 

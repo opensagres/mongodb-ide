@@ -25,4 +25,8 @@ public abstract class TreeSimpleNode<Parent extends ITreeContainerNode>
 	public String getId() {
 		return computeId();
 	}
+
+	public IServer getServer() {
+		return getParent().getServer();
+	}
 }

@@ -1,5 +1,7 @@
 package fr.opensagres.nosql.ide.orientdb.core.model.internal;
 
+import java.net.URL;
+
 import org.xml.sax.Attributes;
 
 import fr.opensagres.nosql.ide.core.extensions.AbstractServerFactory;
@@ -10,7 +12,7 @@ public class OrientServerFactory extends AbstractServerFactory {
 
 	@Override
 	protected IServer doCreate(String id, String name, String url,
-			Attributes attributes) {
-		return new OrientServer(id, name, url);
+			Attributes attributes) throws Exception  {
+		return new OrientServer(id, name, new URL(url));
 	}
 }

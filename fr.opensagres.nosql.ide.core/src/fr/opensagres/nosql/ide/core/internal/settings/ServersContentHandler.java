@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 import fr.opensagres.nosql.ide.core.Platform;
 import fr.opensagres.nosql.ide.core.extensions.IServerFactory;
 import fr.opensagres.nosql.ide.core.extensions.IServerType;
+import fr.opensagres.nosql.ide.core.internal.Trace;
 import fr.opensagres.nosql.ide.core.model.IServer;
 import fr.opensagres.nosql.ide.core.settings.ServersConstants;
 import fr.opensagres.nosql.ide.core.utils.StringUtils;
@@ -31,9 +32,13 @@ public class ServersContentHandler extends AbstractContentHandler<IServer> {
 					IServerFactory factory = Platform
 							.getServerFactoryRegistry().getFactory(serverType);
 					if (factory != null) {
-						IServer server = factory.create(attributes);
-						if (server != null) {
-							super.list.add(server);
+						try {
+							IServer server = factory.create(attributes);
+							if (server != null) {
+								super.list.add(server);
+							}
+						} catch (Exception e) {
+							Trace.trace(Trace.STRING_SEVERE, e.getMessage());
 						}
 					}
 				}

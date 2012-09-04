@@ -1,5 +1,6 @@
 package fr.opensagres.nosql.ide.orientdb.ui.wizards.server;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.jface.viewers.ComboViewer;
@@ -222,12 +223,12 @@ public class NewServerWizardPage extends AbstractWizardPage {
 		return nameText.getText();
 	}
 
-	public String getURL() {
-		// return MongoDriverHelper.createMongoURI(hostCombo.getText(),
-		// getPort(),
-		// userNameText.getText(), passwordText.getText(),
-		// databaseNameText.getText());
-		return urlText.getText();
+	public URL getURL() {
+		try {
+			return new URL(urlText.getText());
+		} catch (MalformedURLException e) {
+			return null;
+		}
 	}
 
 	public IServerRuntime getRuntime() {

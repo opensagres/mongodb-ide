@@ -23,5 +23,6 @@ public class Error extends TreeSimpleNode {
 	public String getName() {
 		return null;
 	}
+	
 
 }

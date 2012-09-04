@@ -9,7 +9,7 @@ import fr.opensagres.nosql.ide.core.settings.ServersConstants;
 
 public abstract class AbstractServerFactory implements IServerFactory {
 
-	public IServer create(Attributes attributes) {
+	public IServer create(Attributes attributes) throws Exception  {
 		String id = attributes.getValue(ServersConstants.ID_ATTR);
 		String name = attributes.getValue(ServersConstants.NAME_ATTR);
 		String url = attributes.getValue(ServersConstants.URL_ATTR);
@@ -36,5 +36,5 @@ public abstract class AbstractServerFactory implements IServerFactory {
 	}
 
 	protected abstract IServer doCreate(String id, String name, String url,
-			Attributes attributes);
+			Attributes attributes) throws Exception ;
 }

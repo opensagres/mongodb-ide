@@ -72,7 +72,7 @@ public class PingThread {
 				count++;
 
 				Trace.trace(Trace.STRING_FINEST, "Ping: pinging " + count);
-				MongoDriverHelper.tryConnection(server.getMongo());
+				MongoDriverHelper.tryConnection(server.getMongo(), server.getDatabaseName());
 
 				// ping worked - server is up
 				if (!stop) {

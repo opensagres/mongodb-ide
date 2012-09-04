@@ -29,4 +29,6 @@ public interface IServer extends ITreeContainerNode<IServer> {
 	void setServerState(ServerState serverState);
 
 	String getURL();
+
+	String getDatabaseName();
 }

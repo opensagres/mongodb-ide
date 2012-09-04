@@ -1,24 +1,26 @@
 package fr.opensagres.nosql.ide.orientdb.core.model;
 
+import java.net.URL;
+
 import fr.opensagres.nosql.ide.core.model.AbstractServer;
 
 public class OrientServer extends AbstractServer {
 
 	public static final String TYPE_ID = "fr.opensagres.nosql.ide.orientdb.core";
-	private String url;
+	private URL url;
 
-	public OrientServer(String name, String url) {
+	public OrientServer(String name, URL url) {
 		super(TYPE_ID, name);
 		this.url = url;
 	}
 
-	public OrientServer(String id, String name, String url) {
+	public OrientServer(String id, String name, URL url) {
 		super(TYPE_ID, id, name);
 		this.url = url;
 	}
 
 	public String getURL() {
-		return url;
+		return url.toString();
 	}
 
 	public void dispose() {
@@ -26,12 +28,11 @@ public class OrientServer extends AbstractServer {
 	}
 
 	public String getLabel() {
-		return getName() + " [" + url + "] - " + getServerState();
+		return getName() + " [" + getURL() + "] - " + getServerState();
 	}
 
-	@Override
-	protected String getDatabaseName() {
-		return null;
+	public String getDatabaseName() {
+		return url.getPath();
 	}
 
 	@Override

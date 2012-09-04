@@ -6,6 +6,6 @@ import fr.opensagres.nosql.ide.core.model.IServer;
 
 public interface IServerFactory {
 
-	IServer create(Attributes attributes);
+	IServer create(Attributes attributes) throws Exception;
 
 }

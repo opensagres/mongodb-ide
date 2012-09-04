@@ -12,7 +12,7 @@ public class MongoServerFactory extends AbstractServerFactory {
 
 	@Override
 	protected IServer doCreate(String id, String name, String url,
-			Attributes attributes) {
+			Attributes attributes) throws Exception {
 		MongoURI mongoURI = new MongoURI(url);
 		return new MongoServer(id, name, mongoURI);
 	}

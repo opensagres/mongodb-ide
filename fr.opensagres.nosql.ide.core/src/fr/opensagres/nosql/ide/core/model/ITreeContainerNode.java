@@ -7,4 +7,6 @@ public interface ITreeContainerNode<Parent extends ITreeContainerNode> extends
 
 	List<ITreeSimpleNode> getChildren();
 
+	NodeStatus getStatus();
+
 }

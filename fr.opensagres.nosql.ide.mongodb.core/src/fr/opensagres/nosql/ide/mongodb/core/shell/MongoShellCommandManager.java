@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
@@ -84,6 +86,11 @@ public class MongoShellCommandManager extends AbstractShellCommandManager {
 					new ShowCollectionsShellCommand(server));
 		}
 		return names;
+	}
+
+	public List<DBObject> getDBCollectionGetIndexes(IServer server,
+			DBCollection dbCollection) {
+		return dbCollection.getIndexInfo();
 	}
 
 }

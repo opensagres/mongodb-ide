@@ -68,7 +68,13 @@ public class ServerLabelProvider extends LabelProvider {
 			case NodeTypeConstants.StoredJavascriptCategory:
 			case NodeTypeConstants.IndexesCategory:
 				return ImageResources.getImage(ImageResources.IMG_CATEGORY_16);
-
+			case NodeTypeConstants.Users:
+				return ImageResources.getImage(ImageResources.IMG_USERS_16);
+			case NodeTypeConstants.Index:
+				return ImageResources.getImage(ImageResources.IMG_INDEX_16);
+			case NodeTypeConstants.GridFSBucket:
+				return ImageResources.getImage(ImageResources.IMG_GRIDFS_16);
+			default:
 			}
 		}
 		return super.getImage(element);

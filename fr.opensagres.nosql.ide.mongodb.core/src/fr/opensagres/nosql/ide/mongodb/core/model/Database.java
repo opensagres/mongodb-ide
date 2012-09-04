@@ -6,6 +6,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoException;
 
 import fr.opensagres.nosql.ide.core.model.AbstractDatabase;
+import fr.opensagres.nosql.ide.core.model.Users;
 import fr.opensagres.nosql.ide.core.utils.StringUtils;
 import fr.opensagres.nosql.ide.mongodb.core.shell.MongoShellCommandManager;
 
@@ -25,13 +26,14 @@ public class Database extends AbstractDatabase {
 
 	@Override
 	protected void doGetChildren() throws Exception {
-		super.addNode(collectionsCategory);
 		// Collections folder
-//		super.addNode(new StoredJavascriptCategory());
-//		// GridFS folder
-//		super.addNode(new GridFSCategory());
-//		// Users
-//		super.addNode(new Users());
+		super.addNode(collectionsCategory);
+		// Stored javascript folder
+		super.addNode(new StoredJavascriptCategory());
+		// // GridFS folder
+		super.addNode(new GridFSCategory());
+		// // Users
+		super.addNode(new Users());
 	}
 
 	public DB getDB() throws UnknownHostException, MongoException {

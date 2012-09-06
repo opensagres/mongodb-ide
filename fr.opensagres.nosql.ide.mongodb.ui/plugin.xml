@@ -10,6 +10,15 @@
       </serverImage>
    </extension>
 
+	<extension
+	      point="fr.opensagres.nosql.ide.ui.dialogFactories">
+    <dialogFactory
+          class="fr.opensagres.nosql.ide.mongodb.ui.internal.extension.MongoRuntimeDialogFactory"
+          dialogType="runtimeDialog"
+          serverType="fr.opensagres.nosql.ide.mongodb.core">
+    </dialogFactory>
+	</extension>
+	
    <extension
          point="org.eclipse.ui.newWizards">
       <category

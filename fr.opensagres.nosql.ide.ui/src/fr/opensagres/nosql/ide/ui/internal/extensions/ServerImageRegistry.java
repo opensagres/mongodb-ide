@@ -35,12 +35,18 @@ import fr.opensagres.nosql.ide.ui.internal.Activator;
 public class ServerImageRegistry extends AbstractUIRegistry implements
 		IServerImageRegistry {
 
+	private static final IServerImageRegistry INSTANCE = new ServerImageRegistry();
+
 	private static final String SERVER_IMAGE_ELT = "serverImage";
 	public static final String SERVER_TYPE_ATTR = "serverType";
 
 	private static final String SERVER_TYPES_EXTENSION_POINT = "serverImages";
 
 	private Map<IServerType, IServerImage> serverImages = new HashMap<IServerType, IServerImage>();
+
+	public static IServerImageRegistry getInstance() {
+		return INSTANCE;
+	}
 
 	/**
 	 * Return the {@link IServerImage} retrieved by the given id.
@@ -118,7 +124,7 @@ public class ServerImageRegistry extends AbstractUIRegistry implements
 		for (IConfigurationElement ce : cf) {
 			String serverTypeId = null;
 			Image icon = null;
-			if (SERVER_IMAGE_ELT.equals(ce.getName())) {				
+			if (SERVER_IMAGE_ELT.equals(ce.getName())) {
 				serverTypeId = ce.getAttribute(SERVER_TYPE_ATTR);
 				IServerType serverType = fr.opensagres.nosql.ide.core.Platform
 						.getServerTypeRegistry().getType(serverTypeId);

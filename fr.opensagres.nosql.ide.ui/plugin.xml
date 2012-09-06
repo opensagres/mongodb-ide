@@ -4,7 +4,9 @@
 
   <extension-point id="serverImages" name="%serverImagesContributionName"
 		schema="schema/serverImages.exsd" />
-		
+  <extension-point id="dialogFactories" name="%dialogFactoriesContributionName"
+		schema="schema/dialogFactories.exsd" />
+				
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">
@@ -52,5 +54,22 @@
             class="fr.opensagres.nosql.ide.ui.internal.views.ShellCommandsView"
             id="fr.opensagres.nosql.ide.ui.views.ShellCommandsView">
       </view>
-   </extension>      
+   </extension>
+
+  <extension point="org.eclipse.ui.preferencePages">
+    <page
+      id="fr.opensagres.nosql.ide.ui.preferencePage"
+      name="%preferenceNoSQLTitle"
+      class="fr.opensagres.nosql.ide.ui.internal.preferences.NoSQLPreferencePage">      
+    </page>    
+  </extension>
+  <extension point="org.eclipse.ui.preferencePages">   
+    <page
+      id="fr.opensagres.nosql.ide.ui.preferences.ServerRuntimePreferencePage"
+      name="%preferenceRuntimesTitle"
+      category="fr.opensagres.nosql.ide.ui.preferencePage"
+      class="fr.opensagres.nosql.ide.ui.internal.preferences.ServerRuntimePreferencePage">      
+    </page>
+  </extension>
+  
 </plugin>

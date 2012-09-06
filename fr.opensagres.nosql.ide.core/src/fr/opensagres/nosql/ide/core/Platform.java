@@ -36,4 +36,5 @@ public class Platform {
 	public static IShellCommandManagerRegistry getShellCommandManagerRegistry() {
 		return ShellCommandManagerRegistry.getInstance();
 	}
+
 }

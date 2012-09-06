@@ -19,6 +19,9 @@ Import-Package: com.mongodb,
  com.mongodb.gridfs,
  com.mongodb.tools.driver,
  com.mongodb.tools.driver.pagination,
+ com.mongodb.tools.process,
+ com.mongodb.tools.process.mongo,
+ com.mongodb.tools.process.mongod,
  com.mongodb.tools.shell,
  org.bson
 Bundle-Activator: fr.opensagres.nosql.ide.mongodb.ui.internal.Activator

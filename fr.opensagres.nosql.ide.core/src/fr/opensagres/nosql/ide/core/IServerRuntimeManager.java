@@ -16,4 +16,6 @@ public interface IServerRuntimeManager extends ISettingsManager {
 	void removeRuntime(IServerRuntime runtime) throws Exception;
 
 	IServerRuntime findRuntime(String runtimeId);
+
+	void setRuntimes(IServerRuntime[] runtimes) throws Exception;
 }

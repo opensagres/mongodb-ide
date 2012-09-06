@@ -2,12 +2,17 @@ package fr.opensagres.nosql.ide.orientdb.core.model;
 
 import java.net.URL;
 
+import com.orientechnologies.orient.client.remote.OServerAdmin;
+import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
+import com.orientechnologies.orient.core.storage.OStorageProxy;
+
 import fr.opensagres.nosql.ide.core.model.AbstractServer;
 
 public class OrientServer extends AbstractServer {
 
 	public static final String TYPE_ID = "fr.opensagres.nosql.ide.orientdb.core";
 	private URL url;
+	private OServerAdmin serverAdmin;
 
 	public OrientServer(String name, URL url) {
 		super(TYPE_ID, name);
@@ -37,13 +42,29 @@ public class OrientServer extends AbstractServer {
 
 	@Override
 	protected void loadDatabases() throws Exception {
-		// TODO Auto-generated method stub
+		// see
+		// http://code.google.com/p/orient/source/browse/trunk/tools/src/main/java/com/orientechnologies/orient/console/OConsoleDatabaseApp.java
 
 	}
 
 	@Override
 	protected void loadDatabase(String databaseName) throws Exception {
-		// TODO Auto-generated method stub
+		// see
+		// http://code.google.com/p/orient/source/browse/trunk/tools/src/main/java/com/orientechnologies/orient/console/OConsoleDatabaseApp.java
+		ODatabaseDocumentTx currentDatabase = new ODatabaseDocumentTx("remote:127.0.0.1/demo");
+		// if (currentDatabase == null)
+		// throw new OException("Database " + iURL + " not found");
+
+		// currentDatabase.registerListener(new OConsoleDatabaseListener(this));
+		currentDatabase.open("admin", "admin");
+
+		// currentDatabaseName = currentDatabase.getName();
+		if (currentDatabase.getStorage() instanceof OStorageProxy)
+			serverAdmin = new OServerAdmin(currentDatabase.getStorage()
+					.getURL());
+
+		Database database = new Database(databaseName);
+		super.addNode(database);
 
 	}
 }

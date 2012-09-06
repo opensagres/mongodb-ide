@@ -9,3 +9,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Require-Bundle: fr.opensagres.nosql.ide.core;bundle-version="1.0.0"
 Export-Package: fr.opensagres.nosql.ide.orientdb.core.model
+Import-Package: com.orientechnologies.orient.client.remote,
+ com.orientechnologies.orient.core.db,
+ com.orientechnologies.orient.core.db.document,
+ com.orientechnologies.orient.core.storage

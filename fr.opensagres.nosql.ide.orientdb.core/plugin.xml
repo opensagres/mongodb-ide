@@ -14,8 +14,21 @@
 	      point="fr.opensagres.nosql.ide.core.serverFactories">
 	   <serverFactory
 	         serverType="fr.opensagres.nosql.ide.orientdb.core"
-	         class="fr.opensagres.nosql.ide.orientdb.core.model.internal.OrientServerFactory">
+	         class="fr.opensagres.nosql.ide.orientdb.core.internal.extensions.OrientServerFactory">
 	   </serverFactory>
 	</extension>
 
+	<extension
+	      point="fr.opensagres.nosql.ide.core.serverRunners">
+	   <serverRunner
+	   		 serverType="fr.opensagres.nosql.ide.orientdb.core"
+	         class="fr.opensagres.nosql.ide.orientdb.core.internal.extensions.ConnectServerRunner"
+	         id="fr.opensagres.nosql.ide.orientdb.core.internal.extensions.ConnectServerRunner"
+	         startName="%ConnectServerRunner.startName"
+	         startDescription="%ConnectServerRunner.startDesc"
+	         stopName="%ConnectServerRunner.stopName"
+	         stopDescription="%ConnectServerRunner.stopDesc">
+	   </serverRunner>
+	</extension>
+	
 </plugin>

@@ -62,7 +62,7 @@ public class Messages extends NLS {
 	public static String NewCollectionAction_toolTipText;
 	public static String NewDocumentAction_text;
 	public static String NewDocumentAction_toolTipText;
-	
+
 	// ****************** RefreshAction ******************
 	public static String RefreshAction_text;
 	public static String RefreshAction_toolTipText;
@@ -170,6 +170,14 @@ public class Messages extends NLS {
 	public static String server_validation_notConnected;
 	public static String database_validation_required;
 	public static String collection_validation_required;
+
+	// Runtime error
+	public static String errorRuntimeNameRequired;
+	public static String errorInstallDirRequired;
+	public static String errorInstallDir_baseDirNotExists;
+	public static String errorInstallDir_baseDirNotDir;
+	public static String errorInstallDir_binDirNotExists;
+	public static String errorInstallDir_processFileNotExists;
 
 	static {
 		// load message values from bundle file

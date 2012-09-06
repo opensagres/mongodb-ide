@@ -275,6 +275,7 @@ public class NewServerWizardPage extends AbstractWizardPage {
 	private void updateFieldsFromURL() {
 		try {
 			String host = null;
+			int portAsInt = -1;
 			String port = null;
 			String userName = null;
 			String password = null;
@@ -282,8 +283,14 @@ public class NewServerWizardPage extends AbstractWizardPage {
 			try {
 				URL url = new URL(urlText.getText());
 				host = url.getHost();
-				// port = url.getPort();
+				portAsInt = url.getPort();
+				port = portAsInt >= 0 ? String.valueOf(portAsInt) : null;
 				databaseName = url.getPath();
+				if (StringUtils.isNotEmpty(databaseName)
+						&& databaseName.startsWith("/")) {
+					databaseName = databaseName.substring(1,
+							databaseName.length());
+				}
 				// MongoURI mongoURI = new MongoURI(mongoURIText.getText());
 				// Retrieve host and port fields from the MongoURI
 				// List<String> hosts = mongoURI.getHosts();

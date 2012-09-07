@@ -6,7 +6,9 @@
 		schema="schema/serverImages.exsd" />
   <extension-point id="dialogFactories" name="%dialogFactoriesContributionName"
 		schema="schema/dialogFactories.exsd" />
-				
+   <extension-point id="editorPages" name="%editorPagesContributionName"
+		schema="schema/editorPages.exsd" />
+						
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">

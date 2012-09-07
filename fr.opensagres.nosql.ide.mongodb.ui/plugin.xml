@@ -12,11 +12,11 @@
 
 	<extension
 	      point="fr.opensagres.nosql.ide.ui.dialogFactories">
-    <dialogFactory
-          class="fr.opensagres.nosql.ide.mongodb.ui.internal.extension.MongoRuntimeDialogFactory"
-          dialogType="runtimeDialog"
-          serverType="fr.opensagres.nosql.ide.mongodb.core">
-    </dialogFactory>
+	    <dialogFactory
+	          class="fr.opensagres.nosql.ide.mongodb.ui.internal.extension.MongoRuntimeDialogFactory"
+	          dialogType="runtimeDialog"
+	          serverType="fr.opensagres.nosql.ide.mongodb.core">
+	    </dialogFactory>
 	</extension>
 	
    <extension
@@ -34,4 +34,31 @@
       </wizard>
    </extension>
    
+   	<extension
+	      point="fr.opensagres.nosql.ide.core.commandIdProviders">
+	    <commandIdProvider
+	          class="fr.opensagres.nosql.ide.mongodb.ui.internal.extension.MongoCommandIdProvider"
+	          serverType="fr.opensagres.nosql.ide.mongodb.core">
+	    </commandIdProvider>
+	</extension>
+	
+  <extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenServerEditorHandler"
+           id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenServerEditorHandler"
+           name="Edit server">
+     </command>
+  </extension>
+  	
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.nosql.ide.mongodb.ui.editors.server.ServerEditor"
+           name="%ServerEditor.name"
+           icon="icons/obj16/mongodb.png"           
+           extensions="server"
+           class="fr.opensagres.nosql.ide.mongodb.ui.internal.editors.server.ServerEditor" />
+  </extension>
+    	
 </plugin>

@@ -390,7 +390,18 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		int selectionCount = selection.size();
 		fEditButton.setEnabled(selectionCount == 1);
 		fRemoveButton.setEnabled(selectionCount == 1);
-		fAddButton.setEnabled(!serverTypeViewer.getSelection().isEmpty());
+		boolean enabled = false;
+		IStructuredSelection serverTypeSelection = (IStructuredSelection) serverTypeViewer
+				.getSelection();
+		if (!serverTypeSelection.isEmpty()) {
+			IServerType serverType = (IServerType) serverTypeSelection
+					.getFirstElement();
+			if (serverType != null) {
+				enabled = PlatformUI.getDialogFactoryRegistry().getFactory(
+						serverType, AbstractRuntimeDialog.DIALOG_TYPE) != null;
+			}
+		}
+		fAddButton.setEnabled(enabled);
 		// if (selectionCount > 0
 		// && selectionCount < tableViewer.getTable().getItemCount()) {
 		// //Iterator<?> iterator = selection.iterator();

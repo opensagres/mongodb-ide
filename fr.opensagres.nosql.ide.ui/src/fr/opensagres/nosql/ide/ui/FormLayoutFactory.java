@@ -1,4 +1,4 @@
-package fr.opensagres.nosql.ide.ui.internal;
+package fr.opensagres.nosql.ide.ui;
 
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 

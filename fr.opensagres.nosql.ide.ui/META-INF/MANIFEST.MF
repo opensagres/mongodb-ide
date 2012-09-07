@@ -15,7 +15,9 @@ Require-Bundle: org.eclipse.ui;resolution:=optional,
  fr.opensagres.nosql.ide.core;bundle-version="1.0.0"
 Export-Package: fr.opensagres.nosql.ide.ui,
  fr.opensagres.nosql.ide.ui.dialogs,
+ fr.opensagres.nosql.ide.ui.editors,
  fr.opensagres.nosql.ide.ui.extensions,
+ fr.opensagres.nosql.ide.ui.handlers,
  fr.opensagres.nosql.ide.ui.viewers,
  fr.opensagres.nosql.ide.ui.wizards,
  fr.opensagres.nosql.ide.ui.wizards.server

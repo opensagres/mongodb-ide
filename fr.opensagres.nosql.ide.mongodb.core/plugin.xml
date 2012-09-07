@@ -18,6 +18,14 @@
 	</extension>
 
 	<extension
+	      point="fr.opensagres.nosql.ide.core.runtimeFactories">
+	   <runtimeFactory
+	         serverType="fr.opensagres.nosql.ide.mongodb.core"
+	         class="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.MongoRuntimeFactory">
+	   </runtimeFactory>
+	</extension>
+	
+	<extension
 	      point="fr.opensagres.nosql.ide.core.serverRunners">
 	   <serverRunner
 	   		 serverType="fr.opensagres.nosql.ide.mongodb.core"

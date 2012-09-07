@@ -8,5 +8,7 @@
 		schema="schema/serverFactories.exsd" />
   <extension-point id="serverRunners" name="%serverRunnersContributionName"
 		schema="schema/serverRunners.exsd" />
-				
+  <extension-point id="runtimeFactories" name="%runtimeFactoriesContributionName"
+		schema="schema/runtimeFactories.exsd" />
+						
 </plugin>

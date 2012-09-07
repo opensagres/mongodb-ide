@@ -68,6 +68,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 	private final ListenerList fSelectionListeners = new ListenerList();
 	private ISelection fPrevSelection = new StructuredSelection();
 	private ComboViewer serverTypeViewer;
+	private Label installDirLabel;
 
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
 		fSelectionListeners.add(listener);
@@ -186,15 +187,15 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 			}
 		});
 
-		// Installation directory column
+		// Server type column
 		TableColumn column2 = new TableColumn(fTable, SWT.NONE);
 		column2.setWidth(180);
 		column2.setResizable(true);
-		column2.setText(Messages.InstalledRuntimesBlock_installDirColumn);
+		column2.setText(Messages.InstalledRuntimesBlock_serverTypeColumn);
 		column2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				sortByInstallDir();
+				sortByServerType();
 			}
 		});
 
@@ -206,6 +207,10 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 				.addSelectionChangedListener(new ISelectionChangedListener() {
 					public void selectionChanged(SelectionChangedEvent evt) {
 						enableButtons();
+						installDirLabel
+								.setText(((IServerRuntime) ((IStructuredSelection) evt
+										.getSelection()).getFirstElement())
+										.getInstallDir());
 					}
 				});
 
@@ -274,6 +279,11 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 		gd.heightHint = 4;
 		separator.setLayoutData(gd);
 
+		installDirLabel = new Label(parent, SWT.NONE);
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		data.horizontalSpan = 3;
+		installDirLabel.setLayoutData(data);
+
 		fillWithWorkspaceRuntimes();
 		enableButtons();
 
@@ -325,6 +335,23 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 				IServerRuntime right = (IServerRuntime) e2;
 				return left.getInstallDir().compareToIgnoreCase(
 						right.getInstallDir());
+			}
+
+			@Override
+			public boolean isSorterProperty(Object element, String property) {
+				return true;
+			}
+		});
+	}
+
+	private void sortByServerType() {
+		tableViewer.setSorter(new ViewerSorter() {
+			@Override
+			public int compare(Viewer viewer, Object e1, Object e2) {
+				IServerRuntime left = (IServerRuntime) e1;
+				IServerRuntime right = (IServerRuntime) e2;
+				return left.getServerType().getName()
+						.compareToIgnoreCase(right.getServerType().getName());
 			}
 
 			@Override
@@ -550,7 +577,7 @@ public class InstalledRuntimesBlock extends AbstractTableBlock implements
 				case 0:
 					return install.getName();
 				case 1:
-					return install.getInstallDir();
+					return install.getServerType().getName();
 					// case 2:
 					// if (install.getDebugger() != null)
 					// {

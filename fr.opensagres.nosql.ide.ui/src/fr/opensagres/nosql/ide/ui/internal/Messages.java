@@ -22,6 +22,7 @@ public class Messages extends NLS {
 	public static String InstalledRuntimesBlock_desc;
 	public static String InstalledRuntimesBlock_nameColumn;
 	public static String InstalledRuntimesBlock_installDirColumn;
+	public static String InstalledRuntimesBlock_serverTypeColumn;
 
 	// ****************** AddRuntimeDialog ******************
 	public static String AddRuntimeDialog_title;

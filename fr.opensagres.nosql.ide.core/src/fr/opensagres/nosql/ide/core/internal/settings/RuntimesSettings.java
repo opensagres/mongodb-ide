@@ -20,8 +20,7 @@ public class RuntimesSettings extends AbstractSettings<IServerRuntime> {
 	@Override
 	protected ContentHandler createContentHandler(
 			Collection<IServerRuntime> list) {
-		// TODO Auto-generated method stub
-		return null;
+		return new RuntimesContentHandler(list);
 	}
 
 	@Override
@@ -30,9 +29,8 @@ public class RuntimesSettings extends AbstractSettings<IServerRuntime> {
 	}
 
 	@Override
-	protected void save(IServerRuntime runtime, Writer out) throws IOException {
-		// TODO Auto-generated method stub
-
+	protected void save(IServerRuntime t, Writer writer) throws IOException {
+		t.save(writer);
 	}
 
 }

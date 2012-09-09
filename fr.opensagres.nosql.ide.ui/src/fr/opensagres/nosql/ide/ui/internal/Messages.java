@@ -81,6 +81,13 @@ public class Messages extends NLS {
 	public static String actionUnlockToolTip;
 	public static String actionOpen;
 
+	// Editors
+	public static String OverviewPage_title;
+	public static String server_label;
+	public static String database_label;
+	public static String collection_label;
+	public static String bucket_label;
+
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

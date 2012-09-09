@@ -15,12 +15,15 @@ public abstract class AbstractCommandAction extends AbstractTreeNodeAction {
 
 	private final Shell parentShell;
 	private final IServiceLocator serviceLocator;
+	private final int commandType;
 
-	protected AbstractCommandAction(ISelectionProvider provider, String text,
+	protected AbstractCommandAction(int commandType,
+			ISelectionProvider provider, String text,
 			IServiceLocator serviceLocator, Shell parentShell) {
 		super(provider, text);
 		this.serviceLocator = serviceLocator;
 		this.parentShell = parentShell;
+		this.commandType = commandType;
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public abstract class AbstractCommandAction extends AbstractTreeNodeAction {
 			return null;
 		}
 		return Platform.getCommandIdProviderRegistry().getCommandId(serverType,
-				obj);
+				commandType, obj);
 	}
 
 	protected IServerType getServerType(Object obj) {

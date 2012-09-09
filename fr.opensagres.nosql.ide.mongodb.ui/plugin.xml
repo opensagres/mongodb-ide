@@ -49,6 +49,16 @@
            id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenServerEditorHandler"
            name="Edit server">
      </command>
+     <command
+           defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenDatabaseEditorHandler"
+           id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenDatabaseEditorHandler"
+           name="Edit server">
+     </command>
+     <command
+           defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenCollectionEditorHandler"
+           id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenCollectionEditorHandler"
+           name="Edit server">
+     </command>     
   </extension>
   	
   <extension
@@ -60,5 +70,40 @@
            extensions="server"
            class="fr.opensagres.nosql.ide.mongodb.ui.internal.editors.server.ServerEditor" />
   </extension>
-    	
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.nosql.ide.mongodb.ui.editors.database.DatabaseEditor"
+           name="%DatabaseEditor.name"
+           icon="icons/obj16/database.png"           
+           extensions="database"
+           class="fr.opensagres.nosql.ide.mongodb.ui.internal.editors.database.DatabaseEditor" />
+  </extension>
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.nosql.ide.mongodb.ui.editors.collection.CollectionEditor"
+           name="%CollectionEditor.name"
+           icon="icons/obj16/collection.png"           
+           extensions="collection"
+           class="fr.opensagres.nosql.ide.mongodb.ui.internal.editors.collection.CollectionEditor" />
+  </extension>    
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.nosql.ide.mongodb.ui.editors.document.DocumentEditor"
+           name="%DocumentEditor.name"
+           icon="icons/obj16/document.gif"           
+           extensions="document"
+           class="fr.opensagres.nosql.ide.mongodb.ui.internal.editors.document.DocumentEditor" />
+  </extension>
+  <extension
+        point="org.eclipse.ui.editors">
+     <editor
+           id="fr.opensagres.nosql.ide.mongodb.ui.editors.gridfs.GridFSEditor"
+           name="%GridFSEditor.name"
+           icon="icons/obj16/gridfs.png"           
+           extensions="gridfs"
+           class="fr.opensagres.nosql.ide.mongodb.ui.editors.gridfs.GridFSEditor" />
+  </extension>     	
 </plugin>

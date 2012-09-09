@@ -12,5 +12,7 @@
 		schema="schema/runtimeFactories.exsd" />
   <extension-point id="commandIdProviders" name="%commandIdProvidersContributionName"
 		schema="schema/commandIdProviders.exsd" />
-								
+  <extension-point id="shellRunners" name="%shellRunnersContributionName"
+		schema="schema/shellRunners.exsd" />
+										
 </plugin>

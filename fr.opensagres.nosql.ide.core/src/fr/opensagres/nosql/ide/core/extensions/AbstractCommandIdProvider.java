@@ -4,12 +4,12 @@ import fr.opensagres.nosql.ide.core.model.ITreeSimpleNode;
 
 public abstract class AbstractCommandIdProvider implements ICommandIdProvider {
 
-	public String getCommmandId(Object element) {
+	public String getCommmandId(int type, Object element) {
 		if (element instanceof ITreeSimpleNode) {
-			return (getCommmandId((ITreeSimpleNode) element));
+			return getCommmandId(type, (ITreeSimpleNode) element);
 		}
 		return null;
 	}
 
-	protected abstract String getCommmandId(ITreeSimpleNode element);
+	protected abstract String getCommmandId(int type, ITreeSimpleNode element);
 }

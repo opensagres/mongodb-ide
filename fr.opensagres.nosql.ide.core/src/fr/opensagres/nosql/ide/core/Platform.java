@@ -5,6 +5,7 @@ import fr.opensagres.nosql.ide.core.extensions.IRuntimeFactoryRegistry;
 import fr.opensagres.nosql.ide.core.extensions.IServerFactoryRegistry;
 import fr.opensagres.nosql.ide.core.extensions.IServerRunnerRegistry;
 import fr.opensagres.nosql.ide.core.extensions.IServerTypeRegistry;
+import fr.opensagres.nosql.ide.core.extensions.IShellRunnerRegistry;
 import fr.opensagres.nosql.ide.core.internal.ServerManager;
 import fr.opensagres.nosql.ide.core.internal.ServerRuntimeManager;
 import fr.opensagres.nosql.ide.core.internal.extensions.CommandIdProviderRegistry;
@@ -12,6 +13,7 @@ import fr.opensagres.nosql.ide.core.internal.extensions.RuntimeFactoryRegistry;
 import fr.opensagres.nosql.ide.core.internal.extensions.ServerFactoryRegistry;
 import fr.opensagres.nosql.ide.core.internal.extensions.ServerRunnerRegistry;
 import fr.opensagres.nosql.ide.core.internal.extensions.ServerTypeRegistry;
+import fr.opensagres.nosql.ide.core.internal.extensions.ShellRunnerRegistry;
 import fr.opensagres.nosql.ide.core.internal.shell.ShellCommandManagerRegistry;
 import fr.opensagres.nosql.ide.core.shell.IShellCommandManagerRegistry;
 
@@ -47,6 +49,10 @@ public class Platform {
 
 	public static ICommandIdProviderRegistry getCommandIdProviderRegistry() {
 		return CommandIdProviderRegistry.getInstance();
+	}
+
+	public static IShellRunnerRegistry getShellRunnerRegistry() {
+		return ShellRunnerRegistry.getInstance();
 	}
 
 }

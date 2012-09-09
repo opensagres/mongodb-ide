@@ -50,13 +50,13 @@ public class CommandIdProviderRegistry extends AbstractRegistry implements
 
 	private Map<IServerType, ICommandIdProvider> commandIdProviders = new HashMap<IServerType, ICommandIdProvider>();
 
-	public String getCommandId(IServerType serverType, Object element) {
+	public String getCommandId(IServerType serverType, int type, Object element) {
 		if (serverType == null) {
 			throw new IllegalArgumentException();
 		}
 		loadRegistryIfNedded();
 		ICommandIdProvider provider = commandIdProviders.get(serverType);
-		return provider != null ? provider.getCommmandId(element) : null;
+		return provider != null ? provider.getCommmandId(type, element) : null;
 	}
 
 	@Override

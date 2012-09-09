@@ -67,4 +67,24 @@ public class OrientServer extends AbstractServer {
 		super.addNode(database);
 
 	}
+
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getPort() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getHost() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

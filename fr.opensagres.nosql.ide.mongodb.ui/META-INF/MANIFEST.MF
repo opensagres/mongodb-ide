@@ -23,6 +23,11 @@ Import-Package: com.mongodb,
  com.mongodb.tools.process.mongo,
  com.mongodb.tools.process.mongod,
  com.mongodb.tools.shell,
- org.bson
+ org.bson,
+ org.eclipse.nebula.widgets.pagination,
+ org.eclipse.nebula.widgets.pagination.table,
+ org.eclipse.nebula.widgets.pagination.table.forms,
+ org.eclipse.nebula.widgets.pagination.tree,
+ org.eclipse.nebula.widgets.pagination.tree.forms
 Bundle-Activator: fr.opensagres.nosql.ide.mongodb.ui.internal.Activator
 Export-Package: fr.opensagres.nosql.ide.mongodb.ui.singlesourcing

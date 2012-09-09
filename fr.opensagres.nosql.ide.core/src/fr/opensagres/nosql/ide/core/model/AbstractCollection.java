@@ -21,4 +21,14 @@ public abstract class AbstractCollection extends
 		return NodeTypeConstants.Collection;
 	}
 
+	public String getNameWithDB() {
+		StringBuilder name = new StringBuilder(getDatabase().getName());
+		name.append("/");
+		name.append(this.getName());
+		return name.toString();
+	}
+
+	public IDatabase getDatabase() {
+		return getParent().getParent();
+	}
 }

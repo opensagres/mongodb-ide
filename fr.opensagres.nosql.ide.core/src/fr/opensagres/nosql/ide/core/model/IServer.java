@@ -31,4 +31,12 @@ public interface IServer extends ITreeContainerNode<IServer> {
 	String getURL();
 
 	String getDatabaseName();
+
+	String getUsername();
+	
+	String getPassword();
+
+	Integer getPort();
+
+	String getHost();
 }

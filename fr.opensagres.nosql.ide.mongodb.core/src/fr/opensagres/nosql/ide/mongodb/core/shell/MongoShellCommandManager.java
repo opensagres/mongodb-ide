@@ -4,19 +4,27 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Set;
 
+import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.tools.driver.DBObjectHelper;
 import com.mongodb.tools.driver.MongoInstanceManager;
+import com.mongodb.tools.driver.pagination.Page;
+import com.mongodb.tools.driver.pagination.PaginationHelper;
+import com.mongodb.tools.driver.pagination.SortOrder;
 
 import fr.opensagres.nosql.ide.core.model.IServer;
 import fr.opensagres.nosql.ide.core.shell.AbstractShellCommandManager;
+import fr.opensagres.nosql.ide.mongodb.core.internal.shell.CollectionFindShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.ConnectShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.DBAuthenticateShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.DisconnectShellCommand;
+import fr.opensagres.nosql.ide.mongodb.core.internal.shell.GetSystemUsersShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.ShowCollectionsShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.ShowDbsShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.UseShellCommand;
@@ -88,9 +96,58 @@ public class MongoShellCommandManager extends AbstractShellCommandManager {
 		return names;
 	}
 
+	public CommandResult getDBCollectionGetStats(DBCollection collection) {
+		CommandResult result = collection.getStats();
+		return result;
+	}
+
 	public List<DBObject> getDBCollectionGetIndexes(IServer server,
 			DBCollection dbCollection) {
 		return dbCollection.getIndexInfo();
+	}
+
+	public Page paginate(IServer server, DBCollection collection,
+			int pageNumber, int itemsPerPage) {
+		return paginate(server, collection, pageNumber, itemsPerPage, null,
+				null);
+	}
+
+	public Page paginate(IServer server, DBCollection collection,
+			int pageNumber, int itemsPerPage, String sortName, SortOrder order) {
+		Page page = PaginationHelper.paginate(collection, pageNumber,
+				itemsPerPage, sortName, order);
+		if (hasListeners()) {
+			getShellNotificationManager().broadcastChange(
+					new CollectionFindShellCommand(server,
+							collection.getName(), pageNumber, itemsPerPage,
+							sortName, order));
+		}
+		return page;
+	}
+
+	public Page paginate(GridFS gridFS, int pageNumber, int itemsPerPage) {
+		return paginate(gridFS, pageNumber, itemsPerPage, null, null);
+	}
+
+	public Page paginate(GridFS gridFS, int pageNumber, int itemsPerPage,
+			String sortName, SortOrder order) {
+		Page page = PaginationHelper.paginate(gridFS, pageNumber, itemsPerPage,
+				sortName, order);
+		if (hasListeners()) {
+			// getShellNotificationManager().broadcastChange(
+			// new CollectionFindShellCommand(collection, pageNumber,
+			// itemsPerPage, sortName, order));
+		}
+		return page;
+	}
+
+	public List<DBObject> getSystemUsers(IServer server, DB db) {
+		List<DBObject> users = DBObjectHelper.getSystemUsers(db);
+		if (hasListeners()) {
+			getShellNotificationManager().broadcastChange(
+					new GetSystemUsersShellCommand(server));
+		}
+		return users;
 	}
 
 }

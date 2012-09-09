@@ -77,8 +77,12 @@ public class MongoServer extends AbstractServer {
 		// TODO
 	}
 
-	public char[] getPassword() {
-		return mongoURI.getPassword();
+	public String getPassword() {
+		char[] password = mongoURI.getPassword();
+		if (password != null) {
+			return String.valueOf(password);
+		}
+		return null;
 	}
 
 	public void setPassword(char[] password) {
@@ -141,6 +145,10 @@ public class MongoServer extends AbstractServer {
 	public void disposeMongo() {
 		MongoShellCommandManager.getInstance().disconnect(this, mongo);
 		mongo = null;
+	}
+
+	public char[] getPasswordAsCharArray() {
+		return mongoURI.getPassword();
 	}
 
 }

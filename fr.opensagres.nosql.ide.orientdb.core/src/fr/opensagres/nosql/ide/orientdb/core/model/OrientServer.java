@@ -7,6 +7,7 @@ import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 import com.orientechnologies.orient.core.storage.OStorageProxy;
 
 import fr.opensagres.nosql.ide.core.model.AbstractServer;
+import fr.opensagres.nosql.ide.core.model.IDatabase;
 
 public class OrientServer extends AbstractServer {
 
@@ -51,7 +52,8 @@ public class OrientServer extends AbstractServer {
 	protected void loadDatabase(String databaseName) throws Exception {
 		// see
 		// http://code.google.com/p/orient/source/browse/trunk/tools/src/main/java/com/orientechnologies/orient/console/OConsoleDatabaseApp.java
-		ODatabaseDocumentTx currentDatabase = new ODatabaseDocumentTx("remote:127.0.0.1/demo");
+		ODatabaseDocumentTx currentDatabase = new ODatabaseDocumentTx(
+				"remote:127.0.0.1/demo");
 		// if (currentDatabase == null)
 		// throw new OException("Database " + iURL + " not found");
 
@@ -67,6 +69,13 @@ public class OrientServer extends AbstractServer {
 		super.addNode(database);
 
 	}
+
+	@Override
+	protected IDatabase doCreateDatabase(String databaseName) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 	public String getUsername() {
 		// TODO Auto-generated method stub

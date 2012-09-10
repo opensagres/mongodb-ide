@@ -1,4 +1,4 @@
-package fr.opensagres.nosql.ide.ui.internal.viewers;
+package fr.opensagres.nosql.ide.ui.viewers.server;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;

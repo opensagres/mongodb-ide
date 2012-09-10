@@ -19,7 +19,9 @@ Export-Package: fr.opensagres.nosql.ide.ui,
  fr.opensagres.nosql.ide.ui.extensions,
  fr.opensagres.nosql.ide.ui.handlers,
  fr.opensagres.nosql.ide.ui.viewers,
+ fr.opensagres.nosql.ide.ui.viewers.database,
  fr.opensagres.nosql.ide.ui.viewers.editor,
+ fr.opensagres.nosql.ide.ui.viewers.server,
  fr.opensagres.nosql.ide.ui.wizards,
  fr.opensagres.nosql.ide.ui.wizards.server
 Bundle-Activator: fr.opensagres.nosql.ide.ui.internal.Activator

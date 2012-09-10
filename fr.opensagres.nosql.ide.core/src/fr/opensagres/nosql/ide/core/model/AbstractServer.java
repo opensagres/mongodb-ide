@@ -2,6 +2,7 @@ package fr.opensagres.nosql.ide.core.model;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.net.UnknownHostException;
 
 import fr.opensagres.nosql.ide.core.IServerListener;
 import fr.opensagres.nosql.ide.core.Platform;
@@ -287,6 +288,26 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 		currentDatabase = database;
 		return !result;
 	}
+
+	/**
+	 * Create database.
+	 * 
+	 * @param databaseName
+	 * @return
+	 * @throws UnknownHostException
+	 * @throws MongoException
+	 */
+	public IDatabase createDatabase(String databaseName) throws Exception {
+		IDatabase database = doCreateDatabase(databaseName);
+		database.setParent(this);
+		addNode(database);
+		// Database is created fire events
+		fireDatabaseCreatedChangeEvent(database);
+		return database;
+	}
+
+	protected abstract IDatabase doCreateDatabase(String databaseName)
+			throws Exception;
 
 	protected abstract void loadDatabases() throws Exception;
 

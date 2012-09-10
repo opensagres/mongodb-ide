@@ -1,7 +1,5 @@
 package fr.opensagres.nosql.ide.ui.handlers;
 
-import java.io.File;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -11,10 +9,11 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorRegistry;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.services.IServiceLocator;
@@ -72,36 +71,40 @@ public class ContextHandlerUtils {
 			IEditorInput input, String editorId, boolean activate)
 			throws PartInitException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
+		if (window == null) {
+			IWorkbench wb = PlatformUI.getWorkbench();
+			window = wb.getActiveWorkbenchWindow();
+		}
 		IWorkbenchPage page = window.getActivePage();
 		return page.openEditor(input, editorId, activate);
 	}
 
-//	/**
-//	 * 
-//	 * @param event
-//	 * @param file
-//	 * @param activate
-//	 * @return
-//	 * @throws PartInitException
-//	 */
-//	public static IEditorPart openSystemExternalEditor(ExecutionEvent event,
-//			File file, boolean activate) throws PartInitException {
-//		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
-//		IWorkbenchPage page = window.getActivePage();
-//		return openSystemExternalEditor(page, file, activate);
-//	}
+	// /**
+	// *
+	// * @param event
+	// * @param file
+	// * @param activate
+	// * @return
+	// * @throws PartInitException
+	// */
+	// public static IEditorPart openSystemExternalEditor(ExecutionEvent event,
+	// File file, boolean activate) throws PartInitException {
+	// IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
+	// IWorkbenchPage page = window.getActivePage();
+	// return openSystemExternalEditor(page, file, activate);
+	// }
 
-//	/**
-//	 * 
-//	 * @param event
-//	 * @param file
-//	 * @param activate
-//	 * @return
-//	 * @throws PartInitException
-//	 */
-//	public static IEditorPart openSystemExternalEditor(IWorkbenchPage page,
-//			File file, boolean activate) throws PartInitException {
-//		return page.openEditor(new SystemFileEditorInput(file),
-//				IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID, activate);
-//	}
+	// /**
+	// *
+	// * @param event
+	// * @param file
+	// * @param activate
+	// * @return
+	// * @throws PartInitException
+	// */
+	// public static IEditorPart openSystemExternalEditor(IWorkbenchPage page,
+	// File file, boolean activate) throws PartInitException {
+	// return page.openEditor(new SystemFileEditorInput(file),
+	// IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID, activate);
+	// }
 }

@@ -54,7 +54,7 @@ public class UIFieldsFactory {
 		return serverLabel;
 
 	}
-	
+
 	public static Label createDatabaseField(Composite parent,
 			FormToolkit toolkit, final IDatabase database) {
 		// Database
@@ -63,7 +63,7 @@ public class UIFieldsFactory {
 		databaseHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent ev) {
-				//ServerUI.editDatabase(database);
+				ServerUI.openEditor(database);
 
 			}
 		});
@@ -72,25 +72,25 @@ public class UIFieldsFactory {
 		gridData.widthHint = 150;
 		databaseLabel.setLayoutData(gridData);
 
-//		final IDatabaseListener databaseListener = new IDatabaseListener() {
-//
-//			public void databaseChanged(DatabaseEvent event) {
-//				databaseLabel.setText(database.getName());
-//
-//			}
-//		};
-//		database.addDatabaseListener(databaseListener);
-//
-//		databaseLabel.addDisposeListener(new DisposeListener() {
-//
-//			public void widgetDisposed(DisposeEvent e) {
-//				database.removeDatabaseListener(databaseListener);
-//			}
-//		});
+		// final IDatabaseListener databaseListener = new IDatabaseListener() {
+		//
+		// public void databaseChanged(DatabaseEvent event) {
+		// databaseLabel.setText(database.getName());
+		//
+		// }
+		// };
+		// database.addDatabaseListener(databaseListener);
+		//
+		// databaseLabel.addDisposeListener(new DisposeListener() {
+		//
+		// public void widgetDisposed(DisposeEvent e) {
+		// database.removeDatabaseListener(databaseListener);
+		// }
+		// });
 		return databaseLabel;
 
 	}
-	
+
 	public static Label createCollectionField(Composite parent,
 			FormToolkit toolkit, final ICollection collection) {
 		// Collection
@@ -99,31 +99,32 @@ public class UIFieldsFactory {
 		collectionHyperlink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent ev) {
-				//ServerUI.editCollection(collection);
-
+				ServerUI.openEditor(collection);
 			}
 		});
-		final Label collectionLabel = toolkit.createLabel(parent, "", SWT.SINGLE);
+		final Label collectionLabel = toolkit.createLabel(parent, "",
+				SWT.SINGLE);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
 		collectionLabel.setLayoutData(gridData);
 
-//		final ICollectionListener collectionListener = new ICollectionListener() {
-//
-//			public void collectionChanged(CollectionEvent event) {
-//				collectionLabel.setText(collection.getName());
-//
-//			}
-//		};
-//		collection.addCollectionListener(collectionListener);
-//
-//		collectionLabel.addDisposeListener(new DisposeListener() {
-//
-//			public void widgetDisposed(DisposeEvent e) {
-//				collection.removeCollectionListener(collectionListener);
-//			}
-//		});
+		// final ICollectionListener collectionListener = new
+		// ICollectionListener() {
+		//
+		// public void collectionChanged(CollectionEvent event) {
+		// collectionLabel.setText(collection.getName());
+		//
+		// }
+		// };
+		// collection.addCollectionListener(collectionListener);
+		//
+		// collectionLabel.addDisposeListener(new DisposeListener() {
+		//
+		// public void widgetDisposed(DisposeEvent e) {
+		// collection.removeCollectionListener(collectionListener);
+		// }
+		// });
 		return collectionLabel;
 
-	}	
+	}
 }

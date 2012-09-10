@@ -88,6 +88,41 @@ public class Messages extends NLS {
 	public static String collection_label;
 	public static String bucket_label;
 
+	// ****************** New Action ******************
+	public static String NewServerAction_text;
+	public static String NewServerAction_toolTipText;
+	public static String NewDatabaseAction_text;
+	public static String NewDatabaseAction_toolTipText;
+	public static String NewCollectionAction_text;
+	public static String NewCollectionAction_toolTipText;
+	public static String NewDocumentAction_text;
+	public static String NewDocumentAction_toolTipText;
+
+	// ****************** New Database Wizard ******************
+	public static String NewDatabaseWizard_title;
+	public static String NewDatabaseWizardPage_title;
+	public static String NewDatabaseWizardPage_desc;
+	public static String NewDatabaseWizardPage_openDatabaseEditorCheckbox_label;
+	public static String NewDatabaseWizardPage_name_validation_exists;
+
+	// ****************** New Collection Wizard ******************
+	public static String NewCollectionWizard_title;
+	public static String NewCollectionWizardPage_title;
+	public static String NewCollectionWizardPage_desc;
+	public static String NewCollectionWizardPage_openCollectionEditorCheckbox_label;
+
+	// ****************** New Document Wizard ******************
+	public static String NewDocumentWizard_title;
+	public static String NewDocumentWizardPage_title;
+	public static String NewDocumentWizardPage_desc;
+	public static String NewDocumentWizardPage_openDocumentEditorCheckbox_label;
+	
+	// Validation
+	public static String server_validation_required;
+	public static String server_validation_notConnected;
+	public static String database_validation_required;
+	public static String collection_validation_required;
+	
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

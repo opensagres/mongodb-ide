@@ -4,7 +4,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
-import fr.opensagres.nosql.ide.ui.internal.IErrorMessageAware;
+import fr.opensagres.nosql.ide.ui.IErrorMessageAware;
 
 public abstract class AbstractWizardPage extends WizardPage implements
 		IErrorMessageAware {

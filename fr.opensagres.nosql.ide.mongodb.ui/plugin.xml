@@ -55,10 +55,25 @@
            name="Edit server">
      </command>
      <command
+           defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenUsersEditorHandler"
+           id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenUsersEditorHandler"
+           name="Edit server">
+     </command>           
+     <command
+           defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenGridFSEditorHandler"
+           id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenGridFSEditorHandler"
+           name="Edit server">
+     </command>         
+     <command
            defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenCollectionEditorHandler"
            id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenCollectionEditorHandler"
            name="Edit server">
-     </command>     
+     </command>
+     <command
+           defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenDocumentEditorHandler"
+           id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenDocumentEditorHandler"
+           name="Edit server">
+     </command>         
   </extension>
   	
   <extension
@@ -104,6 +119,6 @@
            name="%GridFSEditor.name"
            icon="icons/obj16/gridfs.png"           
            extensions="gridfs"
-           class="fr.opensagres.nosql.ide.mongodb.ui.editors.gridfs.GridFSEditor" />
+           class="fr.opensagres.nosql.ide.mongodb.ui.internal.editors.gridfs.GridFSEditor" />
   </extension>     	
 </plugin>

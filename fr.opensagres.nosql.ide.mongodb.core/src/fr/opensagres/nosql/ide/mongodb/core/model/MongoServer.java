@@ -8,6 +8,7 @@ import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
 
 import fr.opensagres.nosql.ide.core.model.AbstractServer;
+import fr.opensagres.nosql.ide.core.model.IDatabase;
 import fr.opensagres.nosql.ide.core.model.ServerState;
 import fr.opensagres.nosql.ide.mongodb.core.internal.Trace;
 import fr.opensagres.nosql.ide.mongodb.core.shell.MongoShellCommandManager;
@@ -130,6 +131,14 @@ public class MongoServer extends AbstractServer {
 		super.addNode(database);
 	}
 
+	@Override
+	protected IDatabase doCreateDatabase(String databaseName) throws Exception {
+		Database database = new Database(databaseName);
+		database.setParent(this);
+		// call get collection names to register the database.
+		database.getDB().getCollectionNames();
+		return database;
+	}
 	public Mongo getMongo() throws UnknownHostException, MongoException {
 		if (mongo == null) {
 			mongo = MongoShellCommandManager.getInstance().connect(this,

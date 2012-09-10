@@ -58,6 +58,30 @@
       </view>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%NoSQL.category"
+            id="fr.opensagres.nosql.ide.ui">
+      </category>                     
+      <wizard
+            class="fr.opensagres.nosql.ide.ui.wizards.database.NewDatabaseWizard"
+            icon="icons/ctool16/wiz_new_database.png"
+            id="fr.opensagres.nosql.ide.ui.wizards.database.NewDatabaseWizard"
+            category="fr.opensagres.nosql.ide.ui"
+            name="%NewDatabaseWizard.name">
+      </wizard>
+   </extension>
+   
+  <extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="fr.opensagres.nosql.ide.ui.handlers.wizards.database.NewDatabaseWizardHandler"
+           id="fr.opensagres.nosql.ide.ui.handlers.wizards.database.NewDatabaseWizardHandler"
+           name="New Database">
+     </command>
+  </extension>
+     
   <extension point="org.eclipse.ui.preferencePages">
     <page
       id="fr.opensagres.nosql.ide.ui.preferencePage"

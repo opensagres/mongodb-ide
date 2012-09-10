@@ -11,7 +11,6 @@ import fr.opensagres.nosql.ide.core.extensions.ICommandIdProvider;
 import fr.opensagres.nosql.ide.core.extensions.IServerType;
 import fr.opensagres.nosql.ide.core.model.ITreeSimpleNode;
 import fr.opensagres.nosql.ide.core.utils.StringUtils;
-import fr.opensagres.nosql.ide.ui.dialogs.StackTraceErrorDialog;
 import fr.opensagres.nosql.ide.ui.editors.AbstractEditorInput;
 import fr.opensagres.nosql.ide.ui.handlers.ContextHandlerUtils;
 import fr.opensagres.nosql.ide.ui.internal.Activator;

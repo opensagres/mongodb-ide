@@ -1,4 +1,4 @@
-package fr.opensagres.nosql.ide.ui.internal;
+package fr.opensagres.nosql.ide.ui;
 
 public interface IErrorMessageAware {
 

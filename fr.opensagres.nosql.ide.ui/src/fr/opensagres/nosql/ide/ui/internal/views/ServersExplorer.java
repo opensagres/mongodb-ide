@@ -3,7 +3,6 @@ package fr.opensagres.nosql.ide.ui.internal.views;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.action.Action;
@@ -27,12 +26,17 @@ import org.eclipse.ui.part.ViewPart;
 import fr.opensagres.nosql.ide.core.Platform;
 import fr.opensagres.nosql.ide.core.extensions.IServerRunnerType;
 import fr.opensagres.nosql.ide.core.extensions.IServerType;
+import fr.opensagres.nosql.ide.core.model.ITreeSimpleNode;
+import fr.opensagres.nosql.ide.core.model.NodeTypeConstants;
 import fr.opensagres.nosql.ide.ui.internal.Trace;
 import fr.opensagres.nosql.ide.ui.internal.actions.OpenAction;
+import fr.opensagres.nosql.ide.ui.internal.actions.database.NewCollectionAction;
+import fr.opensagres.nosql.ide.ui.internal.actions.database.NewDatabaseAction;
+import fr.opensagres.nosql.ide.ui.internal.actions.database.NewDocumentAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.servers.RunServerAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.servers.ServerRunnerAction;
-import fr.opensagres.nosql.ide.ui.internal.viewers.ServerLabelProvider;
-import fr.opensagres.nosql.ide.ui.internal.viewers.ServerTreeContentProvider;
+import fr.opensagres.nosql.ide.ui.viewers.server.ServerLabelProvider;
+import fr.opensagres.nosql.ide.ui.viewers.server.ServerTreeContentProvider;
 
 public class ServersExplorer extends ViewPart {
 
@@ -43,9 +47,16 @@ public class ServersExplorer extends ViewPart {
 	// Server actions
 	private Action startServerAction;
 	private Action stopServerAction;
-	private List<Action> serverStartActions;
-	private List<Action> serverStopActions;
 	private OpenAction openAction;
+
+	// Database actions
+	private Action newDatabaseAction;
+
+	// Collection actions
+	private Action newCollectionAction;
+
+	// Document actions
+	private Action newDocumentAction;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -113,6 +124,26 @@ public class ServersExplorer extends ViewPart {
 		// provider));
 		// }
 
+		createServerActions(provider, actionBars);
+		createGenericActions(provider, actionBars);
+		createDatabaseActions(provider, actionBars);
+		createCollectionActions(provider, actionBars);
+		createDocumentActions(provider, actionBars);
+
+		// add toolbar buttons
+		IContributionManager toolbarOfActionBars = actionBars
+				.getToolBarManager();
+		toolbarOfActionBars.add(startServerAction);
+		toolbarOfActionBars.add(stopServerAction);
+		// toolbarOfActionBars.add(startShellAction);
+		// toolbarOfActionBars.add(stopShellAction);
+		// toolbarOfActionBars.add(refreshAction);
+		toolbarOfActionBars.add(new Separator(
+				IWorkbenchActionConstants.MB_ADDITIONS));
+	}
+
+	private void createServerActions(ISelectionProvider provider,
+			IActionBars actionBars) {
 		Map<IServerType, Collection<Action>> startRunnerActionsMap = new HashMap<IServerType, Collection<Action>>();
 		Map<IServerType, Collection<Action>> stopRunnerActionsMap = new HashMap<IServerType, Collection<Action>>();
 		java.util.Collection<IServerRunnerType> serverRunners = Platform
@@ -151,32 +182,62 @@ public class ServersExplorer extends ViewPart {
 		actionBars.setGlobalActionHandler(
 				"fr.opensagres.nosql.ide.server.stop", stopServerAction);
 
+	}
+
+	private void createGenericActions(ISelectionProvider provider,
+			IActionBars actionBars) {
 		// create the open action
 		openAction = new OpenAction(provider, getSite(), getSite().getShell());
 		actionBars.setGlobalActionHandler("org.eclipse.ui.navigator.Open",
 				openAction);
+	}
 
-		// add toolbar buttons
-		IContributionManager toolbarOfActionBars = actionBars
-				.getToolBarManager();
-		toolbarOfActionBars.add(startServerAction);
-		toolbarOfActionBars.add(stopServerAction);
-		// toolbarOfActionBars.add(startShellAction);
-		// toolbarOfActionBars.add(stopShellAction);
-		// toolbarOfActionBars.add(refreshAction);
-		toolbarOfActionBars.add(new Separator(
-				IWorkbenchActionConstants.MB_ADDITIONS));
+	private void createDatabaseActions(ISelectionProvider provider,
+			IActionBars actionBars) {
+		newDatabaseAction = new NewDatabaseAction(provider, getSite(),
+				getSite().getShell());
+	}
+
+	private void createCollectionActions(ISelectionProvider provider,
+			IActionBars actionBars) {
+		newCollectionAction = new NewCollectionAction(provider, getSite(),
+				getSite().getShell());
+	}
+
+	private void createDocumentActions(ISelectionProvider provider,
+			IActionBars actionBars) {
+		newDocumentAction = new NewDocumentAction(provider, getSite(),
+				getSite().getShell());
 	}
 
 	protected void fillContextMenu(Shell shell, IMenuManager menu) {
-		IStructuredSelection selection = (IStructuredSelection) viewer
-				.getSelection();
-		Object selectedElement = null;
-		if (selection.size() == 1) {
-			selectedElement = selection.getFirstElement();
-			
-			menu.add(openAction);
+		menu.add(openAction);
+		Object selectedElement = getFirstSelectedElement(viewer);
+		if (selectedElement != null) {
+			if (selectedElement instanceof ITreeSimpleNode) {
+				switch (((ITreeSimpleNode) selectedElement).getType()) {
+				case NodeTypeConstants.Server:
+					menu.add(newDatabaseAction);
+					break;
+				case NodeTypeConstants.CollectionsCategory:
+				case NodeTypeConstants.Database:
+					menu.add(newCollectionAction);
+					break;
+				case NodeTypeConstants.Collection:
+					menu.add(newDocumentAction);
+					break;
+				}
+			}
 		}
+	}
+
+	private Object getFirstSelectedElement(ISelectionProvider provider) {
+		IStructuredSelection selection = (IStructuredSelection) provider
+				.getSelection();
+		if (selection.isEmpty()) {
+			return null;
+		}
+		return selection.getFirstElement();
 	}
 
 	@Override

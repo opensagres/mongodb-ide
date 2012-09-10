@@ -11,6 +11,11 @@ public abstract class AbstractDocument extends TreeSimpleNode<ICollection>
 		return NodeTypeConstants.Document;
 	}
 
+	@Override
+	public String getId() {
+		return "Document";
+	}
+
 	public String getLabel() {
 		return getId();
 	}

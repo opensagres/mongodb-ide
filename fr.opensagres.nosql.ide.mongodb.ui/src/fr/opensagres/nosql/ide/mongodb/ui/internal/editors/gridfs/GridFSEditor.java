@@ -9,7 +9,7 @@ import fr.opensagres.nosql.ide.ui.editors.BasicModelFormEditor;
 public class GridFSEditor extends
 		BasicModelFormEditor<GridFSEditorInput, GridFSBucket> {
 
-	public static final String ID = "fr.opensagres.mongodb.ide.ui.editors.gridfs.GridFSEditor";
+	public static final String ID = "fr.opensagres.nosql.ide.mongodb.ui.editors.gridfs.GridFSEditor";
 
 	@Override
 	protected void doAddPages() throws PartInitException {

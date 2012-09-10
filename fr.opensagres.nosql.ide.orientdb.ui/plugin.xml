@@ -25,4 +25,21 @@
       </wizard>
    </extension>
    
+   	<extension
+	      point="fr.opensagres.nosql.ide.core.commandIdProviders">
+	    <commandIdProvider
+	          class="fr.opensagres.nosql.ide.orientdb.ui.internal.extensions.OrientCommandIdProvider"
+	          serverType="fr.opensagres.nosql.ide.orientdb.core">
+	    </commandIdProvider>
+	</extension>
+	   
+  <extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="fr.opensagres.nosql.ide.orientdb.ui.internal.handlers.NewServerWizardHandler"
+           id="fr.opensagres.nosql.ide.orientdb.ui.handlers.NewServerWizardHandler"
+           name="New server">
+     </command>                             
+  </extension>
+     
 </plugin>

@@ -45,6 +45,11 @@
   <extension
         point="org.eclipse.ui.commands">
      <command
+           defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.NewServerWizardHandler"
+           id="fr.opensagres.nosql.ide.mongodb.ui.handlers.NewServerWizardHandler"
+           name="New server">
+     </command>                             
+     <command
            defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenServerEditorHandler"
            id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenServerEditorHandler"
            name="Edit server">
@@ -73,7 +78,7 @@
            defaultHandler="fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenDocumentEditorHandler"
            id="fr.opensagres.nosql.ide.mongodb.ui.handlers.OpenDocumentEditorHandler"
            name="Edit server">
-     </command>         
+     </command>
   </extension>
   	
   <extension

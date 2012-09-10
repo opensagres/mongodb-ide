@@ -1,8 +1,10 @@
 package fr.opensagres.nosql.ide.mongodb.ui.internal.extension;
 
 import fr.opensagres.nosql.ide.core.extensions.ICommandIdProvider;
+import fr.opensagres.nosql.ide.core.extensions.IServerType;
 import fr.opensagres.nosql.ide.core.model.ITreeSimpleNode;
 import fr.opensagres.nosql.ide.core.model.NodeTypeConstants;
+import fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.NewServerWizardHandler;
 import fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenCollectionEditorHandler;
 import fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenDatabaseEditorHandler;
 import fr.opensagres.nosql.ide.mongodb.ui.internal.handlers.OpenDocumentEditorHandler;
@@ -13,6 +15,15 @@ import fr.opensagres.nosql.ide.ui.extensions.AbstractCommandIdProvider;
 
 public class MongoCommandIdProvider extends AbstractCommandIdProvider {
 
+	@Override
+	protected String getServerTypeCommandId(int type, IServerType element) {
+		switch (type) {
+		case ICommandIdProvider.OPEN_NEW_WIZARD:
+			return NewServerWizardHandler.ID;
+		}
+		return null;
+	}
+	
 	@Override
 	protected String getCommmandId(int type, ITreeSimpleNode element) {
 		switch (element.getType()) {

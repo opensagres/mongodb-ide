@@ -54,6 +54,9 @@ public abstract class AbstractCommandAction extends AbstractTreeNodeAction {
 	}
 
 	protected IServerType getServerType(Object obj) {
+		if (obj instanceof IServerType) {
+			return (IServerType) obj;
+		}
 		if (obj instanceof ITreeSimpleNode) {
 			return ((ITreeSimpleNode) obj).getServer().getServerType();
 		}

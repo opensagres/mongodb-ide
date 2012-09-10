@@ -35,6 +35,7 @@ import fr.opensagres.nosql.ide.ui.internal.actions.RefreshAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.database.NewCollectionAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.database.NewDatabaseAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.database.NewDocumentAction;
+import fr.opensagres.nosql.ide.ui.internal.actions.servers.NewServerAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.servers.RunServerAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.servers.ServerRunnerAction;
 import fr.opensagres.nosql.ide.ui.viewers.server.ServerLabelProvider;
@@ -45,6 +46,9 @@ public class ServersExplorer extends ViewPart {
 	public static final String ID = "fr.opensagres.nosql.ide.ui.views.ServersExplorer";
 
 	private ServerTreeViewer viewer;
+
+	// Server type actions
+	Action newServerAction;
 
 	// Generic actions
 	private OpenAction openAction;
@@ -130,6 +134,7 @@ public class ServersExplorer extends ViewPart {
 		// provider));
 		// }
 
+		createServerTypeActions(provider, actionBars);
 		createServerActions(provider, actionBars);
 		createGenericActions(provider, actionBars);
 		createDatabaseActions(provider, actionBars);
@@ -146,6 +151,12 @@ public class ServersExplorer extends ViewPart {
 		// toolbarOfActionBars.add(refreshAction);
 		toolbarOfActionBars.add(new Separator(
 				IWorkbenchActionConstants.MB_ADDITIONS));
+	}
+
+	private void createServerTypeActions(ISelectionProvider provider,
+			IActionBars actionBars) {
+		newServerAction = new NewServerAction(provider, getSite(), getSite()
+				.getShell());
 	}
 
 	private void createServerActions(ISelectionProvider provider,
@@ -221,13 +232,17 @@ public class ServersExplorer extends ViewPart {
 	}
 
 	protected void fillContextMenu(Shell shell, IMenuManager menu) {
-		menu.add(openAction);
-		menu.add(refreshAction);
-		menu.add(deleteAction);
-		menu.add(new Separator());
 		Object selectedElement = getFirstSelectedElement(viewer);
 		if (selectedElement != null) {
-			if (selectedElement instanceof ITreeSimpleNode) {
+			if (selectedElement instanceof IServerType) {
+				menu.add(newServerAction);
+			} else if (selectedElement instanceof ITreeSimpleNode) {
+
+				menu.add(openAction);
+				menu.add(refreshAction);
+				menu.add(deleteAction);
+				menu.add(new Separator());
+
 				switch (((ITreeSimpleNode) selectedElement).getType()) {
 				case NodeTypeConstants.Server:
 					menu.add(newDatabaseAction);

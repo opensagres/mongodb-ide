@@ -139,6 +139,13 @@ public class MongoServer extends AbstractServer {
 		database.getDB().getCollectionNames();
 		return database;
 	}
+
+	@Override
+	protected void doDropDatabase(IDatabase database) throws Exception {
+		MongoShellCommandManager.getInstance().dropDatabase(this,
+				((Database) database).getDB());
+	}
+
 	public Mongo getMongo() throws UnknownHostException, MongoException {
 		if (mongo == null) {
 			mongo = MongoShellCommandManager.getInstance().connect(this,

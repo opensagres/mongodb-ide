@@ -29,7 +29,9 @@ import fr.opensagres.nosql.ide.core.extensions.IServerType;
 import fr.opensagres.nosql.ide.core.model.ITreeSimpleNode;
 import fr.opensagres.nosql.ide.core.model.NodeTypeConstants;
 import fr.opensagres.nosql.ide.ui.internal.Trace;
+import fr.opensagres.nosql.ide.ui.internal.actions.DeleteAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.OpenAction;
+import fr.opensagres.nosql.ide.ui.internal.actions.RefreshAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.database.NewCollectionAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.database.NewDatabaseAction;
 import fr.opensagres.nosql.ide.ui.internal.actions.database.NewDocumentAction;
@@ -44,10 +46,14 @@ public class ServersExplorer extends ViewPart {
 
 	private ServerTreeViewer viewer;
 
+	// Generic actions
+	private OpenAction openAction;
+	private DeleteAction deleteAction;
+	private RefreshAction refreshAction;
+
 	// Server actions
 	private Action startServerAction;
 	private Action stopServerAction;
-	private OpenAction openAction;
 
 	// Database actions
 	private Action newDatabaseAction;
@@ -190,6 +196,10 @@ public class ServersExplorer extends ViewPart {
 		openAction = new OpenAction(provider, getSite(), getSite().getShell());
 		actionBars.setGlobalActionHandler("org.eclipse.ui.navigator.Open",
 				openAction);
+		deleteAction = new DeleteAction(viewer);
+		actionBars.setGlobalActionHandler("org.eclipse.ui.navigator.Delete",
+				deleteAction);
+		refreshAction = new RefreshAction(viewer);
 	}
 
 	private void createDatabaseActions(ISelectionProvider provider,
@@ -212,6 +222,9 @@ public class ServersExplorer extends ViewPart {
 
 	protected void fillContextMenu(Shell shell, IMenuManager menu) {
 		menu.add(openAction);
+		menu.add(refreshAction);
+		menu.add(deleteAction);
+		menu.add(new Separator());
 		Object selectedElement = getFirstSelectedElement(viewer);
 		if (selectedElement != null) {
 			if (selectedElement instanceof ITreeSimpleNode) {

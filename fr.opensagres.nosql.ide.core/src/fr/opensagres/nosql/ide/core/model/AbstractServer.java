@@ -312,4 +312,18 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 	protected abstract void loadDatabases() throws Exception;
 
 	protected abstract void loadDatabase(String databaseName) throws Exception;
+
+	public void dropDatabase(IDatabase database) throws Exception {
+		doDropDatabase(database);
+		// Database is dropped fire events
+		fireDatabaseDroppedChangeEvent(database);
+	}
+
+	protected abstract void doDropDatabase(IDatabase database) throws Exception ;
+
+	public void deleteCollection(ICollection collection)throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+
 }

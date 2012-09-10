@@ -24,6 +24,7 @@ import fr.opensagres.nosql.ide.mongodb.core.internal.shell.CollectionFindShellCo
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.ConnectShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.DBAuthenticateShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.DisconnectShellCommand;
+import fr.opensagres.nosql.ide.mongodb.core.internal.shell.DropDatabaseShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.GetSystemUsersShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.ShowCollectionsShellCommand;
 import fr.opensagres.nosql.ide.mongodb.core.internal.shell.ShowDbsShellCommand;
@@ -148,6 +149,19 @@ public class MongoShellCommandManager extends AbstractShellCommandManager {
 					new GetSystemUsersShellCommand(server));
 		}
 		return users;
+	}
+
+	public void dropDatabase(IServer server, DB db) {
+		db.dropDatabase();
+		if (hasListeners()) {
+			getShellNotificationManager().broadcastChange(
+					new DropDatabaseShellCommand(server));
+		}
+	}
+
+	public void createCollection(DB db, String collectionName, DBObject options) {
+		db.createCollection(collectionName, options);
+
 	}
 
 }

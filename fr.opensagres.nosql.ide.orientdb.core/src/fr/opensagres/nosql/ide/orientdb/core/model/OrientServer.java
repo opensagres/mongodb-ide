@@ -75,7 +75,6 @@ public class OrientServer extends AbstractServer {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 	public String getUsername() {
 		// TODO Auto-generated method stub
@@ -95,5 +94,11 @@ public class OrientServer extends AbstractServer {
 	public String getHost() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected void doDropDatabase(IDatabase database) throws Exception {
+		// TODO Auto-generated method stub
+
 	}
 }

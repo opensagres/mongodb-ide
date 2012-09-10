@@ -41,4 +41,9 @@ public interface IServer extends ITreeContainerNode<IServer> {
 	String getHost();
 
 	IDatabase createDatabase(String databaseName) throws Exception;
+
+	void dropDatabase(IDatabase database) throws Exception;
+
+	void deleteCollection(ICollection collection) throws Exception;
+	
 }

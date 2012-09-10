@@ -45,5 +45,7 @@ public interface IServer extends ITreeContainerNode<IServer> {
 	void dropDatabase(IDatabase database) throws Exception;
 
 	void deleteCollection(ICollection collection) throws Exception;
+
+	boolean hasRuntime();
 	
 }

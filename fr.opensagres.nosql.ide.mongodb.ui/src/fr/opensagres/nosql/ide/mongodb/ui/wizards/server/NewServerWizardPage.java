@@ -23,6 +23,7 @@ import com.mongodb.tools.driver.MongoDriverHelper;
 import fr.opensagres.nosql.ide.core.Platform;
 import fr.opensagres.nosql.ide.core.model.IServerRuntime;
 import fr.opensagres.nosql.ide.core.utils.StringUtils;
+import fr.opensagres.nosql.ide.mongodb.core.model.MongoServer;
 import fr.opensagres.nosql.ide.mongodb.ui.internal.ImageResources;
 import fr.opensagres.nosql.ide.mongodb.ui.internal.Messages;
 import fr.opensagres.nosql.ide.ui.ServerUI;
@@ -84,7 +85,8 @@ public class NewServerWizardPage extends AbstractWizardPage {
 		runtimeViewer = new ComboViewer(container, SWT.BORDER | SWT.READ_ONLY);
 		runtimeViewer.setLabelProvider(RuntimeLabelProvider.getInstance());
 		runtimeViewer.setContentProvider(RuntimeContentProvider.getInstance());
-		//runtimeViewer.setInput(Platform.getServerRuntimeManager().getRuntimes());
+		runtimeViewer.setInput(Platform.getServerRuntimeManager().getRuntimes(
+				MongoServer.TYPE_ID));
 		runtimeViewer.getControl().setLayoutData(
 				new GridData(GridData.FILL_HORIZONTAL));
 

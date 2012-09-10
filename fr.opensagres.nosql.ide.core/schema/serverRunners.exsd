@@ -48,7 +48,7 @@
       <complexType>
          <sequence>
          </sequence>
-         <attribute name="serverType" type="string">
+         <attribute name="serverType" type="string" use="required">
             <annotation>
                <documentation>
                   

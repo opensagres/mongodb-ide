@@ -7,7 +7,9 @@ Bundle-SymbolicName: fr.opensagres.mongodb.ide.demo
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: fr.opensagres.mongodb.ide.demo.internal.Activator
 Require-Bundle: org.eclipse.core.runtime,
- fr.opensagres.mongodb.ide.core;bundle-version="1.0.0"
+ fr.opensagres.nosql.ide.core;bundle-version="1.0.0",
+ fr.opensagres.nosql.ide.mongodb.core;bundle-version="1.0.0",
+ fr.opensagres.nosql.ide.orientdb.core;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: com.mongodb

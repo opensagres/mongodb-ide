@@ -1,6 +1,7 @@
 package fr.opensagres.nosql.ide.core.internal;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.eclipse.core.runtime.ListenerList;
 
 import fr.opensagres.nosql.ide.core.IServerRuntimeListener;
 import fr.opensagres.nosql.ide.core.IServerRuntimeManager;
+import fr.opensagres.nosql.ide.core.Platform;
 import fr.opensagres.nosql.ide.core.extensions.IServerType;
 import fr.opensagres.nosql.ide.core.internal.settings.RuntimesSettings;
 import fr.opensagres.nosql.ide.core.model.IServerRuntime;
@@ -31,6 +33,12 @@ public class ServerRuntimeManager extends AbstractManager<IServerRuntime>
 
 	public List<IServerRuntime> getRuntimes() {
 		return this;
+	}
+
+	public Collection<IServerRuntime> getRuntimes(String serverTypeId) {
+		IServerType serverType = Platform.getServerTypeRegistry().getType(
+				serverTypeId);
+		return getRuntimes(serverType);
 	}
 
 	public List<IServerRuntime> getRuntimes(IServerType serverType) {

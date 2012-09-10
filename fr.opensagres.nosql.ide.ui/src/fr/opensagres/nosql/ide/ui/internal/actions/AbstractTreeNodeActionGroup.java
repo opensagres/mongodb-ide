@@ -19,6 +19,7 @@ public abstract class AbstractTreeNodeActionGroup extends
 	protected AbstractTreeNodeActionGroup(ISelectionProvider provider,
 			String text) {
 		super(provider, text);
+		setMenuCreator(this);
 	}
 
 	@Override

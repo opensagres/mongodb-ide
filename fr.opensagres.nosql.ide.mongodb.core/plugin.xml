@@ -24,7 +24,29 @@
 	         class="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.MongoRuntimeFactory">
 	   </runtimeFactory>
 	</extension>
-	
+	 
+  	<extension point="fr.opensagres.nosql.ide.core.serverRunners">
+ 		<!-- Start/Stop Server (mongod) with cmd/sh -->  	
+	  	<serverRunner 
+	  		serverType="fr.opensagres.nosql.ide.mongodb.core"
+	        id="fr.opensagres.nosql.ide.mongodb.core.extensions.ExternalServerRunner"
+	        class="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.ExternalServerRunner"
+	        startName="%ExternalServerRunner.startName"
+	        stopName="%ExternalServerRunner.stopName"
+	        startDescription="%ExternalServerRunner.startDesc"
+	        stopDescription="%ExternalServerRunner.stopDesc" >
+	  	</serverRunner>   
+  		<!-- Connect/Disconnect Server with Java API Mongo -->	  	
+		<serverRunner
+	   		 serverType="fr.opensagres.nosql.ide.mongodb.core"
+	         class="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.ConnectServerRunner"
+	         id="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.ConnectServerRunner"
+	         startName="%ConnectServerRunner.startName"
+	         startDescription="%ConnectServerRunner.startDesc"
+	         stopName="%ConnectServerRunner.stopName"
+	         stopDescription="%ConnectServerRunner.stopDesc">
+	   </serverRunner>	  	
+  	</extension> 	
 	<extension
 	      point="fr.opensagres.nosql.ide.core.serverRunners">
 	   <serverRunner
@@ -38,4 +60,16 @@
 	   </serverRunner>
 	</extension>
 	
+  <!-- Start/Stop Shell Console (mongo) with cmd/sh --> 
+  <extension point="fr.opensagres.nosql.ide.core.shellRunners">
+	  <runner
+	        id="fr.opensagres.nosql.ide.mongodb.core.extensions.ExternalShellRunner"
+	        class="fr.opensagres.nosql.ide.mongodb.core.internal.extensions.ExternalShellRunner"
+	        startName="%ExternalShellRunner.startName"
+	        stopName="%ExternalShellRunner.stopName"
+	        startDescription="%ExternalShellRunner.startDesc"
+	        stopDescription="%ExternalShellRunner.stopDesc" >
+	  </runner>   
+  </extension>
+  	
 </plugin>

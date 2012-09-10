@@ -167,4 +167,17 @@ public class MongoServer extends AbstractServer {
 		return mongoURI.getPassword();
 	}
 
+	public String getMongoServerCommand(boolean withBaseDir) {
+		StringBuilder connection = new StringBuilder("");
+		if (!withBaseDir) {
+			connection.append("mongod");
+		} else {
+			// mongo.exe
+			MongoServerRuntime runtime = (MongoServerRuntime) getRuntime();
+			connection.append(runtime.getMongodProcessLocation().toFile()
+					.toString());
+		}
+		return connection.toString();
+	}
+
 }

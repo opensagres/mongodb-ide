@@ -223,6 +223,10 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 		return runtime;
 	}
 
+	public boolean hasRuntime() {
+		return runtime != null;
+	}
+
 	public IServerType getServerType() {
 		return serverType;
 	}
@@ -319,9 +323,9 @@ public abstract class AbstractServer extends TreeContainerNode<IServer>
 		fireDatabaseDroppedChangeEvent(database);
 	}
 
-	protected abstract void doDropDatabase(IDatabase database) throws Exception ;
+	protected abstract void doDropDatabase(IDatabase database) throws Exception;
 
-	public void deleteCollection(ICollection collection)throws Exception {
+	public void deleteCollection(ICollection collection) throws Exception {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,5 +1,6 @@
 package fr.opensagres.nosql.ide.core;
 
+import java.util.Collection;
 import java.util.List;
 
 import fr.opensagres.nosql.ide.core.extensions.IServerType;
@@ -11,6 +12,8 @@ public interface IServerRuntimeManager extends ISettingsManager {
 
 	List<IServerRuntime> getRuntimes(IServerType serverType);
 
+	Collection<IServerRuntime> getRuntimes(String serverTypeId);
+
 	void addRuntime(IServerRuntime runtime) throws Exception;
 
 	void removeRuntime(IServerRuntime runtime) throws Exception;
@@ -18,4 +21,5 @@ public interface IServerRuntimeManager extends ISettingsManager {
 	IServerRuntime findRuntime(String runtimeId);
 
 	void setRuntimes(IServerRuntime[] runtimes) throws Exception;
+
 }

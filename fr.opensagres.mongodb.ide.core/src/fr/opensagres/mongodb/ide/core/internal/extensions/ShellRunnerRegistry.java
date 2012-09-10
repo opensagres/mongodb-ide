@@ -36,7 +36,7 @@ import fr.opensagres.mongodb.ide.core.internal.Trace;
 public class ShellRunnerRegistry extends AbstractRegistry implements
 		IShellRunnerRegistry {
 
-	private static final String RUNNER_ELT = "runner";
+	private static final String SHELL_RUNNER_ELT = "shellRunner";
 	public static final String START_NAME_ATTR = "startName";
 	public static final String STOP_NAME_ATTR = "stopName";
 	public static final String START_DESCRIPTION_ATTR = "startDescription";
@@ -118,7 +118,7 @@ public class ShellRunnerRegistry extends AbstractRegistry implements
 			String stopName = null;
 			String startDescription = null;
 			String stopDescription = null;
-			if (RUNNER_ELT.equals(ce.getName())) {
+			if (SHELL_RUNNER_ELT.equals(ce.getName())) {
 				id = ce.getAttribute(ID_ATTR);
 				startName = ce.getAttribute(START_NAME_ATTR);
 				stopName = ce.getAttribute(STOP_NAME_ATTR);
